@@ -5,7 +5,38 @@ package fr.sandro642.github;
  * @author Sandro642
  * @version 1.0
  * @since 1.0
+ * @see ConnectorAPI#JobTemplate()
+ * @see ConnectorAPI#JobGetRoutes()
  */
 
 public class ConnectorAPI {
+
+    // Création de Getter de chaque classe de la librairie
+
+    /**
+     * Retourne l'instance de la classe JobTemplate.
+     *
+     * @return L'instance de JobTemplate.
+     */
+    public static fr.sandro642.github.jobs.JobTemplate JobTemplate() {
+        return fr.sandro642.github.jobs.JobTemplate.getInstance();
+    }
+
+    /**
+     * Retourne l'instance de la classe JobGetInfos.
+     *
+     * @return L'instance de JobGetRoutes.
+     */
+    public static fr.sandro642.github.jobs.JobGetInfos JobGetInfos() {
+        return fr.sandro642.github.jobs.JobGetInfos.getInstance();
+    }
+
+    /**
+     * Retourne l'instance de la classe StoreAndretrieve.
+     *
+     * @return L'instance de StoreAndRetrieve.
+     */
+    public static fr.sandro642.github.jobs.misc.StoreAndRetrieve StoreAndRetrieve() {
+        return fr.sandro642.github.jobs.misc.StoreAndRetrieve.getInstance();
+    }
 }

@@ -1,0 +1,9 @@
+# properties Connector API By Sandro642
+
+urlPath: "https://localhost:8080/api/"
+
+routes:
+  addMoney:
+    url: "/add/money/user"
+  # removeMoney:
+  #   url: "v2/remove/money/user"
