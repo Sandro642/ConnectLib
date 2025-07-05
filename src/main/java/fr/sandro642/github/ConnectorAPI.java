@@ -39,4 +39,13 @@ public class ConnectorAPI {
     public static fr.sandro642.github.jobs.misc.StoreAndRetrieve StoreAndRetrieve() {
         return fr.sandro642.github.jobs.misc.StoreAndRetrieve.getInstance();
     }
+
+    /**
+     * Retourne l'instance de la classe Logger.
+     *
+     * @return L'instance de Logger.
+     */
+    public static fr.sandro642.github.utils.Logger Logger() {
+        return new fr.sandro642.github.utils.Logger();
+    }
 }
