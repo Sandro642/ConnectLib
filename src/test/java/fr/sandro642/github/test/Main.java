@@ -22,17 +22,13 @@ public class Main {
     }
 
     @Test
-    public void testSeeDataMap() {
-        System.out.println(ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY));
+    public void testStoreAndSeeDataMap() {
+        ConnectorAPI.JobTemplate().generateTemplateIfNotExists(ResourceType.TEST_RESOURCES);
+        System.out.println(ConnectorAPI.JobGetInfos().getRoutes(VersionType.V1_BRANCH, "addMoney"));
     }
 
     @Test
     public void testGetUrl() {
         System.out.println(ConnectorAPI.JobGetInfos().getURL(ResourceType.TEST_RESOURCES));
-    }
-
-    @Test
-    public void testGetRoutes() {
-         ConnectorAPI.JobGetInfos().getRoutes(VersionType.V1_BRANCH, "addMoney");
     }
 }

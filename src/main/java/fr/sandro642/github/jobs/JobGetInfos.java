@@ -41,13 +41,18 @@ public class JobGetInfos {
      */
     public String getRoutes(VersionType versionType, String routeName) {
         String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY) + "/infos.yml";
+        System.out.println("Test dans getRoutes : " + ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY) + " YamlPath : " + yamlFilePath);
 
         try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
             Yaml yaml = new Yaml();
             Map<String, Object> yamlData = yaml.load(inputStream);
 
-            // Vérification de l'existence de la clé "routes" et de la route spécifique
-            return (String) yamlData.get(routeName);
+            // Récupérer la map "routes"
+            Map<String, Object> routes = (Map<String, Object>) yamlData.get("routes");
+            if (routes != null) {
+                return versionType.getVersion() + (String) routes.get(routeName);
+            }
+            return null;
         } catch (Exception ex) {
             return null;
         }
