@@ -8,6 +8,13 @@ plugins {
 group = "fr.sandro642.github"
 version = "0.1.0"
 
+// Ajoutez cette tâche à votre build.gradle.kts
+tasks.register("printVersion") {
+    doLast {
+        println(project.version)
+    }
+}
+
 repositories {
     mavenCentral()
 }
