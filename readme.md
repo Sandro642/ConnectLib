@@ -46,6 +46,24 @@ Imaginez une API qui ne se contente pas de relier des services, mais qui devient
 
 ## 🧑‍💻 Exemple d’utilisation
 
+Importation de la librairie
+```java
+repositories {
+    
+    maven {
+        url = uri("https://sandro642.github.io/connectorapi/jar")
+   }
+   
+}
+
+dependencies {
+    
+    implementation("fr.sandro642.github:ConnectorAPI:0.1.1")
+    
+}
+
+```
+
 ```java
 import fr.sandro642.github.api.ApiClient;
 
