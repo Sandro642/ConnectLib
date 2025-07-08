@@ -21,7 +21,7 @@ public class ApiClient {
     /**
      * WebClient est utilisé pour effectuer les requêtes HTTP vers l'API.
      * lastResponse stocke la dernière réponse de l'API.
-     * logger est utilisé pour enregistrer les informations de débogage et d'erreur.
+     * Logger est utilisé pour enregistrer les informations de débogage et d'erreur.
      */
     private final WebClient webClient;
     private final AtomicReference<ApiResponse<Void>> lastResponse = new AtomicReference<>();
@@ -74,5 +74,57 @@ public class ApiClient {
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(lastResponse::set)
                 .doOnError(error -> logger.ERROR("Erreur lors de l'appel POST: " + error.getMessage()));
+    }
+
+    /**
+     * Méthode pour appeler l'API avec une requête PUT
+     * @param routeName
+     * @param body
+     * @return
+     */
+    public Mono<ApiResponse<Void>> callAPIPut(String routeName, Map<String, Object> body) {
+        logger.INFO("Appel PUT vers: " + routeName);
+        return webClient.put()
+                .uri(routeName)
+                .bodyValue(body != null ? body : Map.of())
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<ApiResponse<Void>>() {})
+                .subscribeOn(Schedulers.boundedElastic())
+                .doOnNext(lastResponse::set)
+                .doOnError(error -> logger.ERROR("Erreur lors de l'appel PUT: " + error.getMessage()));
+    }
+
+    /**
+     * Méthode pour appeler l'API avec une reqête PATCH
+     * @param routeName
+     * @param body
+     * @return
+     */
+    public Mono<ApiResponse<Void>> callAPIPatch(String routeName, Map<String, Object> body) {
+        logger.INFO("Appel PATCH vers: " + routeName);
+        return webClient.patch()
+                .uri(routeName)
+                .bodyValue(body != null ? body : Map.of())
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<ApiResponse<Void>>() {})
+                .subscribeOn(Schedulers.boundedElastic())
+                .doOnNext(lastResponse::set)
+                .doOnError(error -> logger.ERROR("Erreur lors de l'appel PATCH: " + error.getMessage()));
+    }
+
+    /**
+     * Méthode pour appeler l'API avec une requête DELETE
+     * @param routeName
+     * @return
+     */
+    public Mono<ApiResponse<Void>> callAPIDelete(String routeName) {
+        logger.INFO("Appel DELETE vers: " + routeName);
+        return webClient.delete()
+                .uri(routeName)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<ApiResponse<Void>>() {})
+                .subscribeOn(Schedulers.boundedElastic())
+                .doOnNext(lastResponse::set)
+                .doOnError(error -> logger.ERROR("Erreur lors de l'appel PATCH: " + error.getMessage()));
     }
 }

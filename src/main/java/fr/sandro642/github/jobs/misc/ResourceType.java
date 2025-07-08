@@ -13,12 +13,8 @@ public enum ResourceType {
      * Gradle and Maven Support.
      */
     MAIN_RESOURCES("src/main/resources"),
-    TEST_RESOURCES("src/test/resources");
-
-    /**
-     * Prochainement Support : Minecraft
-     */
-    // MINECRAFT_RESOURCES("src/main/resources/minecraft");
+    TEST_RESOURCES("src/test/resources"),
+    MC_RESOURCES("Arrive prochainement");
 
 
     /**

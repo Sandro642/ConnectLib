@@ -183,8 +183,16 @@ public class JobGetInfos {
                 response = apiClient.callAPIGet(route).block();
             } else if (method == MethodType.POST) {
                 response = apiClient.callAPIPost(route, body).block();
+            } else if (method == MethodType.PUT) {
+                response = apiClient.callAPIPut(route, body).block();
+            } else if (method == MethodType.PATCH) {
+                response = apiClient.callAPIPatch(route, body).block();
+            } else if (method == MethodType.DELETE) {
+                response = apiClient.callAPIDelete(route).block();
             } else {
-                throw new RuntimeException("Méthode HTTP non supportée: " + method);
+                ConnectorAPI.Logger().ERROR("Méthode d'envoie non supportée");
+
+                return null;
             }
 
             // Nettoie le store après utilisation

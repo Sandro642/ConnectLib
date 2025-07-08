@@ -9,7 +9,10 @@ package fr.sandro642.github.jobs.misc;
 
 public enum VersionType {
     V1_BRANCH("v1"),
-    V2_BRANCH("v2");
+    V2_BRANCH("v2"),
+    V3_BRANCH("v3"),
+    V4_BRANCH("v4"),
+    V5_BRANCH("v5");
 
     private final String Version;
 

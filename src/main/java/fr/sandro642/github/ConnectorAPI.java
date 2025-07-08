@@ -82,26 +82,4 @@ public class ConnectorAPI {
         }
         return yamlUtils;
     }
-
-    /**
-     * Retourne les énumérations disponibles pour les types de ressources.
-     */
-    public static ResourceType[] getResourceTypes() {
-        return ResourceType.values();
-    }
-
-    /**
-     * Retourne les énumérations disponibles pour les types de versions.
-     */
-
-    public static VersionType[] getVersionTypes() {
-        return VersionType.values();
-    }
-
-    /**
-     * Retourne les énumérations disponibles pour les types de méthodes HTTP.
-     */
-    public static MethodType[] getMethodTypes() {
-        return MethodType.values();
-    }
 }

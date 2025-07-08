@@ -6,7 +6,6 @@ import fr.sandro642.github.api.ApiResponse;
 import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
-import fr.sandro642.github.utils.YamlUtils;
 import org.junit.jupiter.api.Test;
 
 /**

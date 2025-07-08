@@ -8,16 +8,15 @@ package fr.sandro642.github.jobs.misc;
  */
 
 public enum MethodType {
-    POST(true),
-    GET(false);
+    POST(""),
+    GET(""),
+    PUT(""),
+    PATCH(""),
+    DELETE("");
 
-    private final Boolean type;
+    private final String type;
 
-    MethodType(Boolean typeMethod) {
+    MethodType(String typeMethod) {
         this.type = typeMethod;
-    }
-
-    public Boolean getMethod() {
-        return type;
     }
 }
