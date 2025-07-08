@@ -67,6 +67,11 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          
+          # S'assurer qu'on pousse vers le bon repository
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          
+          # Créer et pousser le tag
           git tag -a "${{ steps.extract_version.outputs.version }}" -m "Release version ${{ steps.extract_version.outputs.version }}"
           git push origin "${{ steps.extract_version.outputs.version }}"
         env:
