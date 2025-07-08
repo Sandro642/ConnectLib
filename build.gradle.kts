@@ -52,8 +52,10 @@ publishing {
     publications {
         register<MavenPublication>("mavenJava") {
             from(components["java"])
-            artifact(tasks.named("sourcesJar").get())
-            artifact(tasks.named("javadocJar").get())
+            // Supprimez ces deux lignes - elles sont automatiquement ajoutées par withSourcesJar() et withJavadocJar()
+            // artifact(tasks.named("sourcesJar").get())
+            // artifact(tasks.named("javadocJar").get())
+
             groupId = project.group.toString()
             artifactId = "ConnectorAPI"
             version = project.version.toString()
@@ -71,7 +73,7 @@ publishing {
                     developer {
                         id.set("sandro642")
                         name.set("Sandro")
-                        email.set("sandro33810@gmail;com")
+                        email.set("sandro33810@gmail.com") // Correction de l'email (point-virgule -> point)
                     }
                 }
                 scm {
