@@ -10,11 +10,28 @@ import fr.sandro642.github.utils.YamlUtils;
 
 import java.util.Map;
 
+/**
+ * JobGetInfos est une classe qui permet de récupérer des informations depuis une API en utilisant des routes définies dans un fichier YAML.
+ * Elle utilise ApiClient pour effectuer les requêtes HTTP et YamlUtils pour lire les routes depuis le fichier YAML.
+ *
+ * @author Sandro642
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class JobGetInfos {
 
+    /**
+     * ApiClient est utilisé pour effectuer les requêtes HTTP vers l'API.
+     * YamlUtils est utilisé pour lire les routes depuis le fichier YAML.
+     */
     private ApiClient apiClient;
     private YamlUtils yamlUtils;
 
+    /**
+     * Constructeur de JobGetInfos qui initialise ApiClient et YamlUtils.
+     * Utilise ResourceType.MAIN_RESOURCES pour le type de ressource par défaut.
+     */
     public JobGetInfos() {
         this.apiClient = new ApiClient(ResourceType.MAIN_RESOURCES);
         this.yamlUtils = ConnectorAPI.YamlUtils();

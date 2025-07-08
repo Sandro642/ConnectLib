@@ -6,8 +6,22 @@ import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 
+/**
+ * Exemple d'utilisation de la librairie ConnectorAPI pour récupérer des informations via une API.
+ *
+ * @author Sandro642
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class ExampleUsage {
 
+    /**
+     * Point d'entrée de l'application.
+     * Initialise le ConnectorAPI et effectue un appel API pour récupérer des informations.
+     *
+     * @param args Arguments de la ligne de commande (non utilisés ici).
+     */
     public static void main(String[] args) {
         // Initialisation du ConnectorAPI
         ConnectorAPI.initialize(ResourceType.MAIN_RESOURCES);

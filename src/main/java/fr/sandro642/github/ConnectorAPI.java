@@ -11,6 +11,11 @@ import fr.sandro642.github.utils.YamlUtils;
  * @author Sandro642
  * @version 1.0
  * @since 1.0
+ * @see ConnectorAPI#initialize(ResourceType)
+ * @see ConnectorAPI#JobGetInfos()
+ * @see ConnectorAPI#Logger()
+ * @see ConnectorAPI#StoreAndRetrieve()
+ * @see ConnectorAPI#YamlUtils()
  */
 
 public class ConnectorAPI {

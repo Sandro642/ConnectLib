@@ -2,7 +2,6 @@ package fr.sandro642.github.utils;
 
 import fr.sandro642.github.ConnectorAPI;
 import fr.sandro642.github.jobs.misc.ResourceType;
-import fr.sandro642.github.jobs.misc.VersionType;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -10,10 +9,21 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 
+/**
+ * YamlUtils est une classe utilitaire pour gérer les opérations liées aux fichiers YAML dans le contexte de l'API Connector.
+ * Elle permet de récupérer des informations depuis un fichier YAML, de générer un template si nécessaire,
+ * et de fournir des routes spécifiques définies dans le fichier YAML.
+ *
+ * @author Sandro642
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class YamlUtils {
 
     /**
      * Récupère l'URL de base depuis le fichier YAML
+     * @return l'URL de base définie dans le fichier YAML, ou null si une erreur se produit
      */
     public String getURL() {
         String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
@@ -29,6 +39,8 @@ public class YamlUtils {
 
     /**
      * Récupère une route spécifique depuis le fichier YAML
+     * @param routeName
+     * @return
      */
     public String getRoute(String routeName) {
         String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
@@ -50,7 +62,8 @@ public class YamlUtils {
     }
 
     /**
-     * Génère le template YAML si le fichier n'existe pas
+     * Génère un template de fichier YAML si le fichier n'existe pas déjà.
+     * @param type
      */
     public void generateTemplateIfNotExists(ResourceType type) {
         String basePath = type.getPath();
