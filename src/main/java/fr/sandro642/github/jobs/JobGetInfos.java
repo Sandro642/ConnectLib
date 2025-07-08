@@ -70,6 +70,18 @@ public class JobGetInfos {
     }
 
     /**
+     * Récupère les routes depuis le fichier YAML et construit l'URL complète avec un corps de requête et des paramètres
+     * @param methodType Type de méthode HTTP (GET, POST)
+     * @param routeName Nom de la route dans le fichier YAML
+     * @param body Corps de la requête pour POST (peut être null pour GET)
+     * @param params Paramètres supplémentaires pour la requête
+     * @return JobGetInfos pour chaînage
+     */
+    public JobGetInfos getRoutesBoth(MethodType methodType, String routeName, Map<String, Object> body, Map<String, Object> params) {
+        return getRoutes(null, methodType, routeName, body, params);
+    }
+
+    /**
      * Récupère les routes depuis le fichier YAML et construit l'URL complète
      * @param versionType Version de l'API (V1_BRANCH, V2_BRANCH)
      * @param methodType Type de méthode HTTP (GET, POST)

@@ -44,7 +44,6 @@ public class YamlUtils {
      */
     public String getRoute(String routeName) {
         String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
-        System.out.println("Test dans getRoutes : " + ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + " YamlPath : " + yamlFilePath);
 
         try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
             Yaml yaml = new Yaml();
