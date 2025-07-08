@@ -22,19 +22,14 @@ import fr.sandro642.github.utils.YamlUtils;
 
 public class ConnectorAPI {
 
-    private Logger logger = new Logger();
-    private StoreAndRetrieve storeAndRetrieve = new StoreAndRetrieve();
-    private YamlUtils yamlUtils = new YamlUtils();
-
-    /**
-     * Création de l'instance de ConnectorAPI.
-     */
-    private static ConnectorAPI instance;
+    private static Logger logger = new Logger();
+    private static StoreAndRetrieve storeAndRetrieve = new StoreAndRetrieve();
+    private static YamlUtils yamlUtils = new YamlUtils();
 
     /**
      * Initialise le ConnectorAPI avec le type de ressource spécifié
      */
-    public void initialize(ResourceType resourceType) {
+    public static void initialize(ResourceType resourceType) {
         logger = new Logger();
         storeAndRetrieve = new StoreAndRetrieve();
         yamlUtils = new YamlUtils();
@@ -54,14 +49,14 @@ public class ConnectorAPI {
     /**
      * Retourne une instance de JobGetInfos pour les opérations API
      */
-    public JobGetInfos JobGetInfos() {
+    public static JobGetInfos JobGetInfos() {
         return new JobGetInfos();
     }
 
     /**
      * Retourne l'instance du Logger
      */
-    public Logger Logger() {
+    public static Logger Logger() {
         if (logger == null) {
             logger = new Logger();
         }
@@ -71,7 +66,7 @@ public class ConnectorAPI {
     /**
      * Retourne l'instance de StoreAndRetrieve
      */
-    public StoreAndRetrieve StoreAndRetrieve() {
+    public static StoreAndRetrieve StoreAndRetrieve() {
         if (storeAndRetrieve == null) {
             storeAndRetrieve = new StoreAndRetrieve();
         }
@@ -81,7 +76,7 @@ public class ConnectorAPI {
     /**
      * Retourne l'instance de YamlUtils
      */
-    public YamlUtils YamlUtils() {
+    public static YamlUtils YamlUtils() {
         if (yamlUtils == null) {
             yamlUtils = new YamlUtils();
         }
@@ -91,7 +86,7 @@ public class ConnectorAPI {
     /**
      * Retourne les énumérations disponibles pour les types de ressources.
      */
-    public ResourceType[] getResourceTypes() {
+    public static ResourceType[] getResourceTypes() {
         return ResourceType.values();
     }
 
@@ -99,24 +94,14 @@ public class ConnectorAPI {
      * Retourne les énumérations disponibles pour les types de versions.
      */
 
-    public VersionType[] getVersionTypes() {
+    public static VersionType[] getVersionTypes() {
         return VersionType.values();
     }
 
     /**
      * Retourne les énumérations disponibles pour les types de méthodes HTTP.
      */
-    public MethodType[] getMethodTypes() {
+    public static MethodType[] getMethodTypes() {
         return MethodType.values();
-    }
-
-    /**
-     * Retourne l'instance unique de ConnectorAPI
-     */
-    public static ConnectorAPI getApi() {
-        if (instance == null) {
-            instance = new ConnectorAPI();
-        }
-        return instance;
     }
 }
