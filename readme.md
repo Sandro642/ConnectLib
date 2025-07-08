@@ -1,6 +1,7 @@
 # 🚀 ConnectorAPI
 
 Bienvenue dans **ConnectorAPI** : la passerelle universelle pour connecter, automatiser et orchestrer vos flux de données !
+Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec ConnectorAPI, c’est comme jouer avec des Lego : simple, intuitif et puissant.
 
 ---
 
