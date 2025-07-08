@@ -37,32 +37,55 @@ tasks.jar {
         attributes["Main-Class"] = "fr.sandro642.github.ConnectorAPI"
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from({
-        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-    })
 }
 
 tasks.test {
     useJUnitPlatform()
 }
 
+java {
+    withSourcesJar() // Ajoute le JAR des sources
+    withJavadocJar() // Ajoute le JAR de Javadoc
+}
+
 publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Sandro642/ConnectorAPI") // Remplacez par votre OWNER/REPO
-            credentials {
-                username = System.getenv("USERNAME")
-                password = System.getenv("TOKEN")
-            }
-        }
-    }
     publications {
         register<MavenPublication>("mavenJava") {
             from(components["java"])
+            artifact(tasks.named("sourcesJar").get())
+            artifact(tasks.named("javadocJar").get())
             groupId = project.group.toString()
             artifactId = "ConnectorAPI"
             version = project.version.toString()
+            pom {
+                name.set("ConnectorAPI")
+                description.set("A library for connecting to APIs")
+                url.set("https://sandro642.github.io/connectorapi")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("sandro642")
+                        name.set("Sandro")
+                        email.set("sandro33810@gmail;com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/sandro642/ConnectorAPI.git")
+                    developerConnection.set("scm:git:ssh://github.com/sandro642/ConnectorAPI.git")
+                    url.set("https://github.com/sandro642/ConnectorAPI")
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "LocalRepo"
+            url = uri(layout.buildDirectory.dir("repo")) // Publie dans build/repo
         }
     }
 }
