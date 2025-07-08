@@ -1,43 +1,47 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Publish Javadoc to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    branches:
+      - main
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  publish-javadoc:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
-          # Upload entire repository
-          path: './javadoc/'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Generate Javadoc
+        run: ./gradlew javadoc
+
+      - name: Clone GitHub Pages repository
+        run: |
+          git clone --depth 1 https://github.com/sandro642/sandro642.github.io.git gh-pages
+          cd gh-pages
+          git checkout main
+
+      - name: Copy Javadoc to connectorapi/javadoc
+        run: |
+          rm -rf gh-pages/connectorapi/javadoc/*
+          mkdir -p gh-pages/connectorapi/javadoc
+          cp -r build/docs/javadoc/* gh-pages/connectorapi/javadoc/
+
+      - name: Commit and push changes
+        run: |
+          cd gh-pages
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add connectorapi/javadoc
+          git commit -m "Update Javadoc for connectorapi" || echo "No changes to commit"
+          git push https://${{ secrets.GH_TOKEN }}@github.com/sandro642/sandro642.github.io.git main
