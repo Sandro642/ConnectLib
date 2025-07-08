@@ -2,6 +2,7 @@ plugins {
     id("java")
     application
     id("org.openjfx.javafxplugin") version "0.0.13"
+    id("maven-publish") // Plugin pour la publication
 }
 
 group = "fr.sandro642.github"
@@ -18,7 +19,6 @@ dependencies {
     implementation("io.projectreactor:reactor-core:3.6.9")
     implementation("org.springframework.boot:spring-boot-starter-webflux:3.2.2")
 
-    // JavaFX (nécessaire si jamais le plugin ne les ajoute pas automatiquement)
     implementation("org.openjfx:javafx-controls:21")
     implementation("org.openjfx:javafx-fxml:21")
 }
@@ -29,14 +29,13 @@ javafx {
 }
 
 application {
-    mainClass.set("fr.sandro642.github.ConnectorAPI") // ta classe principale JavaFX
+    mainClass.set("fr.sandro642.github.ConnectorAPI")
 }
 
 tasks.jar {
     manifest {
         attributes["Main-Class"] = "fr.sandro642.github.ConnectorAPI"
     }
-    // Inclure les dépendances dans le JAR (optionnel si tu veux un "fat JAR")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from({
         configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
@@ -45,4 +44,25 @@ tasks.jar {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sandro642/ConnectorAPI") // Remplacez par votre OWNER/REPO
+            credentials {
+                username = System.getenv("USERNAME")
+                password = System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        register<MavenPublication>("mavenJava") {
+            from(components["java"])
+            groupId = project.group.toString()
+            artifactId = "ConnectorAPI"
+            version = project.version.toString()
+        }
+    }
 }

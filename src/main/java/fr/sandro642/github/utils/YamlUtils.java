@@ -76,13 +76,11 @@ public class YamlUtils {
         if (!file.exists()) {
             String template =
                     "# properties Connector API By Sandro642\n\n" +
-                            "urlPath: \"https://api.mcas-project.systemsolutiongroup.xyz/api/\"\n\n" +
+                            "urlPath: \"http://localhost:8080/api\"\n\n" +
                             "routes:\n" +
-                            "  info: \"/mcas/info/version\"\n" +
-                            "  # addMoney:\n" +
-                            "  #   url: \"/mcas/add/money/user\"\n" +
-                            "  # removeMoney:\n" +
-                            "  #   url: \"/mcas/remove/money/user\"\n";
+                            "  #info: \"/info/version\"\n" +
+                            "  #ping: \"/ping\"\n" +
+                            "  #status: \"/status\"\n";
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write(template);
             } catch (IOException e) {
