@@ -1,51 +1,80 @@
 package fr.sandro642.github;
 
+import fr.sandro642.github.jobs.JobGetInfos;
+import fr.sandro642.github.jobs.misc.ResourceType;
+import fr.sandro642.github.utils.Logger;
+import fr.sandro642.github.utils.StoreAndRetrieve;
+import fr.sandro642.github.utils.YamlUtils;
+
 /**
  * ConnectorAPI est une librairie Java permettant de créer un lien de communication entre son projet Java et une API Rest Fastify.
  * @author Sandro642
  * @version 1.0
  * @since 1.0
- * @see ConnectorAPI#JobTemplate()
- * @see ConnectorAPI#JobGetRoutes()
  */
 
 public class ConnectorAPI {
 
-    // Création de Getter de chaque classe de la librairie
+    private static Logger logger;
+    private static StoreAndRetrieve storeAndRetrieve;
+    private static YamlUtils yamlUtils;
 
     /**
-     * Retourne l'instance de la classe JobTemplate.
-     *
-     * @return L'instance de JobTemplate.
+     * Initialise le ConnectorAPI avec le type de ressource spécifié
      */
-    public static fr.sandro642.github.jobs.JobTemplate JobTemplate() {
-        return fr.sandro642.github.jobs.JobTemplate.getInstance();
+    public static void initialize(ResourceType resourceType) {
+        logger = new Logger();
+        storeAndRetrieve = new StoreAndRetrieve();
+        yamlUtils = new YamlUtils();
+
+        // Génère le template si nécessaire
+        yamlUtils.generateTemplateIfNotExists(resourceType);
+
+        storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
+
+        // Charge l'URL depuis le fichier YAML
+        String baseUrl = yamlUtils.getURL();
+        if (baseUrl != null) {
+            storeAndRetrieve.store.put(storeAndRetrieve.URL_KEY, baseUrl);
+        }
     }
 
     /**
-     * Retourne l'instance de la classe JobGetInfos.
-     *
-     * @return L'instance de JobGetRoutes.
+     * Retourne une instance de JobGetInfos pour les opérations API
      */
-    public static fr.sandro642.github.jobs.JobGetInfos JobGetInfos() {
-        return fr.sandro642.github.jobs.JobGetInfos.getInstance();
+    public static JobGetInfos JobGetInfos() {
+        return new JobGetInfos();
     }
 
     /**
-     * Retourne l'instance de la classe StoreAndretrieve.
-     *
-     * @return L'instance de StoreAndRetrieve.
+     * Retourne l'instance du Logger
      */
-    public static fr.sandro642.github.jobs.misc.StoreAndRetrieve StoreAndRetrieve() {
-        return fr.sandro642.github.jobs.misc.StoreAndRetrieve.getInstance();
+    public static Logger Logger() {
+        if (logger == null) {
+            logger = new Logger();
+        }
+        return logger;
     }
 
     /**
-     * Retourne l'instance de la classe Logger.
-     *
-     * @return L'instance de Logger.
+     * Retourne l'instance de StoreAndRetrieve
      */
-    public static fr.sandro642.github.utils.Logger Logger() {
-        return new fr.sandro642.github.utils.Logger();
+    public static StoreAndRetrieve StoreAndRetrieve() {
+        if (storeAndRetrieve == null) {
+            storeAndRetrieve = new StoreAndRetrieve();
+        }
+        return storeAndRetrieve;
     }
+
+    /**
+     * Retourne l'instance de YamlUtils
+     */
+    public static YamlUtils YamlUtils() {
+        if (yamlUtils == null) {
+            yamlUtils = new YamlUtils();
+        }
+        return yamlUtils;
+    }
+
+
 }

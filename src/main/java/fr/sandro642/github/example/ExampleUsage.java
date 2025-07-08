@@ -1,40 +1,16 @@
-package fr.sandro642.github.test;
+package fr.sandro642.github.example;
 
 import fr.sandro642.github.ConnectorAPI;
-
 import fr.sandro642.github.api.ApiResponse;
 import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
-import fr.sandro642.github.utils.YamlUtils;
-import org.junit.jupiter.api.Test;
 
-/**
- * Main est une classe de test pour vérifier la création du fichier YML et pleins d'autres fonctionnalités de la librairie.
- * @author Sandro642
- * @version 1.0
- * @since 1.0
- */
-
-public class Main {
-
-    @Test
-    public void getUrl() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
-
-        System.out.println(ConnectorAPI.YamlUtils().getURL());
-    }
-
-    @Test
-    public void getRoute() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
-
-        System.out.println(ConnectorAPI.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info"));
-    }
+public class ExampleUsage {
 
     public static void main(String[] args) {
         // Initialisation du ConnectorAPI
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+        ConnectorAPI.initialize(ResourceType.MAIN_RESOURCES);
 
         try {
             // Exemple d'utilisation comme demandé
@@ -59,5 +35,4 @@ public class Main {
             e.printStackTrace();
         }
     }
-
 }
