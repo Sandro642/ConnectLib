@@ -59,4 +59,15 @@ public class Main {
         }
     }
 
+    @Test
+    public void testHorsData() {
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+
+        ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
+                .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example1")
+                .getResponse();
+
+        System.out.println(response.display());
+    }
+
 }

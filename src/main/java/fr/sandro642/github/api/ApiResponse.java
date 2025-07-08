@@ -1,5 +1,6 @@
 package fr.sandro642.github.api;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -16,14 +17,18 @@ public class ApiResponse<T> {
      * msg : Message d'erreur ou de succès.
      * code : Code de statut de la réponse (par exemple, HTTP status code).
      * data : Données spécifiques de la réponse, stockées dans une Map.
+     * extra : Champs supplémentaires qui ne font pas partie des champs standard.
      */
     private boolean err;
     private String msg;
     private int code;
     private Map<String, Object> data;
+    private Map<String, Object> extra;
 
     // Constructeurs
-    public ApiResponse() {}
+    public ApiResponse() {
+        this.extra = new HashMap<>();
+    }
 
     /**
      * Constructeur pour initialiser la réponse d'API avec des valeurs spécifiques.
@@ -37,6 +42,7 @@ public class ApiResponse<T> {
         this.msg = msg;
         this.code = code;
         this.data = data;
+        this.extra = new HashMap<>();
     }
 
     /**
@@ -105,9 +111,15 @@ public class ApiResponse<T> {
 
     /**
      * Récupère une donnée spécifique à partir de la Map 'data' en utilisant une clé.
+     * @deprecated En raison de la nature générique de cette méthode créant des erreurs, il est recommandé d'utiliser les méthodes spécifiques pour chaque type de données. Cette méthode est obsolète et peut être supprimée dans les futures versions.
+     * @see #getSpecDataBoolean(String key)
+     * @see #getSpecDataDouble(String key)
+     * @see #getSpecDataString(String key)
+     * @see #getSpecDataInteger (String key)
      * @param key La clé pour accéder à la donnée.
      * @return La valeur associée à la clé dans la Map 'data'.
      */
+    @Deprecated
     public Object getSpecData(String key) {
         if (data == null) {
             throw new RuntimeException("Le champ 'data' est null.");
@@ -188,16 +200,57 @@ public class ApiResponse<T> {
     }
 
     /**
+     * Récupère une donnée supplémentaire à partir de la Map 'extra' en utilisant une clé.
+     * Cette méthode permet d'accéder à des champs qui ne font pas partie des champs standard (err, msg, code, data).
+     * @param key La clé pour accéder à la donnée supplémentaire.
+     * @return La valeur associée à la clé dans la Map 'extra', ou null si la clé n'existe pas.
+     */
+    public Object getExtra(String key) {
+        if (extra == null) {
+            return null;
+        }
+        return extra.get(key);
+    }
+
+    /**
+     * Définit une donnée supplémentaire dans la Map 'extra'.
+     * @param key La clé pour la donnée supplémentaire.
+     * @param value La valeur à associer à la clé.
+     */
+    public void setExtra(String key, Object value) {
+        if (extra == null) {
+            extra = new HashMap<>();
+        }
+        extra.put(key, value);
+    }
+
+    /**
+     * Récupère toutes les données supplémentaires.
+     * @return La Map contenant toutes les données supplémentaires.
+     */
+    public Map<String, Object> getExtraData() {
+        return extra;
+    }
+
+    /**
+     * Définit toutes les données supplémentaires.
+     * @param extra La Map contenant les données supplémentaires.
+     */
+    public void setExtraData(Map<String, Object> extra) {
+        this.extra = extra;
+    }
+
+    /**
      * Récupère une donnée spécifique à partir de la Map 'data' en utilisant une clé et la convertit en type Long.
      * @return La valeur associée à la clé dans la Map 'data', convertie en Long.
      */
-    @Override
-    public String toString() {
+    public String display() {
         return "ApiResponse{" +
                 "err=" + err +
                 ", msg='" + msg + '\'' +
                 ", code=" + code +
                 ", data=" + data +
+                ", extra=" + extra +
                 '}';
     }
 }
