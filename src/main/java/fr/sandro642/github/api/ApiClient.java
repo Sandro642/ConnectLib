@@ -25,7 +25,7 @@ public class ApiClient {
      */
     private final WebClient webClient;
     private final AtomicReference<ApiResponse<Void>> lastResponse = new AtomicReference<>();
-    private final Logger logger = ConnectorAPI.Logger();
+    private final Logger logger = new Logger();
 
     /**
      * Constructeur de ApiClient qui initialise WebClient avec l'URL de base.
