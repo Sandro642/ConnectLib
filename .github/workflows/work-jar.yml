@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/hook
 
 permissions:
   contents: write
