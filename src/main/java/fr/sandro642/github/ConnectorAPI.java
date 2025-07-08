@@ -1,7 +1,9 @@
 package fr.sandro642.github;
 
 import fr.sandro642.github.jobs.JobGetInfos;
+import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
+import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.Logger;
 import fr.sandro642.github.utils.StoreAndRetrieve;
 import fr.sandro642.github.utils.YamlUtils;
@@ -20,14 +22,19 @@ import fr.sandro642.github.utils.YamlUtils;
 
 public class ConnectorAPI {
 
-    private static Logger logger;
-    private static StoreAndRetrieve storeAndRetrieve;
-    private static YamlUtils yamlUtils;
+    private Logger logger = new Logger();
+    private StoreAndRetrieve storeAndRetrieve = new StoreAndRetrieve();
+    private YamlUtils yamlUtils = new YamlUtils();
+
+    /**
+     * Création de l'instance de ConnectorAPI.
+     */
+    private static ConnectorAPI instance;
 
     /**
      * Initialise le ConnectorAPI avec le type de ressource spécifié
      */
-    public static void initialize(ResourceType resourceType) {
+    public void initialize(ResourceType resourceType) {
         logger = new Logger();
         storeAndRetrieve = new StoreAndRetrieve();
         yamlUtils = new YamlUtils();
@@ -47,14 +54,14 @@ public class ConnectorAPI {
     /**
      * Retourne une instance de JobGetInfos pour les opérations API
      */
-    public static JobGetInfos JobGetInfos() {
+    public JobGetInfos JobGetInfos() {
         return new JobGetInfos();
     }
 
     /**
      * Retourne l'instance du Logger
      */
-    public static Logger Logger() {
+    public Logger Logger() {
         if (logger == null) {
             logger = new Logger();
         }
@@ -64,7 +71,7 @@ public class ConnectorAPI {
     /**
      * Retourne l'instance de StoreAndRetrieve
      */
-    public static StoreAndRetrieve StoreAndRetrieve() {
+    public StoreAndRetrieve StoreAndRetrieve() {
         if (storeAndRetrieve == null) {
             storeAndRetrieve = new StoreAndRetrieve();
         }
@@ -74,12 +81,42 @@ public class ConnectorAPI {
     /**
      * Retourne l'instance de YamlUtils
      */
-    public static YamlUtils YamlUtils() {
+    public YamlUtils YamlUtils() {
         if (yamlUtils == null) {
             yamlUtils = new YamlUtils();
         }
         return yamlUtils;
     }
 
+    /**
+     * Retourne les énumérations disponibles pour les types de ressources.
+     */
+    public ResourceType[] getResourceTypes() {
+        return ResourceType.values();
+    }
 
+    /**
+     * Retourne les énumérations disponibles pour les types de versions.
+     */
+
+    public VersionType[] getVersionTypes() {
+        return VersionType.values();
+    }
+
+    /**
+     * Retourne les énumérations disponibles pour les types de méthodes HTTP.
+     */
+    public MethodType[] getMethodTypes() {
+        return MethodType.values();
+    }
+
+    /**
+     * Retourne l'instance unique de ConnectorAPI
+     */
+    public static ConnectorAPI getApi() {
+        if (instance == null) {
+            instance = new ConnectorAPI();
+        }
+        return instance;
+    }
 }
