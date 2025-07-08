@@ -1,0 +1,9 @@
+# properties Connector API By Sandro642
+
+urlPath: "https://api.mcas-project.systemsolutiongroup.xyz/"
+
+routes:
+
+  info: "/api/mcas/info/version"
+  # removeMoney:
+  #   url: "v2/remove/money/user"
