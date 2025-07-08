@@ -22,30 +22,18 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Publish Maven artifacts
-        run: ./gradlew publishToMavenLocal
+      - name: Publish Maven artifacts to local repo
+        run: ./gradlew publish
         env:
           GROUP_ID: fr.sandro642.github
           ARTIFACT_ID: ConnectorAPI
           VERSION: 0.1.0
 
-      - name: Clone GitHub Pages repository
-        run: |
-          git clone --depth 1 https://github.com/sandro642/sandro642.github.io.git gh-pages
-          cd gh-pages
-          git checkout main
-
-      - name: Copy Maven artifacts to connectorapi/jar
-        run: |
-          rm -rf gh-pages/connectorapi/jar/*
-          mkdir -p gh-pages/connectorapi/jar/fr/sandro642/github/ConnectorAPI/0.1.0
-          cp -r ~/.m2/repository/fr/sandro642/github/ConnectorAPI/0.1.0/* gh-pages/connectorapi/jar/fr/sandro642/github/ConnectorAPI/0.1.0/
-
-      - name: Commit and push changes
-        run: |
-          cd gh-pages
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add connectorapi/jar
-          git commit -m "Update JAR and POM for ConnectorAPI" || echo "No changes to commit"
-          git push https://${{ secrets.GH_TOKEN }}@github.com/sandro642/sandro642.github.io.git main
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          repository-name: sandro642/sandro642.github.io
+          branch: main
+          folder: build/repo
+          target-folder: connectorapi/jar
