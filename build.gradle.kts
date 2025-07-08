@@ -59,9 +59,6 @@ publishing {
     publications {
         register<MavenPublication>("mavenJava") {
             from(components["java"])
-            // Supprimez ces deux lignes - elles sont automatiquement ajoutées par withSourcesJar() et withJavadocJar()
-            // artifact(tasks.named("sourcesJar").get())
-            // artifact(tasks.named("javadocJar").get())
 
             groupId = project.group.toString()
             artifactId = "ConnectorAPI"
