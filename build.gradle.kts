@@ -50,7 +50,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/sandro642/ConnectorAPI") // Remplacez par votre OWNER/REPO
+            url = uri("https://maven.pkg.github.com/Sandro642/ConnectorAPI") // Remplacez par votre OWNER/REPO
             credentials {
                 username = System.getenv("USERNAME")
                 password = System.getenv("TOKEN")
