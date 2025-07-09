@@ -5,9 +5,9 @@ Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec Con
 
 ---
 ```java
-Support Lib 23 | Future 24...
+Support Lib 23 | Future 24
 
-Support Minecraft 1.8.0
+Support Minecraft 1.8
 ```
 ---
 
