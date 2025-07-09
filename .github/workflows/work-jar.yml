@@ -46,14 +46,34 @@ jobs:
           GROUP_ID: fr.sandro642.github
           ARTIFACT_ID: ConnectorAPI
           VERSION: ${{ steps.extract_version.outputs.version }}
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Checkout target repository
+        uses: actions/checkout@v4
         with:
+          repository: sandro642/sandro642.github.io
           token: ${{ secrets.GH_TOKEN }}
-          repository-name: sandro642/sandro642.github.io
-          branch: main
-          folder: build/repo
-          target-folder: connectorapi/jar
+          path: target-repo
+      - name: Clean existing version folder
+        run: |
+          if [ -d "target-repo/connectorapi/jar" ]; then
+            echo "Cleaning existing connectorapi/jar folder..."
+            rm -rf target-repo/connectorapi/jar
+          fi
+          mkdir -p target-repo/connectorapi/jar
+      - name: Copy new artifacts
+        run: |
+          cp -r build/repo/* target-repo/connectorapi/jar/
+      - name: Deploy to GitHub Pages
+        run: |
+          cd target-repo
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update ConnectorAPI artifacts for version ${{ steps.extract_version.outputs.version }}"
+            git push
+          fi
       - name: Create and push Git tag (with override)
         run: |
           git config --local user.email "action@github.com"
