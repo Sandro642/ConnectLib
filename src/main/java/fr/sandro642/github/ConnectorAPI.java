@@ -2,13 +2,10 @@ package fr.sandro642.github;
 
 import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.jobs.JobGetInfos;
-import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
-import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.Logger;
 import fr.sandro642.github.utils.StoreAndRetrieve;
 import fr.sandro642.github.utils.YamlUtils;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * ConnectorAPI est une librairie Java permettant de créer un lien de communication entre son projet Java et une API Rest Fastify.
@@ -89,7 +86,7 @@ public class ConnectorAPI {
      * Retourne une instance de MCSupport si le projet est un projet Minecraft
      * @return MCSupport ou null si ce n'est pas un projet Minecraft
      */
-    public static @Nullable MCSupport MCSupport() {
+    public static MCSupport MCSupport() {
         if (MCSupport().isMCProject()) {
             return new MCSupport();
         } else {
