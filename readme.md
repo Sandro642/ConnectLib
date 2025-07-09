@@ -7,7 +7,10 @@ Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec Con
 ```java
 Support Lib 23 | Future 24
 
-Support Minecraft 1.8
+Hook -----------------------|
+ - Support Minecraft 1.8
+
+ - Comming Soon.
 ```
 ---
 
