@@ -32,9 +32,15 @@ public class ApiClient {
      * @param resourceType Type de ressource (peut être utilisé pour des configurations spécifiques).
      */
     public ApiClient(ResourceType resourceType) {
-        String baseUrl = (String) ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY);
+        String baseUrl;
+        if (resourceType == ResourceType.MC_RESOURCES) {
+            baseUrl = ConnectorAPI.YamlUtils().getURL();
+        } else {
+            baseUrl = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY).toString();
+        }
+
         if (baseUrl == null) {
-            throw new RuntimeException("URL de base non trouvée. Assurez-vous d'avoir initialisé ConnectorAPI.");
+            throw new RuntimeException("URL de base non trouvée. Assurez-vous d'avoir initialisé ConnectorAPI. ");
         }
 
         this.webClient = WebClient.builder()

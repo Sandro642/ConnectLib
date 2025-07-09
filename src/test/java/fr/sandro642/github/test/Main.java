@@ -22,13 +22,21 @@ public class Main {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
         System.out.println(ConnectorAPI.YamlUtils().getURL());
+
+
+
+    }
+
+    @Test
+    public void outGetURL() {
+        System.out.println(ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY));
     }
 
     @Test
     public void getRoute() {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
-        System.out.println(ConnectorAPI.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info"));
+
     }
 
     public static void main(String[] args) {
