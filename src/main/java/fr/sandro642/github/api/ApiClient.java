@@ -1,7 +1,6 @@
 package fr.sandro642.github.api;
 
 import fr.sandro642.github.ConnectorAPI;
-import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.utils.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.reactive.function.client.WebClient;
