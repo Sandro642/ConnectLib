@@ -250,7 +250,6 @@ public class ApiResponse<T> {
                 ", msg='" + msg + '\'' +
                 ", code=" + code +
                 ", data=" + data +
-                ", extra=" + extra +
                 '}';
     }
 }

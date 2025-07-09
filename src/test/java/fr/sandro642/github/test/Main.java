@@ -54,6 +54,8 @@ public class Main {
             System.out.println("Code: " + response.getCode());
             System.out.println("Erreur: " + response.isErr());
 
+            System.out.println(response.display());
+
             // Exemple avec des données spécifiques (si elles existent)
             try {
                 System.out.println("Valeur spécifique: " + response.getSpecData("version"));

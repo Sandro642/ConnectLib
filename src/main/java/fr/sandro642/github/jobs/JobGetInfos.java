@@ -33,7 +33,7 @@ public class JobGetInfos {
      * Utilise ResourceType.MAIN_RESOURCES pour le type de ressource par défaut.
      */
     public JobGetInfos() {
-        this.apiClient = new ApiClient(ResourceType.MAIN_RESOURCES);
+        this.apiClient = new ApiClient();
         this.yamlUtils = ConnectorAPI.YamlUtils();
     }
 
