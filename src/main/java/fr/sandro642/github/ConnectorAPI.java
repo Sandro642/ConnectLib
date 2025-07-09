@@ -4,6 +4,7 @@ import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.utils.Logger;
+import fr.sandro642.github.utils.SerialMap;
 import fr.sandro642.github.utils.StoreAndRetrieve;
 import fr.sandro642.github.utils.YamlUtils;
 
@@ -88,5 +89,13 @@ public class ConnectorAPI {
      */
     public static MCSupport MCSupport() {
         return MCSupport.getInstance();
+    }
+
+    /**
+     * Retourne une instance de SerialMap pour la gestion des données sérialisées
+     * @return SerialMap
+     */
+    public static SerialMap SerialMap() {
+        return SerialMap.getInstance();
     }
 }
