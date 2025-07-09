@@ -4,6 +4,12 @@ Bienvenue dans **ConnectorAPI** : la passerelle universelle pour connecter, auto
 Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec ConnectorAPI, c’est comme jouer avec des Lego : simple, intuitif et puissant.
 
 ---
+```java
+Support Lib 23 | Future 24...
+
+Support Minecraft 1.8.0
+```
+---
 
 ## 🌟 Pourquoi ConnectorAPI ?
 

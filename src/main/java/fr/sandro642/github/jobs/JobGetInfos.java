@@ -25,8 +25,8 @@ public class JobGetInfos {
      * ApiClient est utilisé pour effectuer les requêtes HTTP vers l'API.
      * YamlUtils est utilisé pour lire les routes depuis le fichier YAML.
      */
-    private ApiClient apiClient;
-    private YamlUtils yamlUtils;
+    private final ApiClient apiClient;
+    private final YamlUtils yamlUtils;
 
     /**
      * Constructeur de JobGetInfos qui initialise ApiClient et YamlUtils.
@@ -135,7 +135,7 @@ public class JobGetInfos {
                     String paramKey = "{" + entry.getKey() + "}";
                     String paramValue = entry.getValue().toString();
 
-                    // Remplace tous les occurrences du paramètre dans la route
+                    // Remplace toutes les occurrences du paramètre dans la route
                     fullRoute = fullRoute.replace(paramKey, paramValue);
                 }
             }
