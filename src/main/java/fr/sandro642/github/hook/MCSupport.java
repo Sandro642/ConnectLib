@@ -58,12 +58,12 @@ public class MCSupport {
             throw new IllegalArgumentException("Plugin cannot be null.");
         }
 
-        if (isMCProject()) {
+        //if (isMCProject()) {
             this.pluginSingleton = plugin;
             return this.pluginSingleton;
-        } else {
-            throw new IllegalStateException("This method can only be called in a Minecraft project.");
-        }
+        //} else {
+        //    throw new IllegalStateException("This method can only be called in a Minecraft project.");
+        //}
     }
 
     /**
@@ -74,9 +74,9 @@ public class MCSupport {
      * @throws IllegalStateException Si la méthode n'est pas appelée dans un projet Minecraft ou si le plugin n'est pas initialisé.
      */
     public String getPluginPath() {
-        if (!isMCProject()) {
-            throw new IllegalStateException("This method can only be called in a Minecraft project.");
-        }
+        //if (!isMCProject()) {
+            //throw new IllegalStateException("This method can only be called in a Minecraft project.");
+        //}
 
         if (pluginSingleton == null) {
             throw new IllegalStateException("Plugin variable is not set. Please call setPluginVariable first.");
