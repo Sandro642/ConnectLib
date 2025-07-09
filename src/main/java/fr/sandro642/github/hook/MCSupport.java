@@ -33,7 +33,7 @@ public class MCSupport {
      * @param plugin Le plugin Minecraft à définir.
      * @return L'instance du plugin définie.
      */
-    private Plugin setPluginVariable(Plugin plugin) {
+    public Plugin setPluginVariable(Plugin plugin) {
         if (isMCProject()) {
             return pluginSingleton = plugin;
         } else {
@@ -46,7 +46,7 @@ public class MCSupport {
      * Elle doit être appelée dans un projet Minecraft pour récupérer le chemin du dossier de données du plugin.
      * @return Le chemin du dossier de données du plugin.
      */
-    private String getPluginPath() {
+    public String getPluginPath() {
         if (isMCProject()) {
             if (pluginSingleton == null) {
                 throw new IllegalStateException("Plugin variable is not set. Please call setPluginVariable first.");
