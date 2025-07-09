@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "fr.sandro642.github"
-version = "0.1.3.1-Alpha"
+version = "0.1.3.2-Alpha"
 
 // Ajoutez cette tâche à votre build.gradle.kts
 tasks.register("printVersion") {
