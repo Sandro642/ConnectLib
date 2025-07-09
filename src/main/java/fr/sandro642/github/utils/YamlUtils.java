@@ -1,6 +1,7 @@
 package fr.sandro642.github.utils;
 
 import fr.sandro642.github.ConnectorAPI;
+import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import org.yaml.snakeyaml.Yaml;
 
@@ -65,7 +66,14 @@ public class YamlUtils {
      * @param type
      */
     public void generateTemplateIfNotExists(ResourceType type) {
-        String basePath = type.getPath();
+        String basePath;
+
+        if (type == ResourceType.MC_RESOURCES) {
+            basePath = MCSupport.getInstance().getPluginPath();
+        } else {
+            basePath = type.getPath();
+        }
+
         File directory = new File(basePath);
         if (!directory.exists()) {
             directory.mkdirs();
