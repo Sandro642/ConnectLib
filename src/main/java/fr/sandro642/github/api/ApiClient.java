@@ -30,7 +30,7 @@ public class ApiClient {
      * Constructeur de ApiClient qui initialise WebClient avec l'URL de base.
      */
     public ApiClient() {
-        String baseUrl = ConnectorAPI.YamlUtils().getURL();
+        String baseUrl = (String) ConnectorAPI.StoreAndRetrieve().get(ConnectorAPI.StoreAndRetrieve().URL_KEY);
 
         if (baseUrl == null) {
             throw new RuntimeException("URL de base non trouvée. Assurez-vous d'avoir initialisé ConnectorAPI. ");
