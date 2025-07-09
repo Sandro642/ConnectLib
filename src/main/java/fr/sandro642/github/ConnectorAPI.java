@@ -87,11 +87,6 @@ public class ConnectorAPI {
      * @return MCSupport ou null si ce n'est pas un projet Minecraft
      */
     public static MCSupport MCSupport() {
-        if (MCSupport().isMCProject()) {
-            return new MCSupport();
-        } else {
-            logger.ERROR("MCSupport ne peut être utilisé que dans un projet Minecraft.");
-            return null;
-        }
+        return new MCSupport();
     }
 }

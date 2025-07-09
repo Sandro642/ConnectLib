@@ -12,6 +12,11 @@ import org.bukkit.plugin.Plugin;
 public class MCSupport {
 
     /**
+     * Création de l'instance unique de MCSupport.
+     */
+    private static MCSupport instance;
+
+    /**
      * Instance unique du plugin Minecraft.
      * Utilisée pour stocker la variable du plugin Minecraft.
      */
@@ -57,4 +62,14 @@ public class MCSupport {
         }
     }
 
+    /**
+     * Méthode permettant d'obtenir l'instance unique de MCSupport.
+     * @return L'instance unique de MCSupport.
+     */
+    public static MCSupport getInstance() {
+        if (instance == null) {
+            instance = new MCSupport();
+        }
+        return instance;
+    }
 }
