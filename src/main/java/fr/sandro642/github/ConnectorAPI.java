@@ -87,6 +87,6 @@ public class ConnectorAPI {
      * @return MCSupport ou null si ce n'est pas un projet Minecraft
      */
     public static MCSupport MCSupport() {
-        return new MCSupport();
+        return MCSupport.getInstance();
     }
 }

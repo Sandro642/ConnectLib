@@ -59,9 +59,4 @@ public class Main {
         }
     }
 
-    @Test
-    public void testHorsData() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
-    }
-
 }

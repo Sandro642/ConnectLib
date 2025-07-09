@@ -6,7 +6,9 @@ import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -132,7 +134,7 @@ public class ExampleUsage {
             complexBody.put("nestedObject", subObject);
 
             // Array
-            java.util.List<String> arrayValue = java.util.Arrays.asList("item1", "item2", "item3");
+            List<String> arrayValue = Arrays.asList("item1", "item2", "item3");
             complexBody.put("arrayValue", arrayValue);
 
             ApiResponse<Void> complexResponse = ConnectorAPI.JobGetInfos()
