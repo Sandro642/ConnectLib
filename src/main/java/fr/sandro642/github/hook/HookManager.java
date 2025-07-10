@@ -32,6 +32,15 @@ public class HookManager {
     private ResourceType usedType;
 
     /**
+     * Obtient le type de ressource utilisé par le HookManager.
+     *
+     * @return Le type de ressource utilisé.
+     */
+    public ResourceType getUsedType() {
+        return usedType;
+    }
+
+    /**
      * Méthode pour choisir le type de ressource utilisé par le HookManager.
      *
      * @param type
