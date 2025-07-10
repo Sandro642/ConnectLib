@@ -2,8 +2,8 @@ name: Publish JAR to GitHub Pages
 on:
   push:
     branches:
-      - main
       - feature/hook
+      - feature/serializer
 permissions:
   contents: write
   pages: write
