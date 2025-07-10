@@ -1,11 +1,9 @@
 package fr.sandro642.github;
 
-import fr.sandro642.github.hook.HookManager;
 import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.utils.Logger;
-import fr.sandro642.github.utils.SerialMap;
 import fr.sandro642.github.utils.StoreAndRetrieve;
 import fr.sandro642.github.utils.YamlUtils;
 
@@ -35,8 +33,6 @@ public class ConnectorAPI {
         storeAndRetrieve = new StoreAndRetrieve();
         yamlUtils = new YamlUtils();
 
-        HookManager().TypeManagerHook(resourceType);
-
         // Génère le template si nécessaire
         yamlUtils.generateTemplateIfNotExists(resourceType);
 
@@ -46,15 +42,11 @@ public class ConnectorAPI {
             storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
         }
 
-        //ConnectorAPI.HookManager().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
-
         // Charge l'URL depuis le fichier YAML
         String baseUrl = yamlUtils.getURL();
         if (baseUrl != null) {
             storeAndRetrieve.store.put(storeAndRetrieve.URL_KEY, baseUrl);
         }
-
-        //ConnectorAPI.HookManager().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
     }
 
     /**
@@ -100,17 +92,5 @@ public class ConnectorAPI {
      */
     public static MCSupport MCSupport() {
         return MCSupport.getInstance();
-    }
-
-    /**
-     * Retourne une instance de SerialMap pour la gestion des données sérialisées
-     * @return SerialMap
-     */
-    public static SerialMap SerialMap() {
-        return SerialMap.getInstance();
-    }
-
-    public static HookManager HookManager() {
-        return HookManager.getInstance();
     }
 }

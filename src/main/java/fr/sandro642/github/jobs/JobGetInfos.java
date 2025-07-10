@@ -7,7 +7,6 @@ import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.YamlUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +29,6 @@ public class JobGetInfos {
 
     /**
      * Constructeur de JobGetInfos qui initialise ApiClient et YamlUtils.
-     * Utilise ResourceType.MAIN_RESOURCES pour le type de ressource par défaut.
      */
     public JobGetInfos() {
         this.apiClient = new ApiClient();
@@ -153,8 +151,6 @@ public class JobGetInfos {
                 ConnectorAPI.StoreAndRetrieve().store.put("currentParams", params);
             }
 
-            //ConnectorAPI.HookManager().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
-
             ConnectorAPI.Logger().INFO("Route construite: " + fullRoute);
 
         } catch (Exception e) {
@@ -171,7 +167,6 @@ public class JobGetInfos {
      */
     public ApiResponse<Void> getResponse() {
         try {
-            //HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
 
             String route = (String) ConnectorAPI.StoreAndRetrieve().store.get("currentRoute");
             MethodType method = (MethodType) ConnectorAPI.StoreAndRetrieve().store.get("currentMethod");
@@ -203,8 +198,6 @@ public class JobGetInfos {
             ConnectorAPI.StoreAndRetrieve().store.remove("currentRoute");
             ConnectorAPI.StoreAndRetrieve().store.remove("currentMethod");
             ConnectorAPI.StoreAndRetrieve().store.remove("currentBody");
-
-            //ConnectorAPI.HookManager().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
 
             return response;
 

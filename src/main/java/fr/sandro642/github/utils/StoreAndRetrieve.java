@@ -1,8 +1,6 @@
 package fr.sandro642.github.utils;
 
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Map;
 
 /**
  * StoreAndRetrieve est une classe utilitaire pour stocker et récupérer des valeurs associées à des clés.

@@ -7,7 +7,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,8 +30,6 @@ public class ApiClient {
      * Constructeur de ApiClient qui initialise WebClient avec l'URL de base.
      */
     public ApiClient() {
-        //HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
-
         String baseUrl = (String) ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY);
 
         if (baseUrl == null) {
