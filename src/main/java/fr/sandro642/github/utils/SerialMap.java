@@ -39,7 +39,7 @@ public class SerialMap {
             File file;
 
             if (plugin != null) {
-                file = new File(plugin.getDataFolder() + fileName);
+                file = new File(plugin.getDataFolder(), fileName);
             } else {
                 file = new File(fileName);
             }
@@ -68,7 +68,7 @@ public class SerialMap {
             File file;
 
             if (plugin != null) {
-                file = new File(plugin.getDataFolder() + fileName);
+                file = new File(plugin.getDataFolder(), fileName);
             } else {
                 file = new File(fileName);
             }
