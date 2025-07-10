@@ -26,26 +26,8 @@ public class Main {
         System.out.println(ConnectorAPI.YamlUtils().getURL());
     }
 
-    @Test
-    public void outGetURL() {
-        HashMap<String, Object> data = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
-
-
-        //System.out.println(data.get(ConnectorAPI.StoreAndRetrieve().URL_KEY));
-
-        System.out.println(ConnectorAPI.YamlUtils().getURL());
-    }
-
-    @Test
-    public void getRoute() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
-
-
-    }
-
     public static void main(String[] args) {
-        // Initialisation du ConnectorAPI
-        //ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
         try {
             // Exemple d'utilisation comme demandé
@@ -71,32 +53,6 @@ public class Main {
             System.err.println("Erreur lors de l'appel API: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    @Test
-    public void saveDataMap() {
-        HashMap<String, Object> data = new HashMap<>();
-
-        data.put("version", "1.0.0");
-        data.put("status", "ok");
-
-        ConnectorAPI.HookManager().saveData(data, "test_map.yml");
-    }
-
-    @Test
-    public void loadDataMap() {
-        HashMap<String, Object> data = ConnectorAPI.HookManager().loadData("test_map.yml");
-
-        System.out.println("data version: " + data.get("version"));
-    }
-
-    @Test
-    public void resetDataMap() {
-        HashMap<String, Object> data = ConnectorAPI.HookManager().loadData("test_map.yml");
-
-        data.clear();
-
-        ConnectorAPI.HookManager().saveData(data, "test_map.yml");
     }
 
 }
