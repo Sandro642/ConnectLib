@@ -59,31 +59,13 @@ public class HookManager {
      * @param fileName
      */
     public void saveData(HashMap<String, Object> map, String fileName) {
-        // DEBUG: Voir ce qui est passé à la sauvegarde
-        System.out.println("=== DÉBUT SAUVEGARDE ===");
-        System.out.println("fileName: " + fileName);
-        System.out.println("map reçue: " + map);
-        System.out.println("map.size(): " + map.size());
-        System.out.println("map.keySet(): " + map.keySet());
-
-        // Détailler chaque entrée
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            System.out.println("Clé: '" + key + "' -> Valeur: '" + value + "' (type: " +
-                    (value != null ? value.getClass().getSimpleName() : "null") + ")");
-        }
-
         if (usedType == ResourceType.MC_RESOURCES) {
             Plugin pluginTarget = MCSupport.getInstance().getPlugin();
-            System.out.println("usedType: " + usedType + " | pluginTarget: " + pluginTarget);
 
             SerialMap.getInstance().saveData(map, fileName, pluginTarget);
         } else {
             SerialMap.getInstance().saveData(map, fileName, null);
         }
-
-        System.out.println("=== FIN SAUVEGARDE ===");
     }
 
     /**
@@ -96,23 +78,11 @@ public class HookManager {
         if (usedType == ResourceType.MC_RESOURCES) {
             Plugin pluginTarget = MCSupport.getInstance().getPlugin();
 
-            System.out.println("usedType: " + usedType + " | pluginTarget: " + pluginTarget);
-            System.out.println("fileName demandé: " + fileName);
-
             HashMap<String, Object> result = SerialMap.getInstance().loadData(fileName, pluginTarget);
-
-            // Debug: afficher le contenu récupéré
-            System.out.println("Données récupérées: " + result);
-            System.out.println("Taille de la HashMap: " + result.size());
-            System.out.println("Clés disponibles: " + result.keySet());
 
             return result;
         } else {
             HashMap<String, Object> result = SerialMap.getInstance().loadData(fileName);
-
-            // Debug: afficher le contenu récupéré
-            System.out.println("Données récupérées (sans plugin): " + result);
-            System.out.println("Taille de la HashMap: " + result.size());
 
             return result;
         }
