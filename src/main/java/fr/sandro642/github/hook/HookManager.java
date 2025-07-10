@@ -5,6 +5,7 @@ import fr.sandro642.github.utils.SerialMap;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Classe HookManager pour gérer les hooks dans le projet.
@@ -58,13 +59,31 @@ public class HookManager {
      * @param fileName
      */
     public void saveData(HashMap<String, Object> map, String fileName) {
+        // DEBUG: Voir ce qui est passé à la sauvegarde
+        System.out.println("=== DÉBUT SAUVEGARDE ===");
+        System.out.println("fileName: " + fileName);
+        System.out.println("map reçue: " + map);
+        System.out.println("map.size(): " + map.size());
+        System.out.println("map.keySet(): " + map.keySet());
+
+        // Détailler chaque entrée
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            System.out.println("Clé: '" + key + "' -> Valeur: '" + value + "' (type: " +
+                    (value != null ? value.getClass().getSimpleName() : "null") + ")");
+        }
+
         if (usedType == ResourceType.MC_RESOURCES) {
             Plugin pluginTarget = MCSupport.getInstance().getPlugin();
+            System.out.println("usedType: " + usedType + " | pluginTarget: " + pluginTarget);
 
             SerialMap.getInstance().saveData(map, fileName, pluginTarget);
         } else {
-            SerialMap.getInstance().saveData(map, fileName);
+            SerialMap.getInstance().saveData(map, fileName, null);
         }
+
+        System.out.println("=== FIN SAUVEGARDE ===");
     }
 
     /**

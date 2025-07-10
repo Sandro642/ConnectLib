@@ -5,6 +5,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Classe utilitaire pour gérer les cartes de sérialisation.
@@ -44,17 +45,40 @@ public class SerialMap {
                 file = new File(fileName);
             }
 
+            System.out.println("=== SAUVEGARDE SERIALMAP ===");
+            System.out.println("Fichier destination: " + file.getAbsolutePath());
+            System.out.println("Map à sauvegarder: " + map);
+            System.out.println("Taille de la map: " + map.size());
+
+            // Vérifier le contenu avant sauvegarde
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                System.out.println("Avant sauvegarde - Clé: '" + entry.getKey() +
+                        "' -> Valeur: '" + entry.getValue() + "'");
+            }
+
             ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file));
             outputStream.writeObject(map);
             outputStream.close();
-            //ConnectorAPI.Logger().INFO("✓ Sauvegarde réussie dans " + fileName);
-        } catch (Exception e) {
-            ConnectorAPI.Logger().ERROR("✗ Erreur sauvegarde " + fileName);
-        }
-    }
 
-    public void saveData(HashMap<String, Object> map, String FileName) {
-        saveData(map, FileName, null);
+            System.out.println("✓ Sauvegarde réussie dans " + fileName);
+            System.out.println("Taille du fichier créé: " + file.length() + " bytes");
+
+            // Test de relecture immédiate pour vérifier
+            System.out.println("=== TEST DE RELECTURE IMMÉDIATE ===");
+            ObjectInputStream testInput = new ObjectInputStream(new FileInputStream(file));
+            HashMap<String, Object> testMap = (HashMap<String, Object>) testInput.readObject();
+            testInput.close();
+
+            System.out.println("Données relues immédiatement: " + testMap);
+            for (Map.Entry<String, Object> entry : testMap.entrySet()) {
+                System.out.println("Après relecture - Clé: '" + entry.getKey() +
+                        "' -> Valeur: '" + entry.getValue() + "'");
+            }
+
+        } catch (Exception e) {
+            System.out.println("✗ Erreur sauvegarde " + fileName);
+            e.printStackTrace();
+        }
     }
 
     /**
