@@ -96,7 +96,7 @@ public class Main {
 
         data.clear();
 
-        ConnectorAPI.SerialMap().saveData(data, "test_map.yml");
+        ConnectorAPI.HookManager().saveData(data, "test_map.yml");
     }
 
 }
