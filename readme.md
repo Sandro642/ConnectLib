@@ -6,7 +6,7 @@ Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec Con
 ---
 
 ```java
-Stable Version : 0.1.2
+Stable Version : 0.1.5-STABLE
 ```
 
 ---
@@ -82,7 +82,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectorAPI:0.1.1")
+    implementation("fr.sandro642.github:ConnectorAPI:0.1.5-STABLE")
     
 }
 
