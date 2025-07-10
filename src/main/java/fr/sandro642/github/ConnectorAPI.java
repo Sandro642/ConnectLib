@@ -17,6 +17,7 @@ import fr.sandro642.github.utils.YamlUtils;
  * @see ConnectorAPI#Logger()
  * @see ConnectorAPI#StoreAndRetrieve()
  * @see ConnectorAPI#YamlUtils()
+ * @see ConnectorAPI#MCSupport()
  */
 
 public class ConnectorAPI {

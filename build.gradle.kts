@@ -7,7 +7,7 @@ plugins {
 
 
 group = "fr.sandro642.github"
-version = "0.1.3.17.1-SNAPSHOT" // Version de votre projet
+version = "0.1.4-STABLE" // Version de votre projet
 
 
 // Ajoutez cette tâche à votre build.gradle.kts
