@@ -14,7 +14,7 @@ public enum ResourceType {
      */
     MAIN_RESOURCES("src/main/resources"),
     TEST_RESOURCES("src/test/resources"),
-    MC_RESOURCES("Arrive prochainement");
+    MC_RESOURCES("");
 
 
     /**

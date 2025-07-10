@@ -21,6 +21,14 @@ Hook -----------------------|
 ```
 ---
 
+Changelog : 
+
+```java
+ - [0.1.3.9-SNAPSHOT] : Ajout de la sérialisation des données pour une compatibilisation parfaite des données avec les HOOK.
+```
+
+---
+
 ## 🌟 Pourquoi ConnectorAPI ?
 
 Imaginez une API qui ne se contente pas de relier des services, mais qui devient le chef d’orchestre de vos intégrations. ConnectorAPI est conçu pour :

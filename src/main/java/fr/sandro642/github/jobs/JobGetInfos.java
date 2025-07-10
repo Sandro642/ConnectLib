@@ -4,7 +4,6 @@ import fr.sandro642.github.ConnectorAPI;
 import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiResponse;
 import fr.sandro642.github.jobs.misc.MethodType;
-import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.YamlUtils;
 
@@ -25,15 +24,14 @@ public class JobGetInfos {
      * ApiClient est utilisé pour effectuer les requêtes HTTP vers l'API.
      * YamlUtils est utilisé pour lire les routes depuis le fichier YAML.
      */
-    private ApiClient apiClient;
-    private YamlUtils yamlUtils;
+    private final ApiClient apiClient;
+    private final YamlUtils yamlUtils;
 
     /**
      * Constructeur de JobGetInfos qui initialise ApiClient et YamlUtils.
-     * Utilise ResourceType.MAIN_RESOURCES pour le type de ressource par défaut.
      */
     public JobGetInfos() {
-        this.apiClient = new ApiClient(ResourceType.MAIN_RESOURCES);
+        this.apiClient = new ApiClient();
         this.yamlUtils = ConnectorAPI.YamlUtils();
     }
 
@@ -135,7 +133,7 @@ public class JobGetInfos {
                     String paramKey = "{" + entry.getKey() + "}";
                     String paramValue = entry.getValue().toString();
 
-                    // Remplace tous les occurrences du paramètre dans la route
+                    // Remplace toutes les occurrences du paramètre dans la route
                     fullRoute = fullRoute.replace(paramKey, paramValue);
                 }
             }
@@ -169,6 +167,7 @@ public class JobGetInfos {
      */
     public ApiResponse<Void> getResponse() {
         try {
+
             String route = (String) ConnectorAPI.StoreAndRetrieve().store.get("currentRoute");
             MethodType method = (MethodType) ConnectorAPI.StoreAndRetrieve().store.get("currentMethod");
             Map<String, Object> body = (Map<String, Object>) ConnectorAPI.StoreAndRetrieve().store.get("currentBody");

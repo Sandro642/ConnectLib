@@ -5,8 +5,10 @@ plugins {
     id("maven-publish") // Plugin pour la publication
 }
 
+
 group = "fr.sandro642.github"
-version = "0.1.2"
+version = "0.1.3.17.1-SNAPSHOT" // Version de votre projet
+
 
 // Ajoutez cette tâche à votre build.gradle.kts
 tasks.register("printVersion") {
@@ -17,6 +19,9 @@ tasks.register("printVersion") {
 
 repositories {
     mavenCentral()
+
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
@@ -28,6 +33,8 @@ dependencies {
 
     implementation("org.openjfx:javafx-controls:21")
     implementation("org.openjfx:javafx-fxml:21")
+
+    compileOnly("org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT")
 }
 
 javafx {

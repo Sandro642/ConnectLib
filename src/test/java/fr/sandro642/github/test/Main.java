@@ -8,6 +8,8 @@ import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 /**
  * Main est une classe de test pour vérifier la création du fichier YML et pleins d'autres fonctionnalités de la librairie.
  * @author Sandro642
@@ -24,15 +26,7 @@ public class Main {
         System.out.println(ConnectorAPI.YamlUtils().getURL());
     }
 
-    @Test
-    public void getRoute() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
-
-        System.out.println(ConnectorAPI.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info"));
-    }
-
     public static void main(String[] args) {
-        // Initialisation du ConnectorAPI
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
         try {
@@ -46,6 +40,8 @@ public class Main {
             System.out.println("Code: " + response.getCode());
             System.out.println("Erreur: " + response.isErr());
 
+            System.out.println(response.display());
+
             // Exemple avec des données spécifiques (si elles existent)
             try {
                 System.out.println("Valeur spécifique: " + response.getSpecData("version"));
@@ -57,17 +53,6 @@ public class Main {
             System.err.println("Erreur lors de l'appel API: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    @Test
-    public void testHorsData() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
-
-        ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
-                .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example1")
-                .getResponse();
-
-        System.out.println(response.display());
     }
 
 }

@@ -1,9 +1,8 @@
 package fr.sandro642.github;
 
+import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.jobs.JobGetInfos;
-import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
-import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.Logger;
 import fr.sandro642.github.utils.StoreAndRetrieve;
 import fr.sandro642.github.utils.YamlUtils;
@@ -37,7 +36,11 @@ public class ConnectorAPI {
         // Génère le template si nécessaire
         yamlUtils.generateTemplateIfNotExists(resourceType);
 
-        storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
+        if (resourceType == ResourceType.MC_RESOURCES) {
+            storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, MCSupport().getPluginPath());
+        } else {
+            storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
+        }
 
         // Charge l'URL depuis le fichier YAML
         String baseUrl = yamlUtils.getURL();
@@ -81,5 +84,13 @@ public class ConnectorAPI {
             yamlUtils = new YamlUtils();
         }
         return yamlUtils;
+    }
+
+    /**
+     * Retourne une instance de MCSupport si le projet est un projet Minecraft
+     * @return MCSupport ou null si ce n'est pas un projet Minecraft
+     */
+    public static MCSupport MCSupport() {
+        return MCSupport.getInstance();
     }
 }

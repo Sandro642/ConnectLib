@@ -1,7 +1,6 @@
 package fr.sandro642.github.api;
 
 import fr.sandro642.github.ConnectorAPI;
-import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.utils.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -29,12 +28,12 @@ public class ApiClient {
 
     /**
      * Constructeur de ApiClient qui initialise WebClient avec l'URL de base.
-     * @param resourceType Type de ressource (peut être utilisé pour des configurations spécifiques).
      */
-    public ApiClient(ResourceType resourceType) {
+    public ApiClient() {
         String baseUrl = (String) ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY);
+
         if (baseUrl == null) {
-            throw new RuntimeException("URL de base non trouvée. Assurez-vous d'avoir initialisé ConnectorAPI.");
+            throw new RuntimeException("URL de base non trouvée. Assurez-vous d'avoir initialisé ConnectorAPI. ");
         }
 
         this.webClient = WebClient.builder()
