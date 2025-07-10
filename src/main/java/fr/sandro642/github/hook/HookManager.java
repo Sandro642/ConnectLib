@@ -71,15 +71,31 @@ public class HookManager {
      * Méthode pour charger une HashMap depuis un fichier.
      *
      * @param fileName
+     * @return La HashMap chargée, ou une nouvelle HashMap vide en cas d'erreur.
      */
     public HashMap<String, Object> loadData(String fileName) {
         if (usedType == ResourceType.MC_RESOURCES) {
             Plugin pluginTarget = MCSupport.getInstance().getPlugin();
 
             System.out.println("usedType: " + usedType + " | pluginTarget: " + pluginTarget);
-            return SerialMap.getInstance().loadData(fileName, pluginTarget);
+            System.out.println("fileName demandé: " + fileName);
+
+            HashMap<String, Object> result = SerialMap.getInstance().loadData(fileName, pluginTarget);
+
+            // Debug: afficher le contenu récupéré
+            System.out.println("Données récupérées: " + result);
+            System.out.println("Taille de la HashMap: " + result.size());
+            System.out.println("Clés disponibles: " + result.keySet());
+
+            return result;
         } else {
-            return SerialMap.getInstance().loadData(fileName);
+            HashMap<String, Object> result = SerialMap.getInstance().loadData(fileName);
+
+            // Debug: afficher le contenu récupéré
+            System.out.println("Données récupérées (sans plugin): " + result);
+            System.out.println("Taille de la HashMap: " + result.size());
+
+            return result;
         }
     }
 

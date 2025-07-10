@@ -73,18 +73,50 @@ public class SerialMap {
                 file = new File(fileName);
             }
 
+            // Debug: vérifier l'existence du fichier
+            System.out.println("Tentative de chargement du fichier: " + file.getAbsolutePath());
+            System.out.println("Fichier existe: " + file.exists());
+            System.out.println("Fichier lisible: " + file.canRead());
+            System.out.println("Taille du fichier: " + file.length() + " bytes");
+
+            if (!file.exists()) {
+                System.out.println("ERREUR: Le fichier n'existe pas!");
+                return new HashMap<>();
+            }
+
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file));
             HashMap<String, Object> data = (HashMap<String, Object>) inputStream.readObject();
             inputStream.close();
-            //ConnectorAPI.Logger().INFO("✓ Chargement réussi depuis " + fileName);
+
+            System.out.println("✓ Chargement réussi depuis " + fileName);
+            System.out.println("Données chargées: " + data);
+
             return data;
+        } catch (FileNotFoundException e) {
+            System.out.println("✗ Fichier introuvable: " + fileName);
+            e.printStackTrace();
+            return new HashMap<>();
+        } catch (IOException e) {
+            System.out.println("✗ Erreur de lecture du fichier: " + fileName);
+            e.printStackTrace();
+            return new HashMap<>();
+        } catch (ClassNotFoundException e) {
+            System.out.println("✗ Erreur de désérialisation: " + fileName);
+            e.printStackTrace();
+            return new HashMap<>();
         } catch (Exception e) {
-            ConnectorAPI.Logger().ERROR("✗ Erreur chargement " + fileName);
+            System.out.println("✗ Erreur générale lors du chargement: " + fileName);
             e.printStackTrace();
             return new HashMap<>();
         }
     }
 
+    /**
+     * Méthode pour charger une HashMap depuis un fichier sans spécifier de plugin.
+     *
+     * @param fileName Le nom du fichier à partir duquel la HashMap sera chargée.
+     * @return La HashMap chargée, ou une nouvelle HashMap vide en cas d'erreur.
+     */
     public HashMap<String, Object> loadData(String fileName) {
         return loadData(fileName, null);
     }
