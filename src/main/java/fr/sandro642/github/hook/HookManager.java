@@ -75,6 +75,8 @@ public class HookManager {
     public HashMap<String, Object> loadData(String fileName) {
         if (usedType == ResourceType.MC_RESOURCES) {
             Plugin pluginTarget = MCSupport.getInstance().getPlugin();
+
+            System.out.println("usedType: " + usedType + " | pluginTarget: " + pluginTarget);
             return SerialMap.getInstance().loadData(fileName, pluginTarget);
         } else {
             return SerialMap.getInstance().loadData(fileName);

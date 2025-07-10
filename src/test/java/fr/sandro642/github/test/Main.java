@@ -45,7 +45,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Initialisation du ConnectorAPI
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+        //ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
         try {
             // Exemple d'utilisation comme demandé
