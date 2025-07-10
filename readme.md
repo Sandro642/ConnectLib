@@ -5,6 +5,22 @@ Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec Con
 
 ---
 
+```java
+Stable Version : 0.1.2
+```
+
+---
+
+```java
+Support Lib 23 | Future 24
+
+Hook -----------------------|
+ - Support Minecraft 1.8
+
+ - Comming Soon.
+```
+---
+
 ## 🌟 Pourquoi ConnectorAPI ?
 
 Imaginez une API qui ne se contente pas de relier des services, mais qui devient le chef d’orchestre de vos intégrations. ConnectorAPI est conçu pour :
