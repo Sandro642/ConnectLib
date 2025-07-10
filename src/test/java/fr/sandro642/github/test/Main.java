@@ -19,13 +19,6 @@ import java.util.HashMap;
 
 public class Main {
 
-    @Test
-    public void getUrl() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
-
-        System.out.println(ConnectorAPI.YamlUtils().getURL());
-    }
-
     public static void main(String[] args) {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
@@ -48,6 +41,24 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("Clé 'version' non trouvée dans les données");
             }
+
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'appel API: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void testGetExtraData() {
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+
+        try {
+            ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
+                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
+                    .getResponse();
+
+            System.out.println("Data: " + response.getExtra("example"));
 
         } catch (Exception e) {
             System.err.println("Erreur lors de l'appel API: " + e.getMessage());

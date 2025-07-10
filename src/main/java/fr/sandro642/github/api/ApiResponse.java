@@ -23,11 +23,10 @@ public class ApiResponse<T> {
     private String msg;
     private int code;
     private Map<String, Object> data;
-    private Map<String, Object> extra;
+    private Object extra;
 
     // Constructeurs
     public ApiResponse() {
-        this.extra = new HashMap<>();
     }
 
     /**
@@ -37,12 +36,12 @@ public class ApiResponse<T> {
      * @param code
      * @param data
      */
-    public ApiResponse(boolean err, String msg, int code, Map<String, Object> data) {
+    public ApiResponse(boolean err, String msg, int code, Map<String, Object> data, Object extra) {
         this.err = err;
         this.msg = msg;
         this.code = code;
         this.data = data;
-        this.extra = new HashMap<>();
+        this.extra = extra;
     }
 
     /**
@@ -107,6 +106,14 @@ public class ApiResponse<T> {
      */
     public void setData(Map<String, Object> data) {
         this.data = data;
+    }
+
+    /**
+     * Récupère les champs supplémentaires de la réponse.
+     * @return
+     */
+    public Object getExtra(String key) {
+        return key;
     }
 
     /**
@@ -197,47 +204,6 @@ public class ApiResponse<T> {
         } else {
             throw new RuntimeException("La valeur de la clé '" + key + "' n'est pas un entier.");
         }
-    }
-
-    /**
-     * Récupère une donnée supplémentaire à partir de la Map 'extra' en utilisant une clé.
-     * Cette méthode permet d'accéder à des champs qui ne font pas partie des champs standard (err, msg, code, data).
-     * @param key La clé pour accéder à la donnée supplémentaire.
-     * @return La valeur associée à la clé dans la Map 'extra', ou null si la clé n'existe pas.
-     */
-    public Object getExtra(String key) {
-        if (extra == null) {
-            return null;
-        }
-        return extra.get(key);
-    }
-
-    /**
-     * Définit une donnée supplémentaire dans la Map 'extra'.
-     * @param key La clé pour la donnée supplémentaire.
-     * @param value La valeur à associer à la clé.
-     */
-    public void setExtra(String key, Object value) {
-        if (extra == null) {
-            extra = new HashMap<>();
-        }
-        extra.put(key, value);
-    }
-
-    /**
-     * Récupère toutes les données supplémentaires.
-     * @return La Map contenant toutes les données supplémentaires.
-     */
-    public Map<String, Object> getExtraData() {
-        return extra;
-    }
-
-    /**
-     * Définit toutes les données supplémentaires.
-     * @param extra La Map contenant les données supplémentaires.
-     */
-    public void setExtraData(Map<String, Object> extra) {
-        this.extra = extra;
     }
 
     /**
