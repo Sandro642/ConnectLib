@@ -4,6 +4,7 @@ on:
     branches:
       - feature/hook
       - feature/serializer
+      - feature/clean/serial
 permissions:
   contents: write
   pages: write
