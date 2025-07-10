@@ -4,10 +4,10 @@ import fr.sandro642.github.ConnectorAPI;
 import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiResponse;
 import fr.sandro642.github.jobs.misc.MethodType;
-import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.YamlUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -153,6 +153,8 @@ public class JobGetInfos {
                 ConnectorAPI.StoreAndRetrieve().store.put("currentParams", params);
             }
 
+            ConnectorAPI.SerialMap().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
+
             ConnectorAPI.Logger().INFO("Route construite: " + fullRoute);
 
         } catch (Exception e) {
@@ -169,9 +171,11 @@ public class JobGetInfos {
      */
     public ApiResponse<Void> getResponse() {
         try {
-            String route = (String) ConnectorAPI.StoreAndRetrieve().store.get("currentRoute");
-            MethodType method = (MethodType) ConnectorAPI.StoreAndRetrieve().store.get("currentMethod");
-            Map<String, Object> body = (Map<String, Object>) ConnectorAPI.StoreAndRetrieve().store.get("currentBody");
+            HashMap<String, Object> storeLoad = ConnectorAPI.SerialMap().loadData("store_and_retrieve.yml");
+
+            String route = (String) storeLoad.get("currentRoute");
+            MethodType method = (MethodType) storeLoad.get("currentMethod");
+            Map<String, Object> body = (Map<String, Object>) storeLoad.get("currentBody");
 
             if (route == null || method == null) {
                 throw new RuntimeException("Route ou méthode non définie. Appelez getRoutes() d'abord.");
@@ -199,6 +203,8 @@ public class JobGetInfos {
             ConnectorAPI.StoreAndRetrieve().store.remove("currentRoute");
             ConnectorAPI.StoreAndRetrieve().store.remove("currentMethod");
             ConnectorAPI.StoreAndRetrieve().store.remove("currentBody");
+
+            ConnectorAPI.SerialMap().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
 
             return response;
 

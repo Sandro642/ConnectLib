@@ -41,7 +41,7 @@ public class SerialMap {
             ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
             outputStream.writeObject(map);
             outputStream.close();
-            ConnectorAPI.Logger().INFO("✓ Sauvegarde réussie dans " + fileName);
+            //ConnectorAPI.Logger().INFO("✓ Sauvegarde réussie dans " + fileName);
         } catch (Exception e) {
             ConnectorAPI.Logger().ERROR("✗ Erreur sauvegarde " + fileName);
         }
@@ -58,10 +58,11 @@ public class SerialMap {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName));
             HashMap<String, Object> data = (HashMap<String, Object>) inputStream.readObject();
             inputStream.close();
-            System.out.println("✓ Chargement réussi depuis " + fileName);
+            //ConnectorAPI.Logger().INFO("✓ Chargement réussi depuis " + fileName);
             return data;
         } catch (Exception e) {
-            System.out.println("✗ Erreur chargement " + fileName);
+            ConnectorAPI.Logger().ERROR("✗ Erreur chargement " + fileName);
+            e.printStackTrace();
             return new HashMap<>();
         }
     }

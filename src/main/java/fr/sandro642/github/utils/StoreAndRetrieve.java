@@ -1,5 +1,6 @@
 package fr.sandro642.github.utils;
 
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class StoreAndRetrieve {
      */
     public final String URL_KEY = "baseUrl";
     public final String FILE_LOCATION_KEY = "fileLocation";
-    public final Map<String, Object> store = new ConcurrentHashMap<>();
+    public final HashMap<String, Object> store = new HashMap<>();
 
     /**
      * Ajoute une valeur à la map avec la clé spécifiée.

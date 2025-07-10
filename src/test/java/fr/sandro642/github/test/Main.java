@@ -8,6 +8,8 @@ import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 /**
  * Main est une classe de test pour vérifier la création du fichier YML et pleins d'autres fonctionnalités de la librairie.
  * @author Sandro642
@@ -22,9 +24,6 @@ public class Main {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
         System.out.println(ConnectorAPI.YamlUtils().getURL());
-
-
-
     }
 
     @Test
@@ -67,6 +66,32 @@ public class Main {
             System.err.println("Erreur lors de l'appel API: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void saveDataMap() {
+        HashMap<String, Object> data = new HashMap<>();
+
+        data.put("version", "1.0.0");
+        data.put("status", "ok");
+
+        ConnectorAPI.SerialMap().saveData(data, "test_map.yml");
+    }
+
+    @Test
+    public void loadDataMap() {
+        HashMap<String, Object> data = ConnectorAPI.SerialMap().loadData("test_map.yml");
+
+        System.out.println("data version: " + data.get("version"));
+    }
+
+    @Test
+    public void resetDataMap() {
+        HashMap<String, Object> data = ConnectorAPI.SerialMap().loadData("test_map.yml");
+
+        data.clear();
+
+        ConnectorAPI.SerialMap().saveData(data, "test_map.yml");
     }
 
 }

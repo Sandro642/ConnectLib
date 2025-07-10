@@ -8,6 +8,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,7 +28,9 @@ public class YamlUtils {
      * @return l'URL de base définie dans le fichier YAML, ou null si une erreur se produit
      */
     public String getURL() {
-        String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
+        HashMap<String, Object> storeLoad = ConnectorAPI.SerialMap().loadData("store_and_retrieve.yml");
+
+        String yamlFilePath = storeLoad.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
 
         try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
             Yaml yaml = new Yaml();
@@ -44,7 +47,9 @@ public class YamlUtils {
      * @return
      */
     public String getRoute(String routeName) {
-        String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
+        HashMap<String, Object> storeLoad = ConnectorAPI.SerialMap().loadData("store_and_retrieve.yml");
+
+        String yamlFilePath = storeLoad.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
 
         try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
             Yaml yaml = new Yaml();

@@ -39,11 +39,15 @@ public class ConnectorAPI {
 
         storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
 
+        ConnectorAPI.SerialMap().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
+
         // Charge l'URL depuis le fichier YAML
         String baseUrl = yamlUtils.getURL();
         if (baseUrl != null) {
             storeAndRetrieve.store.put(storeAndRetrieve.URL_KEY, baseUrl);
         }
+
+        ConnectorAPI.SerialMap().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
     }
 
     /**
