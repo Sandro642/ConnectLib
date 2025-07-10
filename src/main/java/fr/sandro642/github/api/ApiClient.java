@@ -31,9 +31,9 @@ public class ApiClient {
      * Constructeur de ApiClient qui initialise WebClient avec l'URL de base.
      */
     public ApiClient() {
-        HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
+        //HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
 
-        String baseUrl = (String) storeLoad.get(ConnectorAPI.StoreAndRetrieve().URL_KEY);
+        String baseUrl = (String) ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY);
 
         if (baseUrl == null) {
             throw new RuntimeException("URL de base non trouvée. Assurez-vous d'avoir initialisé ConnectorAPI. ");

@@ -28,9 +28,9 @@ public class YamlUtils {
      * @return l'URL de base définie dans le fichier YAML, ou null si une erreur se produit
      */
     public String getURL() {
-        HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
+        //HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
 
-        String yamlFilePath = storeLoad.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
+        String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
 
         try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
             Yaml yaml = new Yaml();
@@ -47,9 +47,9 @@ public class YamlUtils {
      * @return
      */
     public String getRoute(String routeName) {
-        HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
+        //HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
 
-        String yamlFilePath = storeLoad.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
+        String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
 
         try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
             Yaml yaml = new Yaml();

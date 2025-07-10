@@ -153,7 +153,7 @@ public class JobGetInfos {
                 ConnectorAPI.StoreAndRetrieve().store.put("currentParams", params);
             }
 
-            ConnectorAPI.HookManager().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
+            //ConnectorAPI.HookManager().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
 
             ConnectorAPI.Logger().INFO("Route construite: " + fullRoute);
 
@@ -171,11 +171,11 @@ public class JobGetInfos {
      */
     public ApiResponse<Void> getResponse() {
         try {
-            HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
+            //HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
 
-            String route = (String) storeLoad.get("currentRoute");
-            MethodType method = (MethodType) storeLoad.get("currentMethod");
-            Map<String, Object> body = (Map<String, Object>) storeLoad.get("currentBody");
+            String route = (String) ConnectorAPI.StoreAndRetrieve().store.get("currentRoute");
+            MethodType method = (MethodType) ConnectorAPI.StoreAndRetrieve().store.get("currentMethod");
+            Map<String, Object> body = (Map<String, Object>) ConnectorAPI.StoreAndRetrieve().store.get("currentBody");
 
             if (route == null || method == null) {
                 throw new RuntimeException("Route ou méthode non définie. Appelez getRoutes() d'abord.");
@@ -204,7 +204,7 @@ public class JobGetInfos {
             ConnectorAPI.StoreAndRetrieve().store.remove("currentMethod");
             ConnectorAPI.StoreAndRetrieve().store.remove("currentBody");
 
-            ConnectorAPI.HookManager().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
+            //ConnectorAPI.HookManager().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
 
             return response;
 

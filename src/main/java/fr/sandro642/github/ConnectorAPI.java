@@ -46,7 +46,7 @@ public class ConnectorAPI {
             storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
         }
 
-        ConnectorAPI.HookManager().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
+        //ConnectorAPI.HookManager().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
 
         // Charge l'URL depuis le fichier YAML
         String baseUrl = yamlUtils.getURL();
@@ -54,7 +54,7 @@ public class ConnectorAPI {
             storeAndRetrieve.store.put(storeAndRetrieve.URL_KEY, baseUrl);
         }
 
-        ConnectorAPI.HookManager().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
+        //ConnectorAPI.HookManager().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
     }
 
     /**
