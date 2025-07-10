@@ -4,7 +4,6 @@ import fr.sandro642.github.ConnectorAPI;
 import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiResponse;
 import fr.sandro642.github.jobs.misc.MethodType;
-import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.YamlUtils;
 
@@ -30,7 +29,6 @@ public class JobGetInfos {
 
     /**
      * Constructeur de JobGetInfos qui initialise ApiClient et YamlUtils.
-     * Utilise ResourceType.MAIN_RESOURCES pour le type de ressource par défaut.
      */
     public JobGetInfos() {
         this.apiClient = new ApiClient();
@@ -169,6 +167,7 @@ public class JobGetInfos {
      */
     public ApiResponse<Void> getResponse() {
         try {
+
             String route = (String) ConnectorAPI.StoreAndRetrieve().store.get("currentRoute");
             MethodType method = (MethodType) ConnectorAPI.StoreAndRetrieve().store.get("currentMethod");
             Map<String, Object> body = (Map<String, Object>) ConnectorAPI.StoreAndRetrieve().store.get("currentBody");

@@ -36,6 +36,7 @@ public class MCSupport {
      */
     public boolean isMCProject() {
         try {
+
             String fileLocation = (String) fr.sandro642.github.ConnectorAPI.StoreAndRetrieve().store.get(fr.sandro642.github.ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY);
             return fileLocation != null && fileLocation.contains(fr.sandro642.github.jobs.misc.ResourceType.MC_RESOURCES.getPath());
         } catch (Exception e) {
@@ -57,13 +58,8 @@ public class MCSupport {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null.");
         }
-
-        //if (isMCProject()) {
             this.pluginSingleton = plugin;
             return this.pluginSingleton;
-        //} else {
-        //    throw new IllegalStateException("This method can only be called in a Minecraft project.");
-        //}
     }
 
     /**
@@ -74,9 +70,6 @@ public class MCSupport {
      * @throws IllegalStateException Si la méthode n'est pas appelée dans un projet Minecraft ou si le plugin n'est pas initialisé.
      */
     public String getPluginPath() {
-        //if (!isMCProject()) {
-            //throw new IllegalStateException("This method can only be called in a Minecraft project.");
-        //}
 
         if (pluginSingleton == null) {
             throw new IllegalStateException("Plugin variable is not set. Please call setPluginVariable first.");

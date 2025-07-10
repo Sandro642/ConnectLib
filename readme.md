@@ -4,6 +4,13 @@ Bienvenue dans **ConnectorAPI** : la passerelle universelle pour connecter, auto
 Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec ConnectorAPI, c’est comme jouer avec des Lego : simple, intuitif et puissant.
 
 ---
+
+```java
+Stable Version : 0.1.2
+```
+
+---
+
 ```java
 Support Lib 23 | Future 24
 
@@ -12,6 +19,14 @@ Hook -----------------------|
 
  - Comming Soon.
 ```
+---
+
+Changelog : 
+
+```java
+ - [0.1.3.9-SNAPSHOT] : Ajout de la sérialisation des données pour une compatibilisation parfaite des données avec les HOOK.
+```
+
 ---
 
 ## 🌟 Pourquoi ConnectorAPI ?

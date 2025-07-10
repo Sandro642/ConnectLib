@@ -36,7 +36,11 @@ public class ConnectorAPI {
         // Génère le template si nécessaire
         yamlUtils.generateTemplateIfNotExists(resourceType);
 
-        storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
+        if (resourceType == ResourceType.MC_RESOURCES) {
+            storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, MCSupport().getPluginPath());
+        } else {
+            storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
+        }
 
         // Charge l'URL depuis le fichier YAML
         String baseUrl = yamlUtils.getURL();
