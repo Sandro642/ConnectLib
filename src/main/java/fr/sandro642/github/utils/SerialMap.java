@@ -1,11 +1,9 @@
 package fr.sandro642.github.utils;
 
 import fr.sandro642.github.ConnectorAPI;
+import org.bukkit.plugin.Plugin;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.HashMap;
 
 /**
@@ -36,9 +34,17 @@ public class SerialMap {
      * @param map      La HashMap à sauvegarder.
      * @param fileName Le nom du fichier dans lequel la HashMap sera sauvegardée.
      */
-    public void saveData(HashMap<String, Object> map, String fileName) {
+    public void saveData(HashMap<String, Object> map, String fileName, Plugin plugin) {
         try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+            File file;
+
+            if (plugin != null) {
+                file = new File(plugin.getDataFolder() + fileName);
+            } else {
+                file = new File(fileName);
+            }
+
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file));
             outputStream.writeObject(map);
             outputStream.close();
             //ConnectorAPI.Logger().INFO("✓ Sauvegarde réussie dans " + fileName);
@@ -47,15 +53,27 @@ public class SerialMap {
         }
     }
 
+    public void saveData(HashMap<String, Object> map, String FileName) {
+        saveData(map, FileName, null);
+    }
+
     /**
      * Méthode pour charger une HashMap depuis un fichier.
      *
      * @param fileName Le nom du fichier à partir duquel la HashMap sera chargée.
      * @return La HashMap chargée, ou une nouvelle HashMap vide en cas d'erreur.
      */
-    public HashMap<String, Object> loadData(String fileName) {
+    public HashMap<String, Object> loadData(String fileName, Plugin plugin) {
         try {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName));
+            File file;
+
+            if (plugin != null) {
+                file = new File(plugin.getDataFolder() + fileName);
+            } else {
+                file = new File(fileName);
+            }
+
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file));
             HashMap<String, Object> data = (HashMap<String, Object>) inputStream.readObject();
             inputStream.close();
             //ConnectorAPI.Logger().INFO("✓ Chargement réussi depuis " + fileName);
@@ -65,6 +83,10 @@ public class SerialMap {
             e.printStackTrace();
             return new HashMap<>();
         }
+    }
+
+    public HashMap<String, Object> loadData(String fileName) {
+        return loadData(fileName, null);
     }
 
     /**

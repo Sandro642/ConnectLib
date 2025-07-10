@@ -153,7 +153,7 @@ public class JobGetInfos {
                 ConnectorAPI.StoreAndRetrieve().store.put("currentParams", params);
             }
 
-            ConnectorAPI.SerialMap().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
+            ConnectorAPI.HookManager().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
 
             ConnectorAPI.Logger().INFO("Route construite: " + fullRoute);
 
@@ -171,7 +171,7 @@ public class JobGetInfos {
      */
     public ApiResponse<Void> getResponse() {
         try {
-            HashMap<String, Object> storeLoad = ConnectorAPI.SerialMap().loadData("store_and_retrieve.yml");
+            HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
 
             String route = (String) storeLoad.get("currentRoute");
             MethodType method = (MethodType) storeLoad.get("currentMethod");
@@ -204,7 +204,7 @@ public class JobGetInfos {
             ConnectorAPI.StoreAndRetrieve().store.remove("currentMethod");
             ConnectorAPI.StoreAndRetrieve().store.remove("currentBody");
 
-            ConnectorAPI.SerialMap().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
+            ConnectorAPI.HookManager().saveData(ConnectorAPI.StoreAndRetrieve().store, "store_and_retrieve.yml");
 
             return response;
 

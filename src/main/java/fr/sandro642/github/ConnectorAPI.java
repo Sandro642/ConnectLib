@@ -1,5 +1,6 @@
 package fr.sandro642.github;
 
+import fr.sandro642.github.hook.HookManager;
 import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.jobs.misc.ResourceType;
@@ -34,12 +35,14 @@ public class ConnectorAPI {
         storeAndRetrieve = new StoreAndRetrieve();
         yamlUtils = new YamlUtils();
 
+        HookManager().TypeManagerHook(resourceType);
+
         // Génère le template si nécessaire
         yamlUtils.generateTemplateIfNotExists(resourceType);
 
         storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
 
-        ConnectorAPI.SerialMap().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
+        ConnectorAPI.HookManager().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
 
         // Charge l'URL depuis le fichier YAML
         String baseUrl = yamlUtils.getURL();
@@ -47,7 +50,7 @@ public class ConnectorAPI {
             storeAndRetrieve.store.put(storeAndRetrieve.URL_KEY, baseUrl);
         }
 
-        ConnectorAPI.SerialMap().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
+        ConnectorAPI.HookManager().saveData(storeAndRetrieve.store, "store_and_retrieve.yml");
     }
 
     /**
@@ -101,5 +104,9 @@ public class ConnectorAPI {
      */
     public static SerialMap SerialMap() {
         return SerialMap.getInstance();
+    }
+
+    public static HookManager HookManager() {
+        return HookManager.getInstance();
     }
 }

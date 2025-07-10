@@ -28,7 +28,12 @@ public class Main {
 
     @Test
     public void outGetURL() {
-        System.out.println(ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY));
+        HashMap<String, Object> data = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
+
+
+        //System.out.println(data.get(ConnectorAPI.StoreAndRetrieve().URL_KEY));
+
+        System.out.println(ConnectorAPI.YamlUtils().getURL());
     }
 
     @Test
@@ -75,19 +80,19 @@ public class Main {
         data.put("version", "1.0.0");
         data.put("status", "ok");
 
-        ConnectorAPI.SerialMap().saveData(data, "test_map.yml");
+        ConnectorAPI.HookManager().saveData(data, "test_map.yml");
     }
 
     @Test
     public void loadDataMap() {
-        HashMap<String, Object> data = ConnectorAPI.SerialMap().loadData("test_map.yml");
+        HashMap<String, Object> data = ConnectorAPI.HookManager().loadData("test_map.yml");
 
         System.out.println("data version: " + data.get("version"));
     }
 
     @Test
     public void resetDataMap() {
-        HashMap<String, Object> data = ConnectorAPI.SerialMap().loadData("test_map.yml");
+        HashMap<String, Object> data = ConnectorAPI.HookManager().loadData("test_map.yml");
 
         data.clear();
 

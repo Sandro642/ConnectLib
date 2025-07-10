@@ -31,7 +31,7 @@ public class ApiClient {
      * Constructeur de ApiClient qui initialise WebClient avec l'URL de base.
      */
     public ApiClient() {
-        HashMap<String, Object> storeLoad = ConnectorAPI.SerialMap().loadData("store_and_retrieve.yml");
+        HashMap<String, Object> storeLoad = ConnectorAPI.HookManager().loadData("store_and_retrieve.yml");
 
         String baseUrl = (String) storeLoad.get(ConnectorAPI.StoreAndRetrieve().URL_KEY);
 
