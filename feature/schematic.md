@@ -32,8 +32,8 @@ routes:
 
 
 schema:
-	#Activer la création de schéma ?
-	enable: false
+    #Activer la création de schéma ?
+    enable: false
 
 
 		    #Schéma par défaut: 
