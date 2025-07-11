@@ -1,12 +1,14 @@
 package fr.sandro642.github.api;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Classe représentant une réponse d'API générique.
- *
+ * ApiResponse est une classe générique qui représente la réponse d'une API.
+ * Elle contient des informations sur l'état de la réponse, un message, un code de statut et des données spécifiques.
  * @param <T> Le type de données contenues dans la réponse.
+ * @author Sandro642
+ * @version 1.0
+ * @since 1.0
  */
 
 public class ApiResponse<T> {
@@ -14,10 +16,9 @@ public class ApiResponse<T> {
     /**
      * Variables d'instance
      * err : Indique s'il y a une erreur dans la réponse.
-     * msg : Message d'erreur ou de succès.
-     * code : Code de statut de la réponse (par exemple, HTTP status code).
-     * data : Données spécifiques de la réponse, stockées dans une Map.
-     * extra : Champs supplémentaires qui ne font pas partie des champs standard.
+     * Msg : Message d'erreur ou de succès.
+     * Code : Code de statut de la réponse (par exemple, HTTP status code).
+     * Data : Données spécifiques de la réponse, stockées dans une Map.
      */
     private boolean err;
     private String msg;

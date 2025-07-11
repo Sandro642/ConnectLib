@@ -35,7 +35,6 @@ public class Main {
 
             System.out.println(response.display());
 
-            // Exemple avec des données spécifiques (si elles existent)
             try {
                 System.out.println("Valeur spécifique: " + response.getSpecData("version"));
             } catch (Exception e) {
@@ -58,7 +57,7 @@ public class Main {
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
                     .getResponse();
 
-            System.out.println("Data: ");
+            System.out.println("Data: " + response);
 
         } catch (Exception e) {
             System.err.println("Erreur lors de l'appel API: " + e.getMessage());
