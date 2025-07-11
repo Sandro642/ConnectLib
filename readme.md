@@ -22,6 +22,12 @@ Hook -----------------------|
 ```
 ---
 
+Être tenu au courant des dernière features et mises à jour de ConnectorAPI 
+
+- [Feature/Schematic](feature/schematic.md)
+
+---
+
 Changelog : 
 
 ```java
