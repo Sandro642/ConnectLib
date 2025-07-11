@@ -23,7 +23,6 @@ public class ApiResponse<T> {
     private String msg;
     private int code;
     private Map<String, Object> data;
-    private Object extra;
 
     // Constructeurs
     public ApiResponse() {
@@ -36,12 +35,11 @@ public class ApiResponse<T> {
      * @param code
      * @param data
      */
-    public ApiResponse(boolean err, String msg, int code, Map<String, Object> data, Object extra) {
+    public ApiResponse(boolean err, String msg, int code, Map<String, Object> data) {
         this.err = err;
         this.msg = msg;
         this.code = code;
         this.data = data;
-        this.extra = extra;
     }
 
     /**
@@ -106,14 +104,6 @@ public class ApiResponse<T> {
      */
     public void setData(Map<String, Object> data) {
         this.data = data;
-    }
-
-    /**
-     * Récupère les champs supplémentaires de la réponse.
-     * @return
-     */
-    public Object getExtra(String key) {
-        return key;
     }
 
     /**

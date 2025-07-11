@@ -184,19 +184,19 @@ public class ExampleUsage {
 
             // Tentative d'accès à des données spécifiques
             try {
-                Object specificData = response.getSpecData("version");
-                if (specificData != null) {
-                    System.out.println("  Version spécifique: " + specificData);
-                }
+//                Object specificData = response.getSpecData("version");
+//                if (specificData != null) {
+//                    System.out.println("  Version spécifique: " + specificData);
+//                }
             } catch (Exception e) {
                 // Ignore si la clé n'existe pas
             }
 
             try {
-                Object statusData = response.getSpecData("status");
-                if (statusData != null) {
-                    System.out.println("  Status spécifique: " + statusData);
-                }
+//                Object statusData = response.getSpecData("status");
+//                if (statusData != null) {
+//                    System.out.println("  Status spécifique: " + statusData);
+//                }
             } catch (Exception e) {
                 // Ignore si la clé n'existe pas
             }

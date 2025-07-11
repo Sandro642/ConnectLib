@@ -58,7 +58,7 @@ public class Main {
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
                     .getResponse();
 
-            System.out.println("Data: " + response.getExtra("example"));
+            System.out.println("Data: ");
 
         } catch (Exception e) {
             System.err.println("Erreur lors de l'appel API: " + e.getMessage());
