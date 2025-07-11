@@ -8,8 +8,6 @@ import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-
 /**
  * Main est une classe de test pour vérifier la création du fichier YML et pleins d'autres fonctionnalités de la librairie.
  * @author Sandro642
@@ -18,6 +16,12 @@ import java.util.HashMap;
  */
 
 public class Main {
+
+    @Test
+    public void initializeCAPI() {
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+    }
+
 
     public static void main(String[] args) {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
