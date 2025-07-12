@@ -26,8 +26,7 @@ public class ApiClient {
 
   private final AtomicReference<ApiResponse<Void>> lastResponse = new AtomicReference<>();
 
-  // private final AtomicReference<Map<String, Object>> lastRawResponse = new
-  // AtomicReference<>();
+  // private final AtomicReference<Map<String, Object>> lastRawResponse = new AtomicReference<>();
 
   private final Logger logger = new Logger();
 
