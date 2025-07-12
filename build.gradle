@@ -1,0 +1,97 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'maven-publish' // Plugin pour la publication
+}
+
+group = 'fr.sandro642.github'
+version = '0.1.7.0-SNAPSHOT' // Version de votre projet
+
+// Ajoutez cette tâche à votre build.gradle
+tasks.register('printVersion') {
+    doLast {
+        println project.version
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'io.projectreactor:reactor-core:3.6.9'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:3.2.2'
+
+    compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
+}
+
+application {
+    mainClass = 'fr.sandro642.github.ConnectorAPI'
+}
+
+tasks.jar {
+    manifest {
+        attributes 'Main-Class': 'fr.sandro642.github.ConnectorAPI'
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+java {
+    withSourcesJar() // Ajoute le JAR des sources
+    withJavadocJar() // Ajoute le JAR de Javadoc
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            groupId = project.group.toString()
+            artifactId = 'ConnectorAPI'
+            version = project.version.toString()
+            pom {
+                name = 'ConnectorAPI'
+                description = 'A library for connecting to APIs'
+                url = 'https://sandro642.github.io/connectorapi'
+                licenses {
+                    license {
+                        name = 'The MIT License, Version 2.0'
+                        url = 'https://github.com/Sandro642/ConnectorAPI/blob/patch/groovy/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'sandro642'
+                        name = 'Sandro'
+                        email = 'sandro33810@gmail.com' // Correction de l'email (point-virgule -> point)
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/sandro642/ConnectorAPI.git'
+                    developerConnection = 'scm:git:ssh://github.com/sandro642/ConnectorAPI.git'
+                    url = 'https://github.com/sandro642/ConnectorAPI'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'LocalRepo'
+            url = uri(layout.buildDirectory.dir('repo')) // Publie dans build/repo
+        }
+    }
+}
