@@ -69,8 +69,8 @@ publishing {
                 url = 'https://sandro642.github.io/connectorapi'
                 licenses {
                     license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name = 'The MIT License, Version 2.0'
+                        url = 'https://github.com/Sandro642/ConnectorAPI/blob/patch/groovy/LICENSE'
                     }
                 }
                 developers {
