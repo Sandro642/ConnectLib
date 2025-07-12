@@ -7,7 +7,7 @@ Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec Con
 ---
 
 ```java
-Stable Version : 0.1.7-STABLE
+Stable Version : 0.1.8-STABLE
 ```
 
 ---
@@ -95,10 +95,39 @@ dependencies {
 }
 
 ```
+Initialisation de la Librairie
+```java
+public class Example {
+    
+    // Initialisation avec une enumération
+    public enum RouteList implements ConvertEnum.RouteImport {
+       VERSION("/api/mcas/info/version"),
+       INFO("/api/mcas/info/info");
+
+       String route;
+
+       TestRoutes(String route) {
+          this.route = route;
+       }
+
+       @Override
+       public String route() {
+          return route;
+       }
+    }
+    
+    ConnectorAPI.initialize(ResourceType.MAIN_RESOURCES, RouteList.class);
+    
+    
+///////////////////////////////////////////////////////////////////////////    
+    ConnectorAPI.initialize(ResourceType.MAIN_RESOURCES);
+    
+    //Rajouter vos routes dans le fichier infos.yml
+}
+
+```
 
 ```java
-import fr.sandro642.github.api.ApiClient;
-
 public class Example {
 
     // 5. Appel POST avec version, body et paramètres
@@ -129,8 +158,7 @@ Plus d'exemples dans ICI : [ExampleUsage.java](src/main/java/fr/sandro642/github
 
 - `src/main/java/fr/sandro642/github/` : code source principal
 - `src/test/java/fr/sandro642/github/test/` : tests unitaires
-- `build.gradle.kts` : configuration Gradle
-- `scripts/` : scripts d’exécution
+- `build.gradle` : configuration Gradle
 
 ---
 
