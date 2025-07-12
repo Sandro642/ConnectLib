@@ -1,8 +1,0 @@
-# properties Connector API By Sandro642
-
-urlPath: "http://localhost:8080/api"
-
-routes:
-  #info: "/info/version"
-  #ping: "/ping"
-  #status: "/status"
