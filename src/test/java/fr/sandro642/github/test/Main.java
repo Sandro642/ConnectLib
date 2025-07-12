@@ -6,6 +6,7 @@ import fr.sandro642.github.api.ApiResponse;
 import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
+import fr.sandro642.github.utils.ConvertEnum;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -17,6 +18,22 @@ import org.junit.jupiter.api.Test;
 
 public class Main {
 
+    public enum TestRoutes implements ConvertEnum.RouteImport {
+        VERSION("/api/mcas/info/version"),
+        INFO("/api/mcas/info/info");
+
+        String route;
+
+        TestRoutes(String route) {
+            this.route = route;
+        }
+
+        @Override
+        public String route() {
+            return route;
+        }
+    }
+
     @Test
     public void initializeCAPI() {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
@@ -24,12 +41,12 @@ public class Main {
 
 
     public static void main(String[] args) {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
             // Exemple d'utilisation comme demandé
             ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info")
+                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
                     .getResponse();
 
             System.out.println("Data: " + response.getData());
