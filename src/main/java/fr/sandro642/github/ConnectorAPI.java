@@ -1,18 +1,20 @@
 package fr.sandro642.github;
 
 import fr.sandro642.github.hook.MCSupport;
+import fr.sandro642.github.utils.ConvertEnum;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.utils.Logger;
 import fr.sandro642.github.utils.StoreAndRetrieve;
 import fr.sandro642.github.utils.YamlUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * ConnectorAPI est une librairie Java permettant de créer un lien de communication entre son projet Java et une API Rest Fastify.
  * @author Sandro642
  * @version 1.0
- * @since 1.0
- * @see ConnectorAPI#initialize(ResourceType)
  * @see ConnectorAPI#JobGetInfos()
  * @see ConnectorAPI#Logger()
  * @see ConnectorAPI#StoreAndRetrieve()
@@ -25,17 +27,28 @@ public class ConnectorAPI {
     private static Logger logger = new Logger();
     private static StoreAndRetrieve storeAndRetrieve = new StoreAndRetrieve();
     private static YamlUtils yamlUtils = new YamlUtils();
+    private static final Map<String,String> routes = new HashMap<>();
 
     /**
      * Initialise le ConnectorAPI avec le type de ressource spécifié
      */
-    public static void initialize(ResourceType resourceType) {
+    public static void initialize(ResourceType resourceType, Class<? extends Enum<?>>... routes) {
+
+        Map<Enum<?>,String> routesEnums = new HashMap<>();
+        for (Class<? extends Enum<?>> route : routes) {
+            if (route == null) {
+                throw new IllegalArgumentException("Les routes ne peuvent pas être null");
+            }
+
+            routesEnums.putAll(ConvertEnum.convert(route));
+        }
+
         logger = new Logger();
         storeAndRetrieve = new StoreAndRetrieve();
         yamlUtils = new YamlUtils();
 
         // Génère le template si nécessaire
-        yamlUtils.generateTemplateIfNotExists(resourceType);
+        yamlUtils.generateTemplateIfNotExists(resourceType, routesEnums);
 
         if (resourceType == ResourceType.MC_RESOURCES) {
             storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, MCSupport().getPluginPath());
@@ -48,6 +61,8 @@ public class ConnectorAPI {
         if (baseUrl != null) {
             storeAndRetrieve.store.put(storeAndRetrieve.URL_KEY, baseUrl);
         }
+
+        ConnectorAPI.routes.putAll(yamlUtils.getRoutes());
     }
 
     /**
@@ -55,6 +70,18 @@ public class ConnectorAPI {
      */
     public static JobGetInfos JobGetInfos() {
         return new JobGetInfos();
+    }
+
+    public static String getRoute(String routeName) {
+        if (routes.containsKey(routeName)) {
+            return routes.get(routeName);
+        } else {
+            throw new IllegalArgumentException("La route " + routeName + " n'existe pas.");
+        }
+    }
+
+    public static String getRoute(Enum<?> routeEnum) {
+        return getRoute(routeEnum.name().toLowerCase());
     }
 
     /**

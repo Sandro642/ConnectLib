@@ -1,14 +1,11 @@
 plugins {
     id("java")
     application
-    id("org.openjfx.javafxplugin") version "0.0.13"
     id("maven-publish") // Plugin pour la publication
 }
 
-
 group = "fr.sandro642.github"
 version = "0.1.7-STABLE" // Version de votre projet
-
 
 // Ajoutez cette tâche à votre build.gradle.kts
 tasks.register("printVersion") {
@@ -31,15 +28,7 @@ dependencies {
     implementation("io.projectreactor:reactor-core:3.6.9")
     implementation("org.springframework.boot:spring-boot-starter-webflux:3.2.2")
 
-    implementation("org.openjfx:javafx-controls:21")
-    implementation("org.openjfx:javafx-fxml:21")
-
     compileOnly("org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT")
-}
-
-javafx {
-    version = "21"
-    modules = listOf("javafx.controls", "javafx.fxml")
 }
 
 application {

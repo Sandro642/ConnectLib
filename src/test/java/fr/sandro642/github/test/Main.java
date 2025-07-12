@@ -3,13 +3,16 @@ package fr.sandro642.github.test;
 import fr.sandro642.github.ConnectorAPI;
 
 import fr.sandro642.github.api.ApiResponse;
+import fr.sandro642.github.utils.ConvertEnum;
 import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import org.junit.jupiter.api.Test;
 
 /**
- * Main est une classe de test pour vérifier la création du fichier YML et pleins d'autres fonctionnalités de la librairie.
+ * Main est une classe de test pour vérifier la création du fichier YML et
+ * pleins d'autres fonctionnalités de la librairie.
+ * 
  * @author Sandro642
  * @version 1.0
  * @since 1.0
@@ -17,56 +20,94 @@ import org.junit.jupiter.api.Test;
 
 public class Main {
 
-    @Test
+  public enum TestRoutes implements ConvertEnum.RouteImport {
+    VERSION("/api/mcas/info/version"),
+    INFO("/api/mcas/info/info");
+
+    String route;
+
+    TestRoutes(String route) {
+      this.route = route;
+    }
+
+    @Override
+    public String route() {
+      return route;
+    }
+  }
+
+  @Test
     public void initializeCAPI() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
+
+        ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
+                .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
+                .getResponse();
+
+        System.out.println(response.display());
     }
 
+  public static void main(String[] args) {
+    ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
-    public static void main(String[] args) {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+    try {
+      // Exemple d'utilisation comme demandé
+      ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
+          .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info")
+          .getResponse();
 
-        try {
-            // Exemple d'utilisation comme demandé
-            ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info")
-                    .getResponse();
+      System.out.println("Data: " + response.getData());
+      System.out.println("Message: " + response.getMsg());
+      System.out.println("Code: " + response.getCode());
+      System.out.println("Erreur: " + response.isErr());
 
-            System.out.println("Data: " + response.getData());
-            System.out.println("Message: " + response.getMsg());
-            System.out.println("Code: " + response.getCode());
-            System.out.println("Erreur: " + response.isErr());
+      ApiResponse<Void> response2 = ConnectorAPI.JobGetInfos()
+          .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info")
+          .getResponse();
 
-            System.out.println(response.display());
+      System.out.println("Data: " + response.getData());
+      System.out.println("Message: " + response.getMsg());
+      System.out.println("Code: " + response.getCode());
+      System.out.println("Erreur: " + response.isErr());
 
-            try {
-                System.out.println("Valeur spécifique: " + response.getSpecData("version"));
-            } catch (Exception e) {
-                System.out.println("Clé 'version' non trouvée dans les données");
-            }
+      ApiResponse<Void> response3 = ConnectorAPI.JobGetInfos()
+          .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info")
+          .getResponse();
 
-        } catch (Exception e) {
-            System.err.println("Erreur lors de l'appel API: " + e.getMessage());
-            e.printStackTrace();
-        }
+      System.out.println("Data: " + response.getData());
+      System.out.println("Message: " + response.getMsg());
+      System.out.println("Code: " + response.getCode());
+      System.out.println("Erreur: " + response.isErr());
+
+      System.out.println(response.display());
+
+      try {
+        System.out.println("Valeur spécifique: " + response.getSpecData("version"));
+      } catch (Exception e) {
+        System.out.println("Clé 'version' non trouvée dans les données");
+      }
+
+    } catch (Exception e) {
+      System.err.println("Erreur lors de l'appel API: " + e.getMessage());
+      e.printStackTrace();
     }
+  }
 
+  @Test
+  public void testGetExtraData() {
+    ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
-    @Test
-    public void testGetExtraData() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+    try {
+      ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
+          .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
+          .getResponse();
 
-        try {
-            ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
-                    .getResponse();
+      System.out.println("Data: " + response);
 
-            System.out.println("Data: " + response);
-
-        } catch (Exception e) {
-            System.err.println("Erreur lors de l'appel API: " + e.getMessage());
-            e.printStackTrace();
-        }
+    } catch (Exception e) {
+      System.err.println("Erreur lors de l'appel API: " + e.getMessage());
+      e.printStackTrace();
     }
+  }
 
 }
