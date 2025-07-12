@@ -29,7 +29,7 @@ public class Main {
         try {
             // Exemple d'utilisation comme demandé
             ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "version")
+                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info")
                     .getResponse();
 
             System.out.println("Data: " + response.getData());
@@ -40,7 +40,7 @@ public class Main {
             System.out.println(response.display());
 
             try {
-                System.out.println("Valeur spécifique: " + response.getSpecDataString("version"));
+                System.out.println("Valeur spécifique: " + response.getSpecData("version"));
             } catch (Exception e) {
                 System.out.println("Clé 'version' non trouvée dans les données");
             }

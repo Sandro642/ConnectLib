@@ -1,5 +1,7 @@
 package fr.sandro642.github.hook;
 
+import fr.sandro642.github.ConnectorAPI;
+import fr.sandro642.github.jobs.misc.ResourceType;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -37,8 +39,8 @@ public class MCSupport {
     public boolean isMCProject() {
         try {
 
-            String fileLocation = (String) fr.sandro642.github.ConnectorAPI.StoreAndRetrieve().store.get(fr.sandro642.github.ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY);
-            return fileLocation != null && fileLocation.contains(fr.sandro642.github.jobs.misc.ResourceType.MC_RESOURCES.getPath());
+            String fileLocation = (String) ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY);
+            return fileLocation != null && fileLocation.contains(ResourceType.MC_RESOURCES.getPath());
         } catch (Exception e) {
             // En cas d'erreur, considérer que ce n'est pas un projet MC
             return false;
