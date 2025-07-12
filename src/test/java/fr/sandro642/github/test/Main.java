@@ -20,25 +20,9 @@ import org.junit.jupiter.api.Test;
 
 public class Main {
 
-  public enum TestRoutes implements ConvertEnum.RouteImport {
-    VERSION("/api/mcas/info/version"),
-    INFO("/api/mcas/info/info");
-
-    String route;
-
-    TestRoutes(String route) {
-      this.route = route;
-    }
-
-    @Override
-    public String route() {
-      return route;
-    }
-  }
-
   @Test
     public void initializeCAPI() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, "version");
 
         ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
                 .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
@@ -48,7 +32,7 @@ public class Main {
     }
 
   public static void main(String[] args) {
-    ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
+    ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, "version");
 
     try {
       // Exemple d'utilisation comme demandé
