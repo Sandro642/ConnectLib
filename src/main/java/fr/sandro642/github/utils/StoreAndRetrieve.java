@@ -25,8 +25,8 @@ public class StoreAndRetrieve {
 
     /**
      * Ajoute une valeur à la map avec la clé spécifiée.
-     * @param key
-     * @param value
+     * @param key est la valeur de la clé pour laquelle la valeur sera stockée.
+     * @param value est la valeur à stocker dans la map.
      */
     public void put(String key, Object value) {
         store.put(key, value);
@@ -34,8 +34,8 @@ public class StoreAndRetrieve {
 
     /**
      * Récupère une valeur associée à la clé spécifiée.
-     * @param key
-     * @return
+     * @param key est la clé pour laquelle la valeur sera récupérée.
+     * @return la valeur associée à la clé, ou null si la clé n'existe pas.
      */
     public Object get(String key) {
         return store.get(key);
@@ -44,7 +44,7 @@ public class StoreAndRetrieve {
 
     /**
      * Supprime une valeur associée à la clé spécifiée.
-     * @param key
+     * @param key est la clé pour laquelle la valeur sera supprimée.
      */
     public void remove(String key) {
         store.remove(key);
@@ -53,8 +53,8 @@ public class StoreAndRetrieve {
 
     /**
      * Vérifie si la map contient une clé spécifiée.
-     * @param key
-     * @return
+     * @param key est la clé à vérifier dans la map.
+     * @return true si la clé existe dans la map, false sinon.
      */
     public boolean containsKey(String key) {
         return store.containsKey(key);

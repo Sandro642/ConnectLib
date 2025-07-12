@@ -72,8 +72,6 @@ public class YamlUtils {
             Yaml yaml = new Yaml();
             Map<String, Object> yamlData = yaml.load(inputStream);
 
-            System.out.println("Récupération des routes " + yamlData.get("routes"));
-
             // Récupérer la map "routes"
             return (Map<String, String>) yamlData.get("routes");
         } catch (Exception ex) {
@@ -97,6 +95,7 @@ public class YamlUtils {
         }
 
         File directory = new File(basePath);
+
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -124,7 +123,7 @@ public class YamlUtils {
                     if (line.equals("routes:")) {
                         routesStartIndex = i;
                     } else if (routesStartIndex != -1 && line.matches("^[a-zA-Z_][a-zA-Z0-9_]*:.*")) {
-                        // On a trouvé une nouvelle section (pas une route)
+                        // On a trouvé une nouvelle section (pas une route.)
                         if (!line.startsWith("#") && !line.matches("^\\s*[a-zA-Z_][a-zA-Z0-9_]*:\\s*\"/.*")) {
                             routesEndIndex = i;
                             break;
@@ -138,7 +137,7 @@ public class YamlUtils {
                 }
 
                 if (routesStartIndex != -1) {
-                    // Supprimer l'ancienne section routes (garder juste la ligne "routes:")
+                    // Supprimer l'ancienne section routes (garder juste la ligne "routes :")
                     List<String> newLines = new ArrayList<>();
                     newLines.addAll(lines.subList(0, routesStartIndex + 1));
 

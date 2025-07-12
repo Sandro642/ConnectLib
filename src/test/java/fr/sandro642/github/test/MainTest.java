@@ -16,13 +16,13 @@ import org.junit.jupiter.api.Test;
  * @since 1.0
  */
 
-public class Main {
+public class MainTest {
 
     public enum TestRoutes implements ConvertEnum.RouteImport {
         VERSION("/api/mcas/info/version"),
         INFO("/api/mcas/info/info");
 
-        String route;
+        final String route;
 
         TestRoutes(String route) {
             this.route = route;
@@ -45,7 +45,7 @@ public class Main {
 
         try {
             // Exemple d'utilisation comme demandé
-            ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
+            ApiResponse response = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
                     .getResponse();
 
@@ -57,7 +57,7 @@ public class Main {
             System.out.println(response.display());
 
             try {
-                System.out.println("Valeur spécifique: " + response.getSpecData("version"));
+                System.out.println("Valeur spécifique: " + response.getSpecDataString("version"));
             } catch (Exception e) {
                 System.out.println("Clé 'version' non trouvée dans les données");
             }
@@ -74,7 +74,7 @@ public class Main {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
         try {
-            ApiResponse<Void> response = ConnectorAPI.JobGetInfos()
+            ApiResponse response = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
                     .getResponse();
 

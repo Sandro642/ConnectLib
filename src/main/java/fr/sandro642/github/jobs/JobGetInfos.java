@@ -5,7 +5,6 @@ import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiResponse;
 import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.VersionType;
-import fr.sandro642.github.utils.YamlUtils;
 
 import java.util.Map;
 
@@ -25,13 +24,13 @@ public class JobGetInfos {
      * YamlUtils est utilisé pour lire les routes depuis le fichier YAML.
      */
     private final ApiClient apiClient;
-    private final YamlUtils yamlUtils;
+
     /**
      * Constructeur de JobGetInfos qui initialise ApiClient et YamlUtils.
      */
     public JobGetInfos() {
         this.apiClient = new ApiClient();
-        this.yamlUtils = ConnectorAPI.YamlUtils();
+        ConnectorAPI.YamlUtils();
     }
 
     private String getRouteName(Enum<?> routeName) {
@@ -234,7 +233,7 @@ public class JobGetInfos {
      * Exécute la requête API et retourne la réponse
      * @return ApiResponse contenant la réponse de l'API
      */
-    public ApiResponse<Void> getResponse() {
+    public ApiResponse getResponse() {
         try {
 
             String route = (String) ConnectorAPI.StoreAndRetrieve().store.get("currentRoute");
@@ -245,7 +244,7 @@ public class JobGetInfos {
                 throw new RuntimeException("Route ou méthode non définie. Appelez getRoutes() d'abord.");
             }
 
-            ApiResponse<Void> response;
+            ApiResponse response;
 
             if (method == MethodType.GET) {
                 response = apiClient.callAPIGet(route).block();

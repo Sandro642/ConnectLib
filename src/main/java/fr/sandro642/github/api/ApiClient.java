@@ -24,7 +24,7 @@ public class ApiClient {
    */
   private final WebClient webClient;
 
-  private final AtomicReference<ApiResponse<Void>> lastResponse = new AtomicReference<>();
+  private final AtomicReference<ApiResponse> lastResponse = new AtomicReference<>();
 
   // private final AtomicReference<Map<String, Object>> lastRawResponse = new AtomicReference<>();
 
@@ -48,15 +48,15 @@ public class ApiClient {
   /**
    * Méthode pour appeler l'API avec une requête GET.
    * 
-   * @param routeName
-   * @return
+   * @param routeName c'est le nom de la route à appeler.
+   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
    */
-  public Mono<ApiResponse<Void>> callAPIGet(String routeName) {
+  public Mono<ApiResponse> callAPIGet(String routeName) {
     logger.INFO("Appel GET vers: " + routeName);
     return webClient.get()
         .uri(routeName)
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse<Void>>() {
+        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
         })
         .subscribeOn(Schedulers.boundedElastic())
         .doOnNext(lastResponse::set)
@@ -66,18 +66,18 @@ public class ApiClient {
   /**
    * Méthode pour appeler l'API avec une requête POST.
    * 
-   * @param routeName
+   * @param routeName Nom de la route à appeler.
    * @param body      Corps de la requête (peut être null pour une requête sans
    *                  corps).
-   * @return
+   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
    */
-  public Mono<ApiResponse<Void>> callAPIPost(String routeName, Map<String, Object> body) {
+  public Mono<ApiResponse> callAPIPost(String routeName, Map<String, Object> body) {
     logger.INFO("Appel POST vers: " + routeName);
     return webClient.post()
         .uri(routeName)
         .bodyValue(body != null ? body : Map.of())
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse<Void>>() {
+        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
         })
         .subscribeOn(Schedulers.boundedElastic())
         .doOnNext(lastResponse::set)
@@ -87,17 +87,17 @@ public class ApiClient {
   /**
    * Méthode pour appeler l'API avec une requête PUT
    * 
-   * @param routeName
-   * @param body
-   * @return
+   * @param routeName Nom de la route à appeler.
+   * @param body     Corps de la requête (peut être null pour une requête sans corps).
+   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
    */
-  public Mono<ApiResponse<Void>> callAPIPut(String routeName, Map<String, Object> body) {
+  public Mono<ApiResponse> callAPIPut(String routeName, Map<String, Object> body) {
     logger.INFO("Appel PUT vers: " + routeName);
     return webClient.put()
         .uri(routeName)
         .bodyValue(body != null ? body : Map.of())
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse<Void>>() {
+        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
         })
         .subscribeOn(Schedulers.boundedElastic())
         .doOnNext(lastResponse::set)
@@ -105,19 +105,19 @@ public class ApiClient {
   }
 
   /**
-   * Méthode pour appeler l'API avec une reqête PATCH
+   * Méthode pour appeler l'API avec une requête PATCH
    * 
-   * @param routeName
-   * @param body
-   * @return
+   * @param routeName Nom de la route à appeler.
+   * @param body    Corps de la requête (peut être null pour une requête sans corps).
+   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
    */
-  public Mono<ApiResponse<Void>> callAPIPatch(String routeName, Map<String, Object> body) {
+  public Mono<ApiResponse> callAPIPatch(String routeName, Map<String, Object> body) {
     logger.INFO("Appel PATCH vers: " + routeName);
     return webClient.patch()
         .uri(routeName)
         .bodyValue(body != null ? body : Map.of())
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse<Void>>() {
+        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
         })
         .subscribeOn(Schedulers.boundedElastic())
         .doOnNext(lastResponse::set)
@@ -127,15 +127,15 @@ public class ApiClient {
   /**
    * Méthode pour appeler l'API avec une requête DELETE
    * 
-   * @param routeName
-   * @return
+   * @param routeName Nom de la route à appeler.
+   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
    */
-  public Mono<ApiResponse<Void>> callAPIDelete(String routeName) {
+  public Mono<ApiResponse> callAPIDelete(String routeName) {
     logger.INFO("Appel DELETE vers: " + routeName);
     return webClient.delete()
         .uri(routeName)
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse<Void>>() {
+        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
         })
         .subscribeOn(Schedulers.boundedElastic())
         .doOnNext(lastResponse::set)

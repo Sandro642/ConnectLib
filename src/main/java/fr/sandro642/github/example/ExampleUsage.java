@@ -36,7 +36,7 @@ public class ExampleUsage {
 
             // 1. Appel GET simple sans paramètres
             System.out.println("1. Appel GET simple :");
-            ApiResponse<Void> simpleResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse simpleResponse = ConnectorAPI.JobGetInfos()
                     .getRoutes(MethodType.GET, "info")
                     .getResponse();
 
@@ -44,7 +44,7 @@ public class ExampleUsage {
 
             // 2. Appel GET avec version spécifique
             System.out.println("\n2. Appel GET avec version V1 :");
-            ApiResponse<Void> versionResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse versionResponse = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "info")
                     .getResponse();
 
@@ -57,7 +57,7 @@ public class ExampleUsage {
             requestBody.put("password", "password123");
             requestBody.put("remember", true);
 
-            ApiResponse<Void> postResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse postResponse = ConnectorAPI.JobGetInfos()
                     .getRoutesWithBody(MethodType.POST, "login", requestBody)
                     .getResponse();
 
@@ -69,7 +69,7 @@ public class ExampleUsage {
             urlParams.put("userId", "12345");
             urlParams.put("token", "abc123xyz");
 
-            ApiResponse<Void> paramsResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse paramsResponse = ConnectorAPI.JobGetInfos()
                     .getRoutesWithParams(MethodType.GET, "user_profile", urlParams)
                     .getResponse();
 
@@ -86,7 +86,7 @@ public class ExampleUsage {
             updateParams.put("userId", "67890");
             updateParams.put("sessionId", "sess_abc123");
 
-            ApiResponse<Void> completeResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse completeResponse = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V2_BRANCH, MethodType.POST, "update_user", updateBody, updateParams)
                     .getResponse();
 
@@ -100,7 +100,7 @@ public class ExampleUsage {
             multiParams.put("brand", "apple");
             multiParams.put("model", "iphone15");
 
-            ApiResponse<Void> multiParamsResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse multiParamsResponse = ConnectorAPI.JobGetInfos()
                     .getRoutesWithParams(MethodType.GET, "product_details", multiParams)
                     .getResponse();
 
@@ -109,7 +109,7 @@ public class ExampleUsage {
             // 7. Appel avec gestion d'erreur spécifique
             System.out.println("\n7. Appel avec gestion d'erreur :");
             try {
-                ApiResponse<Void> errorResponse = ConnectorAPI.JobGetInfos()
+                ApiResponse errorResponse = ConnectorAPI.JobGetInfos()
                         .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "nonexistent_route")
                         .getResponse();
 
@@ -121,23 +121,9 @@ public class ExampleUsage {
 
             // 8. Appel avec différents types de données dans le body
             System.out.println("\n8. Appel POST avec types de données variés :");
-            Map<String, Object> complexBody = new HashMap<>();
-            complexBody.put("stringValue", "Hello World");
-            complexBody.put("intValue", 42);
-            complexBody.put("boolValue", false);
-            complexBody.put("doubleValue", 3.14159);
+            Map<String, Object> complexBody = getStringObjectMap();
 
-            // Sous-objet
-            Map<String, Object> subObject = new HashMap<>();
-            subObject.put("nestedString", "Nested Value");
-            subObject.put("nestedInt", 100);
-            complexBody.put("nestedObject", subObject);
-
-            // Array
-            List<String> arrayValue = Arrays.asList("item1", "item2", "item3");
-            complexBody.put("arrayValue", arrayValue);
-
-            ApiResponse<Void> complexResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse complexResponse = ConnectorAPI.JobGetInfos()
                     .getRoutesWithBody(MethodType.POST, "complex_data", complexBody)
                     .getResponse();
 
@@ -149,7 +135,7 @@ public class ExampleUsage {
             versionParams.put("apiKey", "sk-1234567890");
             versionParams.put("format", "json");
 
-            ApiResponse<Void> versionParamsResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse versionParamsResponse = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V2_BRANCH, MethodType.GET, "api_status", null, versionParams)
                     .getResponse();
 
@@ -157,7 +143,7 @@ public class ExampleUsage {
 
             // 10. Appel sans version (utilise la route telle quelle)
             System.out.println("\n10. Appel sans version :");
-            ApiResponse<Void> noVersionResponse = ConnectorAPI.JobGetInfos()
+            ApiResponse noVersionResponse = ConnectorAPI.JobGetInfos()
                     .getRoutes(null, MethodType.GET, "health", null, null)
                     .getResponse();
 
@@ -167,39 +153,39 @@ public class ExampleUsage {
 
         } catch (Exception e) {
             System.err.println("Erreur générale lors de l'exécution: " + e.getMessage());
-            e.printStackTrace();
         }
+    }
+
+    private static Map<String, Object> getStringObjectMap() {
+        Map<String, Object> complexBody = new HashMap<>();
+        complexBody.put("stringValue", "Hello World");
+        complexBody.put("intValue", 42);
+        complexBody.put("boolValue", false);
+        complexBody.put("doubleValue", 3.14159);
+
+        // Sous-objet
+        Map<String, Object> subObject = new HashMap<>();
+        subObject.put("nestedString", "Nested Value");
+        subObject.put("nestedInt", 100);
+        complexBody.put("nestedObject", subObject);
+
+        // Array
+        List<String> arrayValue = Arrays.asList("item1", "item2", "item3");
+        complexBody.put("arrayValue", arrayValue);
+        return complexBody;
     }
 
     /**
      * Méthode utilitaire pour afficher les résultats d'une réponse API
      * @param response La réponse API à afficher
      */
-    private static void displayResponse(ApiResponse<Void> response) {
+    private static void displayResponse(ApiResponse response) {
         if (response != null) {
             System.out.println("  Code: " + response.getCode());
             System.out.println("  Message: " + response.getMsg());
             System.out.println("  Erreur: " + response.isErr());
             System.out.println("  Data: " + response.getData());
 
-            // Tentative d'accès à des données spécifiques
-            try {
-//                Object specificData = response.getSpecData("version");
-//                if (specificData != null) {
-//                    System.out.println("  Version spécifique: " + specificData);
-//                }
-            } catch (Exception e) {
-                // Ignore si la clé n'existe pas
-            }
-
-            try {
-//                Object statusData = response.getSpecData("status");
-//                if (statusData != null) {
-//                    System.out.println("  Status spécifique: " + statusData);
-//                }
-            } catch (Exception e) {
-                // Ignore si la clé n'existe pas
-            }
         } else {
             System.out.println("  Réponse null reçue");
         }

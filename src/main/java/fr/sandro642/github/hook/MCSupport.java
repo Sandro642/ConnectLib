@@ -112,13 +112,6 @@ public class MCSupport {
      * @return L'instance unique de MCSupport.
      */
     public static MCSupport getInstance() {
-        if (instance == null) {
-            synchronized (MCSupport.class) {
-                if (instance == null) {
-                    instance = new MCSupport();
-                }
-            }
-        }
         return instance;
     }
 }
