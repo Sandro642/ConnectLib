@@ -62,14 +62,11 @@ public class ConnectorAPI {
             storeAndRetrieve.store.put(storeAndRetrieve.URL_KEY, baseUrl);
         }
 
-        ConnectorAPI.routes.putAll(yamlUtils.getRoutes());
-    }
-
-    /**
-     * Retourne une instance de JobGetInfos pour les opérations API
-     */
-    public static JobGetInfos JobGetInfos() {
-        return new JobGetInfos();
+        // FIX: Vérifier que getRoutes() ne retourne pas null avant putAll
+        Map<String, String> yamlRoutes = yamlUtils.getRoutes();
+        if (yamlRoutes != null) {
+            ConnectorAPI.routes.putAll(yamlRoutes);
+        }
     }
 
     public static String getRoute(String routeName) {
@@ -82,6 +79,13 @@ public class ConnectorAPI {
 
     public static String getRoute(Enum<?> routeEnum) {
         return getRoute(routeEnum.name().toLowerCase());
+    }
+
+    /**
+     * Retourne une instance de JobGetInfos pour les opérations API
+     */
+    public static JobGetInfos JobGetInfos() {
+        return new JobGetInfos();
     }
 
     /**

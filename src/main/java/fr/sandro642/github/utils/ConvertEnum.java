@@ -16,6 +16,7 @@ public class ConvertEnum {
                 map.put((Enum<?>) routeImport, routeImport.route());
             }
         }
+
         return map;
     }
 }
