@@ -6,14 +6,12 @@ import java.util.Map;
  * ApiResponse est une classe générique qui représente la réponse d'une API.
  * Elle contient des informations sur l'état de la réponse, un message, un code
  * de statut et des données spécifiques.
- * 
- * @param <T> Le type de données contenues dans la réponse.
  * @author Sandro642
  * @version 1.0
  * @since 1.0
  */
 
-public class ApiResponse<T> {
+public class ApiResponse {
 
   /**
    * Variables d'instance
@@ -34,10 +32,10 @@ public class ApiResponse<T> {
   /**
    * Constructeur pour initialiser la réponse d'API avec des valeurs spécifiques.
    * 
-   * @param err
-   * @param msg
-   * @param code
-   * @param data
+   * @param err indique s'il y a une erreur dans la réponse.
+   * @param msg message d'erreur ou de succès.
+   * @param code code de statut de la réponse (par exemple, HTTP status code).
+   * @param data données spécifiques de la réponse, stockées dans une Map.
    */
   public ApiResponse(boolean err, String msg, int code, Map<String, Object> data) {
     this.err = err;
@@ -49,7 +47,7 @@ public class ApiResponse<T> {
   /**
    * Vérifie s'il y a une erreur dans la réponse.
    * 
-   * @return
+   * @return true si la réponse contient une erreur, false sinon.
    */
   public boolean isErr() {
     return err;
@@ -58,7 +56,7 @@ public class ApiResponse<T> {
   /**
    * Définit si la réponse contient une erreur.
    * 
-   * @param err
+   * @param err indique s'il y a une erreur dans la réponse.
    */
   public void setErr(boolean err) {
     this.err = err;
@@ -67,7 +65,7 @@ public class ApiResponse<T> {
   /**
    * Récupère le message de la réponse.
    * 
-   * @return
+   * @return le message de la réponse, qui peut être un message d'erreur ou de
    */
   public String getMsg() {
     return msg;
@@ -76,7 +74,7 @@ public class ApiResponse<T> {
   /**
    * Définit le message de la réponse.
    * 
-   * @param msg
+   * @param msg le message de la réponse, qui peut être un message d'erreur ou de
    */
   public void setMsg(String msg) {
     this.msg = msg;
@@ -85,7 +83,7 @@ public class ApiResponse<T> {
   /**
    * Récupère le code de statut de la réponse.
    * 
-   * @return
+   * @return le code de statut de la réponse, par exemple un code HTTP.
    */
   public int getCode() {
     return code;
@@ -94,7 +92,7 @@ public class ApiResponse<T> {
   /**
    * Définit le code de statut de la réponse.
    * 
-   * @param code
+   * @param code le code de statut de la réponse, par exemple un code HTTP.
    */
   public void setCode(int code) {
     this.code = code;
@@ -103,7 +101,7 @@ public class ApiResponse<T> {
   /**
    * Récupère les données de la réponse.
    * 
-   * @return
+   * @return une Map contenant les données spécifiques de la réponse.
    */
   public Map<String, Object> getData() {
     return data;
@@ -112,7 +110,7 @@ public class ApiResponse<T> {
   /**
    * Définit les données de la réponse.
    * 
-   * @param data
+   * @param data une Map contenant les données spécifiques de la réponse.
    */
   public void setData(Map<String, Object> data) {
     this.data = data;

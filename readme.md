@@ -2,12 +2,12 @@
 
 Bienvenue dans **ConnectorAPI** : la passerelle universelle pour connecter, automatiser et orchestrer vos flux de données !
 Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec ConnectorAPI, c’est comme jouer avec des Lego : simple, intuitif et puissant. 
-> Pour information, cette librairie n'est pas destinée à être utilisée pour Minecraft, elle est utilisée afin professionnel dans un projet Java
+> Pour information, cette librairie n'est pas destinée à être utilisée pour Minecraft, elle est utilisée afin professionnel dans un projet Java.
 
 ---
 
 ```java
-Stable Version : 0.1.8-STABLE
+Stable Version : 0.1.9.1-STABLE
 ```
 
 ---
@@ -22,7 +22,7 @@ Hook -----------------------|
 ```
 ---
 
-Être tenu au courant des dernière features et mises à jour de ConnectorAPI 
+Être tenu au courant des dernières features et mises à jour de ConnectorAPI.
 
 - [Feature/Schematic](feature/schematic.md)
 
