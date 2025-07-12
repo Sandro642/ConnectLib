@@ -49,7 +49,7 @@ public class ApiClient {
    * Méthode pour appeler l'API avec une requête GET.
    * 
    * @param routeName c'est le nom de la route à appeler.
-   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
+   * @return la réponse de l'API encapsulée.
    */
   public Mono<ApiResponse> callAPIGet(String routeName) {
     logger.INFO("Appel GET vers: " + routeName);
@@ -69,7 +69,7 @@ public class ApiClient {
    * @param routeName Nom de la route à appeler.
    * @param body      Corps de la requête (peut être null pour une requête sans
    *                  corps).
-   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
+   * @return la réponse de l'API encapsulée.
    */
   public Mono<ApiResponse> callAPIPost(String routeName, Map<String, Object> body) {
     logger.INFO("Appel POST vers: " + routeName);
@@ -89,7 +89,7 @@ public class ApiClient {
    * 
    * @param routeName Nom de la route à appeler.
    * @param body     Corps de la requête (peut être null pour une requête sans corps).
-   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
+   * @return la réponse de l'API encapsulée.
    */
   public Mono<ApiResponse> callAPIPut(String routeName, Map<String, Object> body) {
     logger.INFO("Appel PUT vers: " + routeName);
@@ -109,7 +109,7 @@ public class ApiClient {
    * 
    * @param routeName Nom de la route à appeler.
    * @param body    Corps de la requête (peut être null pour une requête sans corps).
-   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
+   * @return la réponse de l'API encapsulée.
    */
   public Mono<ApiResponse> callAPIPatch(String routeName, Map<String, Object> body) {
     logger.INFO("Appel PATCH vers: " + routeName);
@@ -128,7 +128,7 @@ public class ApiClient {
    * Méthode pour appeler l'API avec une requête DELETE
    * 
    * @param routeName Nom de la route à appeler.
-   * @return la réponse de l'API encapsulée dans un Mono<ApiResponse>.
+   * @return la réponse de l'API encapsulée.
    */
   public Mono<ApiResponse> callAPIDelete(String routeName) {
     logger.INFO("Appel DELETE vers: " + routeName);
