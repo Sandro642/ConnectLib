@@ -84,8 +84,7 @@ public class YamlUtils {
 
     /**
      * Récupère toutes les routes définies dans le fichier YAML
-     * @param routeName
-     * @return
+     * @return une map contenant les routes, ou null en cas d'erreur
      */
     public Map<String,String> getRoutes() {
 
