@@ -2,7 +2,7 @@ package fr.sandro642.github.test;
 
 import fr.sandro642.github.ConnectorAPI;
 
-import fr.sandro642.github.api.ApiResponse;
+import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
@@ -48,26 +48,28 @@ public class MainTest {
 
         try {
             // Exemple d'utilisation comme demandé
-            ApiResponse response = ConnectorAPI.JobGetInfos()
+            ApiFactory response = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
                     .getResponse();
 
-            System.out.println("Data: " + response.getData());
-            System.out.println("Message: " + response.getMsg());
-            System.out.println("Code: " + response.getCode());
-            System.out.println("Erreur: " + response.isErr());
+            System.out.println(response.getSpecData("data", "version"));
 
-            System.out.println(response.display());
 
-            try {
-                System.out.println("Valeur spécifique: " + response.getSpecDataString("version"));
-            } catch (Exception e) {
-                System.out.println("Clé 'version' non trouvée dans les données");
-            }
+//            System.out.println("Data: " + response.getData());
+//            System.out.println("Message: " + response.getMsg());
+//            System.out.println("Code: " + response.getCode());
+//            System.out.println("Erreur: " + response.isErr());
+//
+//            System.out.println(response.display());
+
+//            try {
+//                System.out.println("Valeur spécifique : " + response.getSpecDataString("version"));
+//            } catch (Exception e) {
+//                System.out.println("Clé 'version' non trouvée dans les données");
+//            }
 
         } catch (Exception e) {
-            System.err.println("Erreur lors de l'appel API: " + e.getMessage());
-            e.printStackTrace();
+            return;
         }
     }
 
@@ -76,7 +78,13 @@ public class MainTest {
     public void FullObjectTest() {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
+        try {
+            ApiFactory response = ConnectorAPI.JobGetInfos()
+                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
+                    .getResponse();
+          
         Map<String, Boolean> body = Map.of("status", true);
+
 
         Map<String, String> params = Map.of("sessionId", "0233-xgt-7113");
 

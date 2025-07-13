@@ -30,7 +30,9 @@ public class ConnectorAPI {
     private static final Map<String,String> routes = new HashMap<>();
 
     /**
-     * Initialise le ConnectorAPI avec le type de ressource spécifié
+     * Initialise le ConnectorAPI avec le type de ressource, les routes et les schémas
+     * @param resourceType Le type de ressource à utiliser
+     * @param routes Les classes d'énumération contenant les routes
      */
     public static void initialize(ResourceType resourceType, Class<? extends Enum<?>>... routes) {
 
@@ -40,7 +42,7 @@ public class ConnectorAPI {
                 throw new IllegalArgumentException("Les routes ne peuvent pas être null");
             }
 
-            routesEnums.putAll(ConvertEnum.convert(route));
+            routesEnums.putAll(ConvertEnum.convertRouteImport(route));
         }
 
         logger = new Logger();
@@ -69,6 +71,10 @@ public class ConnectorAPI {
         }
     }
 
+    /**
+     * Retourne une map contenant les routes définies dans le ConnectorAPI
+     * @return une map de routes
+     */
     public static String getRoute(String routeName) {
         if (routes.containsKey(routeName)) {
             return routes.get(routeName);
@@ -77,6 +83,10 @@ public class ConnectorAPI {
         }
     }
 
+    /**
+     * Retourne une map contenant les schémas définis dans le ConnectorAPI
+     * @return une map de schémas
+     */
     public static String getRoute(Enum<?> routeEnum) {
         return getRoute(routeEnum.name().toLowerCase());
     }

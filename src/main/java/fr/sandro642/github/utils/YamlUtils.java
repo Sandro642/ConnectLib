@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,28 @@ public class YamlUtils {
         }
     }
 
+    public Map<String, String> getSchemas() {
+        String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
+
+        try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
+            Yaml yaml = new Yaml();
+            Map<String, Object> yamlData = yaml.load(inputStream);
+
+            Map<String, Object> schemaMap = (Map<String, Object>) yamlData.get("schema");
+            if (schemaMap == null) return null;
+
+            Map<String, String> filtered = new HashMap<>();
+            for (Map.Entry<String, Object> entry : schemaMap.entrySet()) {
+                if (!entry.getKey().equals("enable")) { // exclure la clé "enable"
+                    filtered.put(entry.getKey(), entry.getValue().toString());
+                }
+            }
+            return filtered;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     /**
      * Récupère toutes les routes définies dans le fichier YAML
      * @return une map contenant les routes, ou null en cas d'erreur
@@ -79,6 +102,12 @@ public class YamlUtils {
         }
     }
 
+    /**
+     * Génère un template de fichier YAML si celui-ci n'existe pas, ou met à jour la section des routes si le fichier existe déjà.
+     *
+     * @param type   Le type de ressource pour laquelle générer le template.
+     * @param routes Les routes à ajouter ou mettre à jour dans le fichier YAML.
+     */
     /**
      * Génère un template de fichier YAML si celui-ci n'existe pas, ou met à jour la section des routes si le fichier existe déjà.
      *
@@ -186,25 +215,6 @@ public class YamlUtils {
                         .append(entry.getValue())
                         .append("\"\n");
             }
-
-            template.append("\nschema:\n" +
-                    "    #Activer la création de schéma ?\n" +
-                    "    enable: false\n\n" +
-                    "    #Schéma par défaut:\n" +
-                    "    #\tmsg : string\n" +
-                    "    #\terr: boolean\n" +
-                    "    #\tcode: integer\n" +
-                    "    #\tdata: Map<String, Object>\n\n" +
-                    "    #Composants à créer exemple, je vais créer plusieurs composant:\n" +
-                    "    #         msg : str\n" +
-                    "    #         status : bln\n" +
-                    "    #         code : int\n" +
-                    "    #         data_string-object : map / string pour une chaine de caractère et\n" +
-                    "    #                                  / object pour la récupération de n'importe\n" +
-                    "    #                                  / quel type de variable.\n" +
-                    "    #\n" +
-                    "    # Grâce à cela vous pourrez les appeler pour récupérer vos propres valeurs\n" +
-                    "    # par rapport à votre schéma réponse API\n");
 
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write(template.toString());

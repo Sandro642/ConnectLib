@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Permet d'effectuer des requêtes GET et POST.
  */
 
-public class ApiClient {
+public class ApiClient extends ApiFactory {
 
   /**
    * WebClient est utilisé pour effectuer les requêtes HTTP vers l'API.
@@ -24,11 +24,10 @@ public class ApiClient {
    */
   private final WebClient webClient;
 
-  private final AtomicReference<ApiResponse> lastResponse = new AtomicReference<>();
-
-  // private final AtomicReference<Map<String, Object>> lastRawResponse = new AtomicReference<>();
+  private final AtomicReference<ApiFactory> lastResponse = new AtomicReference<>();
 
   private final Logger logger = new Logger();
+  private final ApiFactory response = new ApiFactory();
 
   /**
    * Constructeur de ApiClient qui initialise WebClient avec l'URL de base.
@@ -51,17 +50,21 @@ public class ApiClient {
    * @param routeName c'est le nom de la route à appeler.
    * @return la réponse de l'API encapsulée.
    */
-  public Mono<ApiResponse> callAPIGet(String routeName) {
+  public Mono<ApiFactory> callAPIGet(String routeName) {
     logger.INFO("Appel GET vers: " + routeName);
     return webClient.get()
-        .uri(routeName)
-        .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
-        })
-        .subscribeOn(Schedulers.boundedElastic())
-        .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.ERROR("Erreur lors de l'appel GET: " + error.getMessage()));
+            .uri(routeName)
+            .retrieve()
+            .bodyToMono(String.class)  // Récupère le JSON brut comme String
+            .subscribeOn(Schedulers.boundedElastic())
+            .map(rawJson -> {
+              response.parseFromRawJson(rawJson);
+              return response;
+            })
+            .doOnNext(lastResponse::set)
+            .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel GET: " + error.getMessage()));
   }
+
 
   /**
    * Méthode pour appeler l'API avec une requête POST.
@@ -71,17 +74,20 @@ public class ApiClient {
    *                  corps).
    * @return la réponse de l'API encapsulée.
    */
-  public Mono<ApiResponse> callAPIPost(String routeName, Map<String, Object> body) {
+  public Mono<ApiFactory> callAPIPost(String routeName, Map<String, Object> body) {
     logger.INFO("Appel POST vers: " + routeName);
     return webClient.post()
         .uri(routeName)
         .bodyValue(body != null ? body : Map.of())
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
-        })
+        .bodyToMono(String.class)
         .subscribeOn(Schedulers.boundedElastic())
-        .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.ERROR("Erreur lors de l'appel POST: " + error.getMessage()));
+            .map(rawJson -> {
+              response.parseFromRawJson(rawJson);
+              return response;
+            })
+            .doOnNext(lastResponse::set)
+        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel POST: " + error.getMessage()));
   }
 
   /**
@@ -91,17 +97,20 @@ public class ApiClient {
    * @param body     Corps de la requête (peut être null pour une requête sans corps).
    * @return la réponse de l'API encapsulée.
    */
-  public Mono<ApiResponse> callAPIPut(String routeName, Map<String, Object> body) {
+  public Mono<ApiFactory> callAPIPut(String routeName, Map<String, Object> body) {
     logger.INFO("Appel PUT vers: " + routeName);
     return webClient.put()
         .uri(routeName)
         .bodyValue(body != null ? body : Map.of())
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
-        })
-        .subscribeOn(Schedulers.boundedElastic())
-        .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.ERROR("Erreur lors de l'appel PUT: " + error.getMessage()));
+            .bodyToMono(String.class)
+            .subscribeOn(Schedulers.boundedElastic())
+            .map(rawJson -> {
+              response.parseFromRawJson(rawJson);
+              return response;
+            })
+            .doOnNext(lastResponse::set)
+        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel PUT: " + error.getMessage()));
   }
 
   /**
@@ -111,17 +120,20 @@ public class ApiClient {
    * @param body    Corps de la requête (peut être null pour une requête sans corps).
    * @return la réponse de l'API encapsulée.
    */
-  public Mono<ApiResponse> callAPIPatch(String routeName, Map<String, Object> body) {
+  public Mono<ApiFactory> callAPIPatch(String routeName, Map<String, Object> body) {
     logger.INFO("Appel PATCH vers: " + routeName);
     return webClient.patch()
         .uri(routeName)
         .bodyValue(body != null ? body : Map.of())
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
-        })
-        .subscribeOn(Schedulers.boundedElastic())
-        .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.ERROR("Erreur lors de l'appel PATCH: " + error.getMessage()));
+            .bodyToMono(String.class)
+            .subscribeOn(Schedulers.boundedElastic())
+            .map(rawJson -> {
+              response.parseFromRawJson(rawJson);
+              return response;
+            })
+            .doOnNext(lastResponse::set)
+        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel PATCH: " + error.getMessage()));
   }
 
   /**
@@ -130,15 +142,18 @@ public class ApiClient {
    * @param routeName Nom de la route à appeler.
    * @return la réponse de l'API encapsulée.
    */
-  public Mono<ApiResponse> callAPIDelete(String routeName) {
+  public Mono<ApiFactory> callAPIDelete(String routeName) {
     logger.INFO("Appel DELETE vers: " + routeName);
     return webClient.delete()
         .uri(routeName)
         .retrieve()
-        .bodyToMono(new ParameterizedTypeReference<ApiResponse>() {
-        })
-        .subscribeOn(Schedulers.boundedElastic())
-        .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.ERROR("Erreur lors de l'appel PATCH: " + error.getMessage()));
+            .bodyToMono(String.class)
+            .subscribeOn(Schedulers.boundedElastic())
+            .map(rawJson -> {
+              response.parseFromRawJson(rawJson);
+              return response;
+            })
+            .doOnNext(lastResponse::set)
+        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel DELETE: " + error.getMessage()));
   }
 }
