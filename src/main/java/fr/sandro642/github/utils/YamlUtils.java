@@ -42,50 +42,10 @@ public class YamlUtils {
         }
     }
 
-    public Boolean isSchemaEnabled() {
-
-        String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
-
-        try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
-            Yaml yaml = new Yaml();
-            Map<String, Object> yamlData = yaml.load(inputStream);
-
-            // Récupérer la map "routes"
-            Map<String, Object> schema = (Map<String, Object>) yamlData.get("schema");
-            if (schema != null) {
-                return (Boolean) schema.get("enable");
-            }
-            return null;
-        } catch (Exception ex) {
-            return null;
-        }
-    }
-
-    public Map<String, String> getSchemas() {
-        String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY) + "/infos.yml";
-
-        try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
-            Yaml yaml = new Yaml();
-            Map<String, Object> yamlData = yaml.load(inputStream);
-
-            Map<String, Object> schemaMap = (Map<String, Object>) yamlData.get("schema");
-            if (schemaMap == null) return null;
-
-            Map<String, String> filtered = new HashMap<>();
-            for (Map.Entry<String, Object> entry : schemaMap.entrySet()) {
-                if (!entry.getKey().equals("enable")) { // exclure la clé "enable"
-                    filtered.put(entry.getKey(), entry.getValue().toString());
-                }
-            }
-            return filtered;
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
     /**
-     * Récupère toutes les routes définies dans le fichier YAML
-     * @return une map contenant les routes, ou null en cas d'erreur
+     * Récupère les routes définies dans le fichier YAML.
+     *
+     * @return une map contenant les routes, ou null en cas d'erreur.
      */
     public Map<String,String> getRoutes() {
 
@@ -102,12 +62,6 @@ public class YamlUtils {
         }
     }
 
-    /**
-     * Génère un template de fichier YAML si celui-ci n'existe pas, ou met à jour la section des routes si le fichier existe déjà.
-     *
-     * @param type   Le type de ressource pour laquelle générer le template.
-     * @param routes Les routes à ajouter ou mettre à jour dans le fichier YAML.
-     */
     /**
      * Génère un template de fichier YAML si celui-ci n'existe pas, ou met à jour la section des routes si le fichier existe déjà.
      *
