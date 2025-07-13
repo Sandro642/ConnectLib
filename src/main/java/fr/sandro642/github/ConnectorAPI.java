@@ -28,7 +28,6 @@ public class ConnectorAPI {
     private static StoreAndRetrieve storeAndRetrieve = new StoreAndRetrieve();
     private static YamlUtils yamlUtils = new YamlUtils();
     private static final Map<String,String> routes = new HashMap<>();
-    private static final Map<String, String> schemas = new HashMap<>();
 
     /**
      * Initialise le ConnectorAPI avec le type de ressource, les routes et les schémas
