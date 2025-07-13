@@ -154,6 +154,6 @@ public class ApiClient extends ApiFactory {
               return response;
             })
             .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel PATCH: " + error.getMessage()));
+        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel DELETE: " + error.getMessage()));
   }
 }
