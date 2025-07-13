@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'fr.sandro642.github'
-version = '0.1.9.1-STABLE' // Version de votre projet
+version = '0.1.9.2-STABLE' // Version de votre projet
 
 // Ajoutez cette tâche à votre build.gradle
 tasks.register('printVersion') {

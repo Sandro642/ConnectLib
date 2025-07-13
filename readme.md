@@ -7,7 +7,7 @@ Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec Con
 ---
 
 ```java
-Stable Version : 0.1.9.1-STABLE
+Stable Version : 0.1.9.2-STABLE
 ```
 
 ---
@@ -33,6 +33,7 @@ Changelog :
 ```java
  - [0.1.3.9-SNAPSHOT] : Ajout de la sérialisation des données pour une compatibilisation parfaite des données avec les HOOK.
  - [0.1.3.17-SNAPSHOT] : Suppresion de la sérialisation des données... Toujours disponible depuis la branche /feature/serializer. Utile si les processus ne sont pas initialisé dans le même environnement.
+ - [0.1.9.2-STABLE] : Patch de sécurité en utilisant la méthode getRoutes en utilisant une classe enumération pour la routeName : StackOverflowError... + Création des maps selon le type de variable souhaité.
 ```
 
 ---
