@@ -2,7 +2,7 @@ package fr.sandro642.github.test;
 
 import fr.sandro642.github.ConnectorAPI;
 
-import fr.sandro642.github.api.ApiResponse;
+import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
@@ -34,23 +34,6 @@ public class MainTest {
         }
     }
 
-    public enum TestSchemas implements ConvertEnum.SchemaImport {
-        MSG("string"),
-        CODE("int"),
-        DATA("object");
-
-        final String schema;
-
-        TestSchemas(String schema) {
-            this.schema = schema;
-        }
-
-        @Override
-        public String schema() {
-            return schema;
-        }
-    }
-
     @Test
     public void initializeCAPI() {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
@@ -58,16 +41,16 @@ public class MainTest {
 
 
     public static void main(String[] args) {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, new Class[]{TestRoutes.class}, new Class[]{TestSchemas.class});
-
-        System.out.println(ConnectorAPI.getSchema(TestSchemas.MSG));
-
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
             // Exemple d'utilisation comme demandé
-            ApiResponse response = ConnectorAPI.JobGetInfos()
+            ApiFactory response = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
                     .getResponse();
+
+            System.out.println(response.getSpecData("data", "version"));
+
 
 //            System.out.println("Data: " + response.getData());
 //            System.out.println("Message: " + response.getMsg());
@@ -83,8 +66,7 @@ public class MainTest {
 //            }
 
         } catch (Exception e) {
-            System.err.println("Erreur lors de l'appel API: " + e.getMessage());
-            e.printStackTrace();
+            return;
         }
     }
 
@@ -94,7 +76,7 @@ public class MainTest {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
 
         try {
-            ApiResponse response = ConnectorAPI.JobGetInfos()
+            ApiFactory response = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
                     .getResponse();
 

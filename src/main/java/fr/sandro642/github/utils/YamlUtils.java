@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,8 +68,16 @@ public class YamlUtils {
             Yaml yaml = new Yaml();
             Map<String, Object> yamlData = yaml.load(inputStream);
 
-            // Récupérer la map "schema"
-            return (Map<String, String>) yamlData.get(("schema"));
+            Map<String, Object> schemaMap = (Map<String, Object>) yamlData.get("schema");
+            if (schemaMap == null) return null;
+
+            Map<String, String> filtered = new HashMap<>();
+            for (Map.Entry<String, Object> entry : schemaMap.entrySet()) {
+                if (!entry.getKey().equals("enable")) { // exclure la clé "enable"
+                    filtered.put(entry.getKey(), entry.getValue().toString());
+                }
+            }
+            return filtered;
         } catch (IOException e) {
             return null;
         }
@@ -99,7 +108,13 @@ public class YamlUtils {
      * @param type   Le type de ressource pour laquelle générer le template.
      * @param routes Les routes à ajouter ou mettre à jour dans le fichier YAML.
      */
-    public void generateTemplateIfNotExists(ResourceType type, Map<Enum<?>, String> routes, Map<Enum<?>, String> schemas) {
+    /**
+     * Génère un template de fichier YAML si celui-ci n'existe pas, ou met à jour la section des routes si le fichier existe déjà.
+     *
+     * @param type   Le type de ressource pour laquelle générer le template.
+     * @param routes Les routes à ajouter ou mettre à jour dans le fichier YAML.
+     */
+    public void generateTemplateIfNotExists(ResourceType type, Map<Enum<?>, String> routes) {
         String basePath;
 
         if (type == ResourceType.MC_RESOURCES) {
@@ -117,7 +132,7 @@ public class YamlUtils {
         File file = new File(basePath, "infos.yml");
 
         if (file.exists()) {
-            // Le fichier existe, on met à jour les sections routes et schemas
+            // Le fichier existe, on met à jour seulement la section routes
             try {
                 // Lire le contenu existant
                 List<String> lines = new ArrayList<>();
@@ -150,35 +165,9 @@ public class YamlUtils {
                     routesEndIndex = lines.size();
                 }
 
-                // Trouver les indices de début et fin de la section schema
-                int schemaStartIndex = -1;
-                int schemaEndIndex = -1;
-                boolean enableFound = false;
-
-                for (int i = 0; i < lines.size(); i++) {
-                    String line = lines.get(i).trim();
-                    if (line.equals("schema:")) {
-                        schemaStartIndex = i;
-                    } else if (schemaStartIndex != -1 && line.startsWith("enable:")) {
-                        enableFound = true;
-                    } else if (schemaStartIndex != -1 && enableFound && line.matches("^[a-zA-Z_][a-zA-Z0-9_]*:.*")) {
-                        // On a trouvé une nouvelle section après enable
-                        if (!line.startsWith("#") && !line.matches("^\\s*[a-zA-Z_][a-zA-Z0-9_]*:\\s*.*")) {
-                            schemaEndIndex = i;
-                            break;
-                        }
-                    }
-                }
-
-                // Si on n'a pas trouvé de fin, la section schema va jusqu'à la fin du fichier
-                if (schemaStartIndex != -1 && schemaEndIndex == -1) {
-                    schemaEndIndex = lines.size();
-                }
-
-                List<String> newLines = new ArrayList<>();
-
                 if (routesStartIndex != -1) {
                     // Supprimer l'ancienne section routes (garder juste la ligne "routes :")
+                    List<String> newLines = new ArrayList<>();
                     newLines.addAll(lines.subList(0, routesStartIndex + 1));
 
                     // Ajouter les routes commentées par défaut
@@ -192,61 +181,10 @@ public class YamlUtils {
                         newLines.add("  " + entry.getKey().name().toLowerCase() + ": \"" + entry.getValue() + "\"");
                     }
 
-                    // Ajouter le début de la section schema jusqu'à enable
-                    if (schemaStartIndex != -1) {
-                        newLines.add("");
-                        newLines.add("schema:");
-                        newLines.add("    #Activer la création de schéma ?");
-                        newLines.add("    enable: false");
-                        newLines.add("");
-
-                        // Ajouter les schémas
-                        for (Map.Entry<Enum<?>, String> entry : schemas.entrySet()) {
-                            newLines.add("    " + entry.getKey().name().toLowerCase() + ": \"" + entry.getValue() + "\"");
-                        }
-
-                        // Ajouter les commentaires par défaut
-                        newLines.add("");
-                        newLines.add("    #Schéma par défaut:");
-                        newLines.add("    #\tmsg : string");
-                        newLines.add("    #\terr: boolean");
-                        newLines.add("    #\tcode: integer");
-                        newLines.add("    #\tdata: Map<String, Object>");
-                        newLines.add("");
-                        newLines.add("    #Composants à créer exemple, je vais créer plusieurs composant:");
-                        newLines.add("    #         msg : str");
-                        newLines.add("    #         status : bln");
-                        newLines.add("    #         code : int");
-                        newLines.add("    #         data_string-object : map / string pour une chaine de caractère et");
-                        newLines.add("    #                                  / object pour la récupération de n'importe");
-                        newLines.add("    #                                  / quel type de variable.");
-                        newLines.add("    #");
-                        newLines.add("    # Grâce à cela vous pourrez les appeler pour récupérer vos propres valeurs");
-                        newLines.add("    # par rapport à votre schéma réponse API");
-
-                        // Ajouter le reste du fichier après la section schema
-                        if (schemaEndIndex < lines.size()) {
-                            newLines.add("");
-                            newLines.addAll(lines.subList(schemaEndIndex, lines.size()));
-                        }
-                    } else {
-                        // Pas de section schema existante, on l'ajoute
-                        newLines.add("");
-                        newLines.add("schema:");
-                        newLines.add("    #Activer la création de schéma ?");
-                        newLines.add("    enable: false");
-                        newLines.add("");
-
-                        // Ajouter les schémas
-                        for (Map.Entry<Enum<?>, String> entry : schemas.entrySet()) {
-                            newLines.add("    " + entry.getKey().name().toLowerCase() + ": \"" + entry.getValue() + "\"");
-                        }
-
-                        // Ajouter le reste du fichier
-                        if (routesEndIndex < lines.size()) {
-                            newLines.add("");
-                            newLines.addAll(lines.subList(routesEndIndex, lines.size()));
-                        }
+                    // Ajouter le reste du fichier (section schema, etc.)
+                    if (routesEndIndex < lines.size()) {
+                        newLines.add(""); // Ligne vide avant la prochaine section
+                        newLines.addAll(lines.subList(routesEndIndex, lines.size()));
                     }
 
                     // Écrire le fichier mis à jour
@@ -277,36 +215,6 @@ public class YamlUtils {
                         .append(entry.getValue())
                         .append("\"\n");
             }
-
-            template.append("\nschema:\n" +
-                    "    #Activer la création de schéma ?\n" +
-                    "    enable: false\n\n");
-
-            // Ajouter les schémas
-            for (Map.Entry<Enum<?>, String> entry : schemas.entrySet()) {
-                template.append("    ")
-                        .append(entry.getKey().name().toLowerCase())
-                        .append(": \"")
-                        .append(entry.getValue())
-                        .append("\"\n");
-            }
-
-            template.append("\n" +
-                    "    #Schéma par défaut:\n" +
-                    "    #\tmsg : string\n" +
-                    "    #\terr: boolean\n" +
-                    "    #\tcode: integer\n" +
-                    "    #\tdata: Map<String, Object>\n\n" +
-                    "    #Composants à créer exemple, je vais créer plusieurs composant:\n" +
-                    "    #         msg : str\n" +
-                    "    #         status : bln\n" +
-                    "    #         code : int\n" +
-                    "    #         data_string-object : map / string pour une chaine de caractère et\n" +
-                    "    #                                  / object pour la récupération de n'importe\n" +
-                    "    #                                  / quel type de variable.\n" +
-                    "    #\n" +
-                    "    # Grâce à cela vous pourrez les appeler pour récupérer vos propres valeurs\n" +
-                    "    # par rapport à votre schéma réponse API\n");
 
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write(template.toString());

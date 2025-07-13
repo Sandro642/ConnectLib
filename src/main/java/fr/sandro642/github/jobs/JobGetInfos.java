@@ -2,7 +2,7 @@ package fr.sandro642.github.jobs;
 
 import fr.sandro642.github.ConnectorAPI;
 import fr.sandro642.github.api.ApiClient;
-import fr.sandro642.github.api.ApiResponse;
+import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.VersionType;
 
@@ -233,7 +233,7 @@ public class JobGetInfos {
      * Exécute la requête API et retourne la réponse
      * @return ApiResponse contenant la réponse de l'API
      */
-    public ApiResponse getResponse() {
+    public ApiFactory getResponse() {
         try {
 
             String route = (String) ConnectorAPI.StoreAndRetrieve().store.get("currentRoute");
@@ -244,7 +244,7 @@ public class JobGetInfos {
                 throw new RuntimeException("Route ou méthode non définie. Appelez getRoutes() d'abord.");
             }
 
-            ApiResponse response;
+            ApiFactory response;
 
             if (method == MethodType.GET) {
                 response = apiClient.callAPIGet(route).block();
@@ -270,8 +270,7 @@ public class JobGetInfos {
             return response;
 
         } catch (Exception e) {
-            ConnectorAPI.Logger().ERROR("Erreur lors de l'exécution de la requête: " + e.getMessage());
-            throw new RuntimeException("Erreur lors de l'exécution de la requête", e);
+            return null;
         }
     }
 }
