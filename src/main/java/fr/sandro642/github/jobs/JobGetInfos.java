@@ -172,69 +172,10 @@ public class JobGetInfos {
      * @param params Paramètres supplémentaires pour la requête (optionnel)
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, String routeName, Map<String, ?> body, Map<String, ?> params) {
+    public <R> JobGetInfos getRoutes(VersionType versionType, MethodType methodType, R routeName, Map<String, ?> body, Map<String, ?> params) {
         try {
             // Récupère la route depuis le fichier YAML
-            String route = ConnectorAPI.getRoute(routeName);
-
-            String fullRoute;
-
-            // Vérification de null pour éviter NullPointerException
-            if (versionType != null && versionType.getVersion() != null) {
-                // Construit l'URL complète avec la version
-                fullRoute = "/" + versionType.getVersion() + route;
-            } else {
-                // Construit l'URL complète sans version
-                fullRoute = route;
-            }
-
-            // Remplace les paramètres dans la route si présents
-            if (params != null && !params.isEmpty()) {
-                for (Map.Entry<String, ?> entry : params.entrySet()) {
-                    String paramKey = "{" + entry.getKey() + "}";
-                    String paramValue = entry.getValue().toString();
-
-                    // Remplace toutes les occurrences du paramètre dans la route
-                    fullRoute = fullRoute.replace(paramKey, paramValue);
-                }
-            }
-
-            // Stocke les informations pour la requête
-            ConnectorAPI.StoreAndRetrieve().store.put("currentRoute", fullRoute);
-            ConnectorAPI.StoreAndRetrieve().store.put("currentMethod", methodType);
-
-            if (body != null) {
-                ConnectorAPI.StoreAndRetrieve().store.put("currentBody", body);
-            }
-
-            // Stocke les paramètres si présents
-            if (params != null) {
-                ConnectorAPI.StoreAndRetrieve().store.put("currentParams", params);
-            }
-
-            ConnectorAPI.Logger().INFO("Route construite: " + fullRoute);
-
-        } catch (Exception e) {
-            ConnectorAPI.Logger().ERROR("Erreur lors de la construction de la route: " + e.getMessage());
-            throw new RuntimeException("Erreur lors de la construction de la route", e);
-        }
-
-        return this;
-    }
-
-    /**
-     * Récupère les routes depuis le fichier YAML et construit l'URL complète
-     * @param versionType Version de l'API (V1_BRANCH, V2_BRANCH)
-     * @param methodType Type de méthode HTTP (GET, POST)
-     * @param routeName Nom de la route dans le fichier YAML
-     * @param body Corps de la requête pour POST (peut être null pour GET)
-     * @param params Paramètres supplémentaires pour la requête (optionnel)
-     * @return JobGetInfos pour chaînage
-     */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, Enum<?> routeName, Map<String, ?> body, Map<String, ?> params) {
-        try {
-            // Récupère la route depuis le fichier YAML
-            String route = ConnectorAPI.getRoute(routeName);
+            String route = ConnectorAPI.getRoute(routeName.toString().toLowerCase());
 
             String fullRoute;
 

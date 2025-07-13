@@ -38,27 +38,4 @@ public class ConvertEnum {
         }
         return map;
     }
-
-
-    public interface SchemaImport {
-        String schema();
-    }
-
-    /**
-     * Convertit une énumération en une map de schémas.
-     * Seules les énumérations qui implémentent l'interface SchemaImport seront converties.
-     *
-     * @param enumClass la classe de l'énumération à convertir
-     * @return une map contenant les énumérations et leurs schémas associés
-     */
-    public static Map<Enum<?>, String> convertSchemaImport(Class<? extends Enum<?>> enumClass) {
-        Enum<?>[] enums = enumClass.getEnumConstants();
-        HashMap<Enum<?>, String> map = new HashMap<>();
-        for (Enum<?> e : enums) {
-            if (e instanceof SchemaImport schemaImport) {
-                map.put((Enum<?>) schemaImport, schemaImport.schema());
-            }
-        }
-        return map;
-    }
 }
