@@ -33,20 +33,13 @@ public class JobGetInfos {
         ConnectorAPI.YamlUtils();
     }
 
+    /**
+     * Méthode utilitaire pour obtenir le nom de la route en minuscules.
+     * @param routeName Nom de la route (Enum)
+     * @return Nom de la route en minuscules
+     */
     private String getRouteName(Enum<?> routeName) {
         return routeName.name().toLowerCase();
-    }
-    /**
-     * Récupère les routes depuis le fichier YAML et construit l'URL complète
-     * @param versionType Version de l'API (V1_BRANCH, V2_BRANCH)
-     * @param methodType Type de méthode HTTP (GET, POST)
-     * @param routeName Nom de la route dans le fichier YAML
-     * @param body Corps de la requête pour POST (peut être null pour GET)
-     * @param params Paramètres supplémentaires pour la requête (optionnel)
-     * @return JobGetInfos pour chaînage
-     */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, Enum<?> routeName, Map<String, Object> body, Map<String, Object> params) {
-        return getRoutes(versionType, methodType, routeName, body, params);
     }
 
     /**
@@ -56,7 +49,7 @@ public class JobGetInfos {
      * @param routeName Nom de la route dans le fichier YAML
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, Enum<?> routeName, Map<String, Object> body) {
+    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, Enum<?> routeName, Map<String, ?> body) {
         return getRoutes(versionType, methodType, getRouteName(routeName), body, null);
     }
 
@@ -88,7 +81,7 @@ public class JobGetInfos {
      * @param body Corps de la requête pour POST (peut être null pour GET)
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, Object> body) {
+    public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body) {
         return getRoutes(null, methodType, getRouteName(routeName), body, null);
     }
 
@@ -99,7 +92,7 @@ public class JobGetInfos {
      * @param params Paramètres supplémentaires pour la requête
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, Object> body, Map<String, Object> params) {
+    public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body, Map<String, ?> params) {
         return getRoutes(null, methodType, getRouteName(routeName), body, params);
     }
 
@@ -120,7 +113,7 @@ public class JobGetInfos {
      * @param body Corps de la requête pour POST (peut être null pour GET)
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutesWithBody(MethodType methodType, String routeName, Map<String, Object> body) {
+    public JobGetInfos getRoutesWithBody(MethodType methodType, String routeName, Map<String, ?> body) {
         return getRoutes(null, methodType, routeName, body, null);
     }
 
@@ -131,7 +124,7 @@ public class JobGetInfos {
      * @param params Paramètres supplémentaires pour la requête
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutesWithParams(MethodType methodType, String routeName, Map<String, Object> params) {
+    public JobGetInfos getRoutesWithParams(MethodType methodType, String routeName, Map<String, ?> params) {
         return getRoutes(null, methodType, routeName, null, params);
     }
 
@@ -143,7 +136,7 @@ public class JobGetInfos {
      * @param params Paramètres supplémentaires pour la requête
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutesBoth(MethodType methodType, String routeName, Map<String, Object> body, Map<String, Object> params) {
+    public JobGetInfos getRoutesBoth(MethodType methodType, String routeName, Map<String, ?> body, Map<String, ?> params) {
         return getRoutes(null, methodType, routeName, body, params);
     }
 
@@ -166,7 +159,7 @@ public class JobGetInfos {
      * @param body Corps de la requête pour POST (peut être null pour GET)
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, String routeName, Map<String, Object> body) {
+    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, String routeName, Map<String, ?> body) {
         return getRoutes(versionType, methodType, routeName, body, null);
     }
 
@@ -179,7 +172,7 @@ public class JobGetInfos {
      * @param params Paramètres supplémentaires pour la requête (optionnel)
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, String routeName, Map<String, Object> body, Map<String, Object> params) {
+    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, String routeName, Map<String, ?> body, Map<String, ?> params) {
         try {
             // Récupère la route depuis le fichier YAML
             String route = ConnectorAPI.getRoute(routeName);
@@ -197,7 +190,66 @@ public class JobGetInfos {
 
             // Remplace les paramètres dans la route si présents
             if (params != null && !params.isEmpty()) {
-                for (Map.Entry<String, Object> entry : params.entrySet()) {
+                for (Map.Entry<String, ?> entry : params.entrySet()) {
+                    String paramKey = "{" + entry.getKey() + "}";
+                    String paramValue = entry.getValue().toString();
+
+                    // Remplace toutes les occurrences du paramètre dans la route
+                    fullRoute = fullRoute.replace(paramKey, paramValue);
+                }
+            }
+
+            // Stocke les informations pour la requête
+            ConnectorAPI.StoreAndRetrieve().store.put("currentRoute", fullRoute);
+            ConnectorAPI.StoreAndRetrieve().store.put("currentMethod", methodType);
+
+            if (body != null) {
+                ConnectorAPI.StoreAndRetrieve().store.put("currentBody", body);
+            }
+
+            // Stocke les paramètres si présents
+            if (params != null) {
+                ConnectorAPI.StoreAndRetrieve().store.put("currentParams", params);
+            }
+
+            ConnectorAPI.Logger().INFO("Route construite: " + fullRoute);
+
+        } catch (Exception e) {
+            ConnectorAPI.Logger().ERROR("Erreur lors de la construction de la route: " + e.getMessage());
+            throw new RuntimeException("Erreur lors de la construction de la route", e);
+        }
+
+        return this;
+    }
+
+    /**
+     * Récupère les routes depuis le fichier YAML et construit l'URL complète
+     * @param versionType Version de l'API (V1_BRANCH, V2_BRANCH)
+     * @param methodType Type de méthode HTTP (GET, POST)
+     * @param routeName Nom de la route dans le fichier YAML
+     * @param body Corps de la requête pour POST (peut être null pour GET)
+     * @param params Paramètres supplémentaires pour la requête (optionnel)
+     * @return JobGetInfos pour chaînage
+     */
+    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, Enum<?> routeName, Map<String, ?> body, Map<String, ?> params) {
+        try {
+            // Récupère la route depuis le fichier YAML
+            String route = ConnectorAPI.getRoute(routeName);
+
+            String fullRoute;
+
+            // Vérification de null pour éviter NullPointerException
+            if (versionType != null && versionType.getVersion() != null) {
+                // Construit l'URL complète avec la version
+                fullRoute = "/" + versionType.getVersion() + route;
+            } else {
+                // Construit l'URL complète sans version
+                fullRoute = route;
+            }
+
+            // Remplace les paramètres dans la route si présents
+            if (params != null && !params.isEmpty()) {
+                for (Map.Entry<String, ?> entry : params.entrySet()) {
                     String paramKey = "{" + entry.getKey() + "}";
                     String paramValue = entry.getValue().toString();
 

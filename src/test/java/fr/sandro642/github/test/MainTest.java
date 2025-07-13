@@ -9,6 +9,8 @@ import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.ConvertEnum;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
+
 /**
  * Main est une classe de test pour vérifier la création du fichier YML et pleins d'autres fonctionnalités de la librairie.
  * @author Sandro642
@@ -20,7 +22,8 @@ public class MainTest {
 
     public enum TestRoutes implements ConvertEnum.RouteImport {
         VERSION("/api/mcas/info/version"),
-        INFO("/api/mcas/info/info");
+        INFO("/api/mcas/info/info"),
+        UNIX("/api/auth/link/unix/{sessionId}");
 
         final String route;
 
@@ -72,20 +75,24 @@ public class MainTest {
 
 
     @Test
-    public void testGetExtraData() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+    public void FullObjectTest() {
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
             ApiFactory response = ConnectorAPI.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, "example")
                     .getResponse();
+          
+        Map<String, Boolean> body = Map.of("status", true);
 
-            System.out.println("Data: " + response);
 
-        } catch (Exception e) {
-            System.err.println("Erreur lors de l'appel API: " + e.getMessage());
-            e.printStackTrace();
-        }
+        Map<String, String> params = Map.of("sessionId", "0233-xgt-7113");
+
+        ApiResponse response = ConnectorAPI.JobGetInfos()
+                .getRoutes(VersionType.V1_BRANCH, MethodType.POST, TestRoutes.UNIX, body, params)
+                .getResponse();
+
+        System.out.println(response.display());
     }
 
 }
