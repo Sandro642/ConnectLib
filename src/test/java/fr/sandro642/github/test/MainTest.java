@@ -34,6 +34,23 @@ public class MainTest {
         }
     }
 
+    public enum TestSchemas implements ConvertEnum.SchemaImport {
+        MSG("string"),
+        CODE("int"),
+        DATA("object");
+
+        final String schema;
+
+        TestSchemas(String schema) {
+            this.schema = schema;
+        }
+
+        @Override
+        public String schema() {
+            return schema;
+        }
+    }
+
     @Test
     public void initializeCAPI() {
         ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
@@ -41,7 +58,10 @@ public class MainTest {
 
 
     public static void main(String[] args) {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
+        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, new Class[]{TestRoutes.class}, new Class[]{TestSchemas.class});
+
+        System.out.println(ConnectorAPI.getSchema(TestSchemas.MSG));
+
 
         try {
             // Exemple d'utilisation comme demandé
@@ -49,18 +69,18 @@ public class MainTest {
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
                     .getResponse();
 
-            System.out.println("Data: " + response.getData());
-            System.out.println("Message: " + response.getMsg());
-            System.out.println("Code: " + response.getCode());
-            System.out.println("Erreur: " + response.isErr());
+//            System.out.println("Data: " + response.getData());
+//            System.out.println("Message: " + response.getMsg());
+//            System.out.println("Code: " + response.getCode());
+//            System.out.println("Erreur: " + response.isErr());
+//
+//            System.out.println(response.display());
 
-            System.out.println(response.display());
-
-            try {
-                System.out.println("Valeur spécifique: " + response.getSpecDataString("version"));
-            } catch (Exception e) {
-                System.out.println("Clé 'version' non trouvée dans les données");
-            }
+//            try {
+//                System.out.println("Valeur spécifique : " + response.getSpecDataString("version"));
+//            } catch (Exception e) {
+//                System.out.println("Clé 'version' non trouvée dans les données");
+//            }
 
         } catch (Exception e) {
             System.err.println("Erreur lors de l'appel API: " + e.getMessage());

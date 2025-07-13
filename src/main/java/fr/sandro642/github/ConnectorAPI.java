@@ -28,11 +28,32 @@ public class ConnectorAPI {
     private static StoreAndRetrieve storeAndRetrieve = new StoreAndRetrieve();
     private static YamlUtils yamlUtils = new YamlUtils();
     private static final Map<String,String> routes = new HashMap<>();
+    private static final Map<String, String> schemas = new HashMap<>();
 
     /**
      * Initialise le ConnectorAPI avec le type de ressource spécifié
+     * @param resourceType Le type de ressource à utiliser
      */
-    public static void initialize(ResourceType resourceType, Class<? extends Enum<?>>... routes) {
+    public static void initialize(ResourceType resourceType) {
+        initialize(resourceType, new Class[]{}, new Class[]{});
+    }
+
+    /**
+     * Initialise le ConnectorAPI avec le type de ressource spécifié et les routes
+     * @param resourceType Le type de ressource à utiliser
+     * @param routes La classe d'énumération contenant les routes
+     */
+    public static void initialize(ResourceType resourceType, Class<? extends Enum<?>> routes) {
+        initialize(resourceType, new Class[]{routes}, new Class[]{});
+    }
+
+    /**
+     * Initialise le ConnectorAPI avec le type de ressource, les routes et les schémas
+     * @param resourceType Le type de ressource à utiliser
+     * @param routes Les classes d'énumération contenant les routes
+     * @param schemas Les classes d'énumération contenant les schémas
+     */
+    public static void initialize(ResourceType resourceType, Class<? extends Enum<?>>[] routes, Class<? extends Enum<?>>[] schemas) {
 
         Map<Enum<?>,String> routesEnums = new HashMap<>();
         for (Class<? extends Enum<?>> route : routes) {
@@ -40,7 +61,16 @@ public class ConnectorAPI {
                 throw new IllegalArgumentException("Les routes ne peuvent pas être null");
             }
 
-            routesEnums.putAll(ConvertEnum.convert(route));
+            routesEnums.putAll(ConvertEnum.convertRouteImport(route));
+        }
+
+        Map<Enum<?>,String> schemasEnums = new HashMap<>();
+        for (Class<? extends Enum<?>> schema : schemas) {
+            if (schema == null) {
+                throw new IllegalArgumentException("Les schémas ne peuvent pas être null");
+            }
+
+            schemasEnums.putAll(ConvertEnum.convertSchemaImport(schema));
         }
 
         logger = new Logger();
@@ -48,7 +78,7 @@ public class ConnectorAPI {
         yamlUtils = new YamlUtils();
 
         // Génère le template si nécessaire
-        yamlUtils.generateTemplateIfNotExists(resourceType, routesEnums);
+        yamlUtils.generateTemplateIfNotExists(resourceType, routesEnums, schemasEnums);
 
         if (resourceType == ResourceType.MC_RESOURCES) {
             storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, MCSupport().getPluginPath());
@@ -67,8 +97,17 @@ public class ConnectorAPI {
         if (yamlRoutes != null) {
             ConnectorAPI.routes.putAll(yamlRoutes);
         }
+
+        Map<String, String> yamlSchemas = yamlUtils.getSchemas();
+        if (yamlSchemas != null) {
+            ConnectorAPI.schemas.putAll(yamlSchemas);
+        }
     }
 
+    /**
+     * Retourne une map contenant les routes définies dans le ConnectorAPI
+     * @return une map de routes
+     */
     public static String getRoute(String routeName) {
         if (routes.containsKey(routeName)) {
             return routes.get(routeName);
@@ -77,8 +116,32 @@ public class ConnectorAPI {
         }
     }
 
+    /**
+     * Retourne une map contenant les schémas définis dans le ConnectorAPI
+     * @return une map de schémas
+     */
     public static String getRoute(Enum<?> routeEnum) {
         return getRoute(routeEnum.name().toLowerCase());
+    }
+
+    /**
+     * Retourne une map contenant les schémas définis dans le ConnectorAPI
+     * @return une map de schémas
+     */
+    public static String getSchema(String schemaName) {
+        if (schemas.containsKey(schemaName)) {
+            return schemas.get(schemaName);
+        } else {
+            throw new IllegalArgumentException("Le schéma " + schemaName + " n'existe pas.");
+        }
+    }
+
+    /**
+     * Retourne une map contenant les schémas définis dans le ConnectorAPI
+     * @return une map de schémas
+     */
+    public static String getSchema(Enum<?> schemaEnum) {
+        return getSchema(schemaEnum.name().toLowerCase());
     }
 
     /**
