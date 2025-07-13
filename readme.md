@@ -7,7 +7,7 @@ Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec Con
 ---
 
 ```java
-Stable Version : 0.1.9.1-STABLE
+Stable Version : 0.2.0-STABLE
 ```
 
 ---
