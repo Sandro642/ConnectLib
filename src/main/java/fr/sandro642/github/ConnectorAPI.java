@@ -1,12 +1,9 @@
 package fr.sandro642.github;
 
 import fr.sandro642.github.hook.MCSupport;
-import fr.sandro642.github.utils.ConvertEnum;
+import fr.sandro642.github.utils.*;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.jobs.misc.ResourceType;
-import fr.sandro642.github.utils.Logger;
-import fr.sandro642.github.utils.StoreAndRetrieve;
-import fr.sandro642.github.utils.YamlUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +25,7 @@ public class ConnectorAPI {
     private static StoreAndRetrieve storeAndRetrieve = new StoreAndRetrieve();
     private static YamlUtils yamlUtils = new YamlUtils();
     private static final Map<String,String> routes = new HashMap<>();
-
+    private static Logs logs = new Logs();
     /**
      * Initialise le ConnectorAPI avec le type de ressource, les routes et les schémas
      * @param resourceType Le type de ressource à utiliser
@@ -48,9 +45,11 @@ public class ConnectorAPI {
         logger = new Logger();
         storeAndRetrieve = new StoreAndRetrieve();
         yamlUtils = new YamlUtils();
+        logs = new Logs();
 
         // Génère le template si nécessaire
         yamlUtils.generateTemplateIfNotExists(resourceType, routesEnums);
+        logs.setPathFile(resourceType);
 
         if (resourceType == ResourceType.MC_RESOURCES) {
             storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, MCSupport().getPluginPath());
