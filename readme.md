@@ -7,7 +7,7 @@ Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec Con
 ---
 
 ```java
-Stable Version : 0.2.1-STABLE
+Stable Version : 0.2.2-STABLE
 ```
 
 ---
@@ -35,6 +35,7 @@ Changelog :
  - [0.1.3.17-SNAPSHOT] : Suppresion de la sérialisation des données... Toujours disponible depuis la branche /feature/serializer. Utile si les processus ne sont pas initialisé dans le même environnement.
  - [0.1.9.2-STABLE] : Patch de sécurité en utilisant la méthode getRoutes en utilisant une classe enumération pour la routeName : StackOverflowError... + Création des maps selon le type de variable souhaité.
  - [0.2.0-STABLE] : Woaw arrivé de la 0.2.0 en si peu de temps ? Il y en avait des choses à faire sur ce projet ;)
+ - [0.2.2-STABLE] : Ajout de la création de logs.
 ```
 
 ---
@@ -92,7 +93,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectorAPI:0.1.5-STABLE")
+    implementation("fr.sandro642.github:ConnectorAPI:0.2.2-STABLE")
     
 }
 
@@ -126,33 +127,9 @@ public class Example {
     
     //Rajouter vos routes dans le fichier infos.yml
 }
-
 ```
 
-```java
-public class Example {
-
-    // 5. Appel POST avec version, body et paramètres
-            System.out.println("5. Appel POST complet (version + body + paramètres) :");
-            Map<String, Object> updateBody = new HashMap<>();
-                updateBody.put("name", "John Doe");
-                updateBody.put("email", "john.doe@example.com");
-                updateBody.put("active", true);
-
-            Map<String, Object> updateParams = new HashMap<>();
-                updateParams.put("userId", "67890");
-                updateParams.put("sessionId", "sess_abc123");
-
-    ApiResponse<Void> completeResponse = ConnectorAPI.JobGetInfos()
-            .getRoutes(VersionType.V2_BRANCH, MethodType.POST, "update_user", updateBody, updateParams)
-            .getResponse();
-
-    displayResponse(completeResponse);
-    
-}
-```
-
-Plus d'exemples dans ICI : [ExampleUsage.java](src/main/java/fr/sandro642/github/example/ExampleUsage.java)
+Plus d'exemples dans ICI : [ExampleUsage.java](src/main/java/fr/sandro642/github/example/ExampleUsage.java) Non disponible pour le moment dû aux nouvelles features.
 
 ---
 
