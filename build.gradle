@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'fr.sandro642.github'
-version = '0.2.2-STABLE'
+version = '0.2.3-STABLE'
 
 tasks.register('printVersion') {
     doLast {
@@ -51,7 +51,7 @@ tasks.test {
 
 java {
     withSourcesJar()
-    withJavadocJar()
+    //withJavadocJar()
 }
 
 publishing {
