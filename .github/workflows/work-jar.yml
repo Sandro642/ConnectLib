@@ -43,7 +43,7 @@ jobs:
         run: ./gradlew publish
         env:
           GROUP_ID: fr.sandro642.github
-          ARTIFACT_ID: ConnectorAPI
+          ARTIFACT_ID: ConnectLib
           VERSION: ${{ steps.extract_version.outputs.version }}
       - name: Checkout target repository
         uses: actions/checkout@v4
@@ -53,14 +53,14 @@ jobs:
           path: target-repo
       - name: Clean existing version folder
         run: |
-          if [ -d "target-repo/connectorapi/jar" ]; then
-            echo "Cleaning existing connectorapi/jar folder..."
-            rm -rf target-repo/connectorapi/jar
+          if [ -d "target-repo/ConnectLib/jar" ]; then
+            echo "Cleaning existing connectlib/jar folder..."
+            rm -rf target-repo/connectlib/jar
           fi
-          mkdir -p target-repo/connectorapi/jar
+          mkdir -p target-repo/connectlib/jar
       - name: Copy new artifacts
         run: |
-          cp -r build/repo/* target-repo/connectorapi/jar/
+          cp -r build/repo/* target-repo/connectlib/jar/
       - name: Deploy to GitHub Pages
         run: |
           cd target-repo
@@ -70,7 +70,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Update ConnectorAPI artifacts for version ${{ steps.extract_version.outputs.version }}"
+            git commit -m "Update ConnectLib artifacts for version ${{ steps.extract_version.outputs.version }}"
             git push
           fi
       - name: Create and push Git tag (with override)
