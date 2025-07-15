@@ -81,7 +81,6 @@ public class JobGetInfos {
      * @param methodType Type of HTTP method (GET, POST)
      * @param routeName Name of the route in the YAML file
      * @param body Body of the request for POST (can be null for GET)
-     * @param params Additional parameters for the request
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body) {

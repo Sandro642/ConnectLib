@@ -49,7 +49,7 @@ public class Logs {
     /**
      * * Static block to initialize the Logs instance.
      * This block is executed when the class is loaded, ensuring that the instance is created only once.
-     * @param type The type of resource for which the logs are being created.
+     * @param logType The type of resource for which the logs are being created.
      * @param <P>
      * @param logText The text to be logged.
      */
