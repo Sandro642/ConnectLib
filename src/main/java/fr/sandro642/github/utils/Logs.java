@@ -8,40 +8,50 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import fr.sandro642.github.ConnectorAPI;
+import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.jobs.misc.ResourceType;
+
+/**
+ * Logs is a utility class for managing logging in the ConnectLib library.
+ * It provides methods to create logs with timestamps and log types, and to write them to a file.
+ *
+ * @author Sandro642
+ * @version 1.0
+ */
 
 public class Logs {
 
     /**
-     * Création de l'instance de Logs
+     * Make instance of Logs
      */
     private static Logs instance;
 
     /**
-     * Création de la variable pathFile qui va contenir le path du ResourceType
+     * Constructor of Logs
+     * This constructor is private to ensure that the class is a singleton.
      */
     private static String pathFile;
 
     /**
-     * Création d'une ArrayList qui va contenir les logs en mémoire
+     * Make list for save logs in memory before writing to file.
+     * This buffer is used to store log messages temporarily before they are written to a file.
      */
     private static List<String> logBuffer = new ArrayList<>();
 
     /**
-     * Création de la fonction qui permet de mettre le path du ResourceType
-     * correspondant.
+     * Static block to initialize the Logs instance.
+     * This block is executed when the class is loaded, ensuring that the instance is created only once.
      */
     public void setPathFile(ResourceType type) {
         this.pathFile = type.getPath();
     }
 
     /**
-     * Ajout d'un log dans le fichier logs.
-     *
-     * @param logText
-     * @param logType
+     * * Static block to initialize the Logs instance.
+     * This block is executed when the class is loaded, ensuring that the instance is created only once.
+     * @param type The type of resource for which the logs are being created.
      * @param <P>
+     * @param logText The text to be logged.
      */
     public <P> void MakeALog(String logText, P logType) {
         try {
@@ -49,18 +59,15 @@ public class Logs {
             SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timestamp = timestampFormat.format(date);
 
-            // Créer le message de log
             StringBuilder logContent = new StringBuilder();
             logContent.append("[").append(timestamp).append("] ");
             logContent.append("[").append(logType.toString().toUpperCase()).append("] ");
             logContent.append(logText).append("\n");
 
-            // Ajouter le message au buffer en mémoire
             logBuffer.add(logContent.toString());
 
-            if (ConnectorAPI.YamlUtils().isLogEnabled()) {
+            if (ConnectLib.YamlUtils().isLogEnabled()) {
 
-                // Si c'est CRITICAL ou ERROR, créer le fichier avec tous les messages
                 if (logType.toString().toUpperCase().equals("CRITICAL") || logType.toString().toUpperCase().equals("ERROR")) {
                     File directory = new File(pathFile, "logs");
                     if (!directory.exists()) {
@@ -72,12 +79,10 @@ public class Logs {
                     File file = new File(directory, "app_" + dateTimeStr + ".log");
 
                     try (FileWriter writer = new FileWriter(file)) {
-                        // Écrire tous les messages du buffer dans le fichier
                         for (String logEntry : logBuffer) {
                             writer.write(logEntry);
                         }
 
-                        // Vider le buffer après avoir écrit dans le fichier
                         logBuffer.clear();
 
                     } catch (IOException e) {
@@ -91,7 +96,8 @@ public class Logs {
     }
 
     /**
-     * Création d'un getLogs pour l'instance de logs
+     * Get the instance of Logs.
+     * @return instance of Logs
      */
     public static Logs getLogs() {
         return instance;

@@ -1,13 +1,12 @@
 plugins {
     id 'java'
     id 'application'
-    id 'maven-publish' // Plugin pour la publication
+    id 'maven-publish'
 }
 
 group = 'fr.sandro642.github'
-version = '0.2.2-STABLE' // Version de votre projet
+version = '0.2.2-STABLE'
 
-// Ajoutez cette tâche à votre build.gradle
 tasks.register('printVersion') {
     doLast {
         println project.version
@@ -36,12 +35,12 @@ dependencies {
 }
 
 application {
-    mainClass = 'fr.sandro642.github.ConnectorAPI'
+    mainClass = 'fr.sandro642.github.ConnectLib'
 }
 
 tasks.jar {
     manifest {
-        attributes 'Main-Class': 'fr.sandro642.github.ConnectorAPI'
+        attributes 'Main-Class': 'fr.sandro642.github.ConnectLib'
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
@@ -51,8 +50,8 @@ tasks.test {
 }
 
 java {
-    withSourcesJar() // Ajoute le JAR des sources
-    withJavadocJar() // Ajoute le JAR de Javadoc
+    withSourcesJar()
+    withJavadocJar()
 }
 
 publishing {
@@ -61,29 +60,29 @@ publishing {
             from components.java
 
             groupId = project.group.toString()
-            artifactId = 'ConnectorAPI'
+            artifactId = 'ConnectLib'
             version = project.version.toString()
             pom {
-                name = 'ConnectorAPI'
+                name = 'ConnectLib'
                 description = 'A library for connecting to APIs'
                 url = 'https://sandro642.github.io/connectorapi'
                 licenses {
                     license {
                         name = 'The MIT License, Version 2.0'
-                        url = 'https://github.com/Sandro642/ConnectorAPI/blob/patch/groovy/LICENSE'
+                        url = 'https://github.com/Sandro642/ConnectLib/blob/patch/groovy/LICENSE'
                     }
                 }
                 developers {
                     developer {
                         id = 'sandro642'
                         name = 'Sandro'
-                        email = 'sandro33810@gmail.com' // Correction de l'email (point-virgule -> point)
+                        email = 'sandro33810@gmail.com'
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://github.com/sandro642/ConnectorAPI.git'
-                    developerConnection = 'scm:git:ssh://github.com/sandro642/ConnectorAPI.git'
-                    url = 'https://github.com/sandro642/ConnectorAPI'
+                    connection = 'scm:git:git://github.com/sandro642/ConnectLib.git'
+                    developerConnection = 'scm:git:ssh://github.com/sandro642/ConnectLib.git'
+                    url = 'https://github.com/sandro642/ConnectLib'
                 }
             }
         }
@@ -91,7 +90,7 @@ publishing {
     repositories {
         maven {
             name = 'LocalRepo'
-            url = uri(layout.buildDirectory.dir('repo')) // Publie dans build/repo
+            url = uri(layout.buildDirectory.dir('repo'))
         }
     }
 }

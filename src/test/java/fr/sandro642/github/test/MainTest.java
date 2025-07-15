@@ -1,6 +1,6 @@
 package fr.sandro642.github.test;
 
-import fr.sandro642.github.ConnectorAPI;
+import fr.sandro642.github.ConnectLib;
 
 import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.jobs.misc.MethodType;
@@ -9,10 +9,8 @@ import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.ConvertEnum;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
-
 /**
- * Main est une classe de test pour vérifier la création du fichier YML et pleins d'autres fonctionnalités de la librairie.
+ * MainTest is a test class for the ConnectLib library.
  * @author Sandro642
  * @version 1.0
  * @since 1.0
@@ -39,16 +37,16 @@ public class MainTest {
 
     @Test
     public void initializeCAPI() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES);
+        ConnectLib.initialize(ResourceType.TEST_RESOURCES);
     }
 
 
     public static void main(String[] args) {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
+        ConnectLib.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
-            // Exemple d'utilisation comme demandé
-            ApiFactory response = ConnectorAPI.JobGetInfos()
+
+            ApiFactory response = ConnectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
                     .getResponse();
 
@@ -61,11 +59,10 @@ public class MainTest {
 
     @Test
     public void testUseFullRoute() {
-        ConnectorAPI.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
+        ConnectLib.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
-            // Exemple d'utilisation comme demandé
-            ApiFactory response = ConnectorAPI.JobGetInfos()
+            ApiFactory response = ConnectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.POST, TestRoutes.INFO, null, null)
                     .getResponse();
 

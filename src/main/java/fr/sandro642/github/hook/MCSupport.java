@@ -1,60 +1,58 @@
 package fr.sandro642.github.hook;
 
-import fr.sandro642.github.ConnectorAPI;
+import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import org.bukkit.plugin.Plugin;
 
 /**
- * MCSupport est une classe utilitaire pour gérer les hooks liés à Minecraft.
- * Elle permet de vérifier si le projet est un projet Minecraft et de gérer les ressources associées.
+ * MCSupport is a utility class for handling Minecraft plugin support in the ConnectLib library.
+ * It provides methods to check if the project is a Minecraft project, set and get the plugin instance,
  * @author Sandro642
  * @version 1.0
  */
 public class MCSupport {
 
     /**
-     * Création de l'instance unique de MCSupport.
+     * Instance of MCSupport.
      */
     private static MCSupport instance;
 
     /**
-     * Instance unique du plugin Minecraft.
-     * Utilisée pour stocker la variable du plugin Minecraft.
+     * Instance of the Minecraft plugin.
+     * This is a singleton instance that should be set in a Minecraft project.
      */
     private Plugin pluginSingleton;
 
     /**
-     * Constructeur privé pour empêcher l'instanciation directe.
+     * Static block to initialize the singleton instance of MCSupport.
      */
     private MCSupport() {
-        // Constructeur privé pour le pattern Singleton
+        // Private constructor to prevent instantiation
     }
 
     /**
-     * Méthode permettant de vérifier si le projet est un projet Minecraft.
-     * Elle vérifie si le chemin du fichier de configuration contient le chemin des ressources Minecraft.
-     *
-     * @return true si c'est un projet Minecraft, false sinon.
+     * Method to check if the current project is a Minecraft project.
+     * This method checks if the file location contains the Minecraft resources path.
+     * @return true if the project is a Minecraft project, false otherwise.
      */
     public boolean isMCProject() {
         try {
 
-            String fileLocation = (String) ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY);
+            String fileLocation = (String) ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY);
             return fileLocation != null && fileLocation.contains(ResourceType.MC_RESOURCES.getPath());
         } catch (Exception e) {
-            // En cas d'erreur, considérer que ce n'est pas un projet MC
+            ConnectLib.Logger().ERROR("Error while checking if the project is a Minecraft project: " + e.getMessage());
             return false;
         }
     }
 
     /**
-     * Méthode permettant de définir la variable du plugin Minecraft.
-     * Elle doit être appelée dans un projet Minecraft pour initialiser le plugin.
+     * Method to set the plugin instance.
+     * This method should be called in a Minecraft project to set the plugin instance.
      *
-     * @param plugin Le plugin Minecraft à définir.
-     * @return L'instance du plugin définie.
-     * @throws IllegalStateException    Si la méthode n'est pas appelée dans un projet Minecraft.
-     * @throws IllegalArgumentException Si le plugin fourni est null.
+     * @param plugin The instance of the Minecraft plugin to be set.
+     * @return The instance of the plugin that was set.
+     * @throws IllegalArgumentException If the plugin is null.
      */
     public Plugin setPluginVariable(Plugin plugin) {
         if (plugin == null) {
@@ -65,51 +63,55 @@ public class MCSupport {
     }
 
     /**
-     * Méthode permettant d'obtenir le chemin du path du plugin Minecraft.
-     * Elle doit être appelée dans un projet Minecraft pour récupérer le chemin du dossier de données du plugin.
+     * Method to get the path of the plugin's data folder.
+     * This method returns the absolute path of the plugin's data folder.
      *
-     * @return Le chemin du dossier de données du plugin.
-     * @throws IllegalStateException Si la méthode n'est pas appelée dans un projet Minecraft ou si le plugin n'est pas initialisé.
+     * @return The absolute path of the plugin's data folder.
+     * @throws IllegalStateException If the plugin variable is not set.
      */
     public String getPluginPath() {
 
         if (pluginSingleton == null) {
-            throw new IllegalStateException("Plugin variable is not set. Please call setPluginVariable first.");
+            ConnectLib.Logger().ERROR("Plugin variable is not set. Please call setPluginVariable() first.");
         }
 
         return pluginSingleton.getDataFolder().getAbsolutePath();
     }
 
     /**
-     * Méthode permettant de vérifier si le plugin est initialisé.
+     * Method to check if the plugin has been initialized.
+     * This method checks if the pluginSingleton is not null.
      *
-     * @return true si le plugin est initialisé, false sinon.
+     * @return true if the plugin is initialized, false otherwise.
      */
     public boolean isPluginInitialized() {
         return pluginSingleton != null;
     }
 
     /**
-     * Méthode permettant d'obtenir l'instance du plugin (si initialisé).
+     * Method to get the plugin instance.
+     * This method returns the singleton instance of the plugin.
      *
-     * @return L'instance du plugin ou null si non initialisé.
+     * @return The instance of the plugin.
+     * @throws IllegalStateException If the plugin variable is not set.
      */
     public Plugin getPlugin() {
         return pluginSingleton;
     }
 
     /**
-     * Méthode permettant de réinitialiser l'instance du plugin.
-     * Utile pour les tests ou le rechargement.
+     * Method to reset the plugin instance.
+     * This method sets the pluginSingleton to null, effectively resetting it.
      */
     public void resetPlugin() {
         this.pluginSingleton = null;
     }
 
     /**
-     * Méthode permettant d'obtenir l'instance unique de MCSupport.
+     * Static method to get the singleton instance of MCSupport.
+     * This method initializes the instance if it is null and returns it.
      *
-     * @return L'instance unique de MCSupport.
+     * @return The singleton instance of MCSupport.
      */
     public static MCSupport getInstance() {
         return instance;

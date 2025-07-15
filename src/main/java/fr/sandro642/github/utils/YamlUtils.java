@@ -1,6 +1,6 @@
 package fr.sandro642.github.utils;
 
-import fr.sandro642.github.ConnectorAPI;
+import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import org.yaml.snakeyaml.Yaml;
@@ -13,28 +13,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * YamlUtils est une classe utilitaire pour gérer les opérations liées aux
- * fichiers YAML dans le contexte de l'API Connector.
- * Elle permet de récupérer des informations depuis un fichier YAML, de générer
- * un template si nécessaire,
- * et de fournir des routes spécifiques définies dans le fichier YAML.
+ * YamlUtils is a utility class for handling YAML files in the ConnectLib library.
+ * It provides methods to read configuration values such as the base URL, logging settings, and routes from a YAML file.
  *
  * @author Sandro642
  * @version 1.0
- * @since 1.0
  */
 
 public class YamlUtils {
 
 	/**
-	 * Récupère l'URL de base depuis le fichier YAML
-	 * 
-	 * @return l'URL de base définie dans le fichier YAML, ou null si une erreur se
-	 *         produit
+	 * Gets the base URL from the YAML configuration file.
+	 * * This method reads the `infos.yml` file located in the directory specified by the
+	 * @return the base URL as a String, or null if an error occurs.
 	 */
 	public String getURL() {
 
-		String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY)
+		String yamlFilePath = ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
 				+ "/infos.yml";
 
 		try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
@@ -42,12 +37,19 @@ public class YamlUtils {
 			Map<String, Object> yamlData = yaml.load(inputStream);
 			return (String) yamlData.get("urlPath");
 		} catch (Exception ex) {
+			ConnectLib.Logger().ERROR("Error while reading urlPath from infos.yml: " + ex.getMessage());
 			return null;
 		}
 	}
 
+	/**
+	 * Checks if logging is enabled in the YAML configuration file.
+	 * This method reads the `infos.yml` file and retrieves the `enableLogs` setting.
+	 *
+	 * @return true if logging is enabled, false if disabled, or null if an error occurs.
+	 */
 	public Boolean isLogEnabled() {
-		String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY)
+		String yamlFilePath = ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
 				+ "/infos.yml";
 
 		try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
@@ -55,37 +57,39 @@ public class YamlUtils {
 			Map<String, Object> yamlData = yaml.load(inputStream);
 			return (Boolean) yamlData.get("enableLogs");
 		} catch (Exception ex) {
+			ConnectLib.Logger().ERROR("Error while reading enableLogs from infos.yml: " + ex.getMessage());
 			return null;
 		}
 	}
 
 	/**
-	 * Récupère les routes définies dans le fichier YAML.
+	 * Retrieves the routes defined in the YAML configuration file.
+	 * This method reads the `infos.yml` file and returns a map of routes.
 	 *
-	 * @return une map contenant les routes, ou null en cas d'erreur.
+	 * @return a map of route names to their corresponding paths, or null if an error occurs.
 	 */
 	public Map<String, String> getRoutes() {
 
-		String yamlFilePath = ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().FILE_LOCATION_KEY)
+		String yamlFilePath = ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
 				+ "/infos.yml";
 
 		try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
 			Yaml yaml = new Yaml();
 			Map<String, Object> yamlData = yaml.load(inputStream);
 
-			// Récupérer la map "routes"
 			return (Map<String, String>) yamlData.get("routes");
 		} catch (Exception ex) {
+			ConnectLib.Logger().ERROR("Error while reading routes from infos.yml: " + ex.getMessage());
 			return null;
 		}
 	}
 
-	/**
-	 * Génère un template de fichier YAML si celui-ci n'existe pas, ou met à jour la
-	 * section des routes si le fichier existe déjà.
+/**
+	 * Generates a template `infos.yml` file if it does not already exist.
+	 * If the file exists, it updates the routes section with the provided routes.
 	 *
-	 * @param type   Le type de ressource pour laquelle générer le template.
-	 * @param routes Les routes à ajouter ou mettre à jour dans le fichier YAML.
+	 * @param type   the type of resource (e.g., MC_RESOURCES or other types)
+	 * @param routes a map of route names to their corresponding paths
 	 */
 	public void generateTemplateIfNotExists(ResourceType type, Map<Enum<?>, String> routes) {
 		String basePath;
@@ -105,9 +109,7 @@ public class YamlUtils {
 		File file = new File(basePath, "infos.yml");
 
 		if (file.exists()) {
-			// Le fichier existe, on met à jour seulement la section routes
 			try {
-				// Lire le contenu existant
 				List<String> lines = new ArrayList<>();
 				try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 					String line;
@@ -116,7 +118,6 @@ public class YamlUtils {
 					}
 				}
 
-				// Trouver les indices de début et fin de la section routes
 				int routesStartIndex = -1;
 				int routesEndIndex = -1;
 
@@ -125,7 +126,7 @@ public class YamlUtils {
 					if (line.equals("routes:")) {
 						routesStartIndex = i;
 					} else if (routesStartIndex != -1 && line.matches("^[a-zA-Z_][a-zA-Z0-9_]*:.*")) {
-						// On a trouvé une nouvelle section (pas une route.)
+
 						if (!line.startsWith("#") && !line.matches("^\\s*[a-zA-Z_][a-zA-Z0-9_]*:\\s*\"/.*")) {
 							routesEndIndex = i;
 							break;
@@ -133,34 +134,31 @@ public class YamlUtils {
 					}
 				}
 
-				// Si on n'a pas trouvé de fin, la section routes va jusqu'à la fin du fichier
+				// If routesEndIndex is not found, it means we reached the end of the file
 				if (routesStartIndex != -1 && routesEndIndex == -1) {
 					routesEndIndex = lines.size();
 				}
 
 				if (routesStartIndex != -1) {
-					// Supprimer l'ancienne section routes (garder juste la ligne "routes :")
+
 					List<String> newLines = new ArrayList<>();
 					newLines.addAll(lines.subList(0, routesStartIndex + 1));
 
-					// Ajouter les routes commentées par défaut
 					newLines.add("  #info: \"/info/version\"");
 					newLines.add("  #ping: \"/ping\"");
 					newLines.add("  #status: \"/status\"");
 					newLines.add("");
 
-					// Ajouter les nouvelles routes
+
 					for (Map.Entry<Enum<?>, String> entry : routes.entrySet()) {
 						newLines.add("  " + entry.getKey().name().toLowerCase() + ": \"" + entry.getValue() + "\"");
 					}
 
-					// Ajouter le reste du fichier (section schema, etc.)
 					if (routesEndIndex < lines.size()) {
-						newLines.add(""); // Ligne vide avant la prochaine section
+						newLines.add("");
 						newLines.addAll(lines.subList(routesEndIndex, lines.size()));
 					}
 
-					// Écrire le fichier mis à jour
 					try (FileWriter writer = new FileWriter(file)) {
 						for (String line : newLines) {
 							writer.write(line + "\n");
@@ -169,12 +167,12 @@ public class YamlUtils {
 				}
 
 			} catch (IOException e) {
-				throw new RuntimeException("Erreur lors de la mise à jour du fichier infos.yml", e);
+				ConnectLib.Logger().ERROR("Error while updating infos.yml" + e.getMessage());
 			}
 		} else {
-			// Le fichier n'existe pas, on crée le template complet
+
 			StringBuilder template = new StringBuilder(
-					"# properties Connector API By Sandro642\n\n" +
+					"# properties ConnectLib By Sandro642\n\n" +
 							"urlPath: \"http://localhost:8080/api\"\n\n" +
 							"routes:\n" +
 							"  #info: \"/info/version\"\n" +
@@ -195,7 +193,7 @@ public class YamlUtils {
 			try (FileWriter writer = new FileWriter(file)) {
 				writer.write(template.toString());
 			} catch (IOException e) {
-				throw new RuntimeException("Erreur lors de la création du template infos.yml", e);
+				ConnectLib.Logger().ERROR("Error while creating infos.yml: " + e.getMessage());
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 package fr.sandro642.github.jobs.misc;
 
 /**
- * Enumération pour définir les types de versions utilisées dans le projet.
+ * VersionType is an enumeration representing different versions of the ConnectLib library.
  *
  * @author Sandro642
  * @version 1.0

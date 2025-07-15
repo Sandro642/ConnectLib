@@ -1,7 +1,7 @@
 package fr.sandro642.github.jobs.misc;
 
 /**
- * Enumération pour définir les types de méthodes HTTP utilisées dans les requêtes API.
+ * MethodType is an enumeration representing different HTTP methods used in API requests.
  *
  * @author Sandro642
  * @version 1.0

@@ -1,7 +1,7 @@
 package fr.sandro642.github.jobs.misc;
 
 /**
- * Enumération pour définir les types de ressources utilisées dans le projet.
+ * ResourceType is an enumeration representing different types of resources in the ConnectLib library.
  *
  * @author Sandro642
  * @version 1.0

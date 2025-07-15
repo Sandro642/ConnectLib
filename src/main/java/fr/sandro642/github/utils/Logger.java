@@ -1,15 +1,12 @@
 package fr.sandro642.github.utils;
 
 /**
- * Logger est une classe utilitaire pour afficher des messages de log dans la
- * console.
- * Elle permet d'afficher des messages d'information, d'avertissement, d'erreur
- * et critique
- * avec des couleurs différentes pour une meilleure lisibilité.
+ * Logger is a utility class for logging messages in the ConnectLib library.
+ * It provides methods to log messages with different severity levels:
+ * INFO, WARN, ERROR, and CRITICAL.
  *
  * @author Sandro642
  * @version 1.0
- * @since 1.0
  */
 
 public class Logger {
@@ -17,9 +14,9 @@ public class Logger {
 	private Logs logs = new Logs();
 
 	/**
-	 * Méthode pour afficher un message d'information dans la console.
-	 * 
-	 * @param msg le message à afficher
+	 * Method to display an informational message in the console.
+	 * This method prints the message in green color and logs it.
+	 * @param msg
 	 */
 	public void INFO(String msg) {
 		// Green
@@ -30,9 +27,9 @@ public class Logger {
 	}
 
 	/**
-	 * Méthode pour afficher un message d'avertissement dans la console.
-	 * 
-	 * @param msg le message à afficher
+	 * Method to display a warning message in the console.
+	 * This method prints the message in yellow color and logs it.
+	 * @param msg
 	 */
 	public void WARN(String msg) {
 		// Yellow
@@ -43,9 +40,9 @@ public class Logger {
 	}
 
 	/**
-	 * Méthode pour afficher un message d'erreur dans la console.
-	 * 
-	 * @param msg le message à afficher
+	 * Method to display an error message in the console.
+	 * This method prints the message in red color and logs it.
+	 * @param msg
 	 */
 	public void ERROR(String msg) {
 		// Red
@@ -56,9 +53,9 @@ public class Logger {
 	}
 
 	/**
-	 * Méthode pour afficher un message critique dans la console.
-	 * 
-	 * @param msg le message à afficher
+	 * Method to display a critical message in the console.
+	 * This method prints the message in magenta color and logs it.
+	 * @param msg
 	 */
 	public void CRITICAL(String msg) {
 		// Magenta

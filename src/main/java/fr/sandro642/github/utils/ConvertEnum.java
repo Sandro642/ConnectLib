@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ConvertEnum est une classe utilitaire pour convertir des énumérations en routes.
- * Elle permet de récupérer les routes définies dans les énumérations qui implémentent l'interface RouteImport.
+ * ConvertEnum is a utility class for converting enums that implement the RouteImport interface into a map of routes.
+ * This class provides a method to convert an enum class into a map where the keys are the enum constants and the values are their corresponding routes.
  * @author Sandro642
  * @version 1.0
  * @since 1.0
@@ -14,19 +14,19 @@ import java.util.Map;
 public class ConvertEnum {
 
     /**
-     * Interface RouteImport pour les énumérations qui définissent une route.
-     * Les énumérations doivent implémenter cette interface pour être converties en routes.
+     * RouteImport is an interface that should be implemented by enums that provide a route.
+     * Enums implementing this interface must define the route() method to return their associated route as a String.
      */
     public interface RouteImport {
         String route();
     }
 
     /**
-     * Convertit une énumération en une map de routes.
-     * Seules les énumérations qui implémentent l'interface RouteImport seront converties.
+     * Converts an enum class that implements RouteImport into a map.
+     * The keys of the map are the enum constants, and the values are their corresponding routes.
      *
-     * @param enumClass la classe de l'énumération à convertir
-     * @return une map contenant les énumérations et leurs routes associées
+     * @param enumClass the class of the enum to convert
+     * @return a map containing the enum constants as keys and their routes as values
      */
     public static Map<Enum<?>, String> convertRouteImport(Class<? extends Enum<?>> enumClass) {
         Enum<?>[] enums = enumClass.getEnumConstants();

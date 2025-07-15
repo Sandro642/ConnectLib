@@ -1,6 +1,6 @@
 package fr.sandro642.github.api;
 
-import fr.sandro642.github.ConnectorAPI;
+import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.utils.Logger;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -10,149 +10,161 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Classe ApiClient pour interagir avec l'API de ConnectorAPI.
- * Permet d'effectuer des requêtes GET et POST.
+ * ApiClient is a class that provides methods to interact with the ConnectLib API.
+ * It extends ApiFactory and uses WebClient to make HTTP requests.
+ * This class supports various HTTP methods including GET, POST, PUT, PATCH, and DELETE.
+ * It handles the API responses and errors, logging them appropriately.
+ *
+ * @author Sandro642
+ * @version 1.0
  */
 
 public class ApiClient extends ApiFactory {
 
-  /**
-   * WebClient est utilisé pour effectuer les requêtes HTTP vers l'API.
-   * lastResponse stocke la dernière réponse de l'API.
-   * Logger est utilisé pour enregistrer les informations de débogage et d'erreur.
-   */
-  private final WebClient webClient;
+    /**
+     * WebClient is a non-blocking, reactive HTTP client for making requests to the API.
+     * It is initialized with the base URL from the ConnectLib configuration.
+     */
+    private final WebClient webClient;
 
-  private final AtomicReference<ApiFactory> lastResponse = new AtomicReference<>();
+    /**
+     * lastResponse is an AtomicReference that holds the last response received from the API.
+     * It is used to store the response for later retrieval or processing.
+     */
+    private final AtomicReference<ApiFactory> lastResponse = new AtomicReference<>();
 
-  private final Logger logger = new Logger();
-  private final ApiFactory response = new ApiFactory();
+    /**
+     * logger is an instance of Logger used for logging messages at different levels.
+     * It provides methods to log informational, warning, error, and critical messages.
+     */
+    private final Logger logger = new Logger();
 
-  /**
-   * Constructeur de ApiClient qui initialise WebClient avec l'URL de base.
-   */
-  public ApiClient() {
-    String baseUrl = (String) ConnectorAPI.StoreAndRetrieve().store.get(ConnectorAPI.StoreAndRetrieve().URL_KEY);
+    /**
+     * response is an instance of ApiFactory that is used to parse and store the raw JSON response from the API.
+     * It provides methods to handle the response data.
+     */
+    private final ApiFactory response = new ApiFactory();
 
-    if (baseUrl == null) {
-      throw new RuntimeException("URL de base non trouvée. Assurez-vous d'avoir initialisé ConnectorAPI. ");
+    /**
+     * Constructor for ApiClient.
+     * It initializes the WebClient with the base URL from the ConnectLib configuration.
+     * If the base URL is not found, it throws a RuntimeException.
+     */
+    public ApiClient() {
+        String baseUrl = (String) ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().URL_KEY);
+
+        if (baseUrl == null) {
+            logger.CRITICAL("Base URL not found in configuration. Please set the base URL in the configuration file.");
+        }
+
+        this.webClient = WebClient.builder()
+                .baseUrl(baseUrl)
+                .build();
     }
 
-    this.webClient = WebClient.builder()
-        .baseUrl(baseUrl)
-        .build();
-  }
+    /**
+     * Method to call the API with a GET request.
+     * @param routeName Name of the route to call.
+     * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
+     */
+    public Mono<ApiFactory> callAPIGet(String routeName) {
+        logger.INFO("Call GET to : " + routeName);
+        return webClient.get()
+                .uri(routeName)
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribeOn(Schedulers.boundedElastic())
+                .map(rawJson -> {
+                    response.parseFromRawJson(rawJson);
+                    return response;
+                })
+                .doOnNext(lastResponse::set)
+                .doOnError(error -> logger.CRITICAL("Error while call GET: " + error.getMessage()));
+    }
 
-  /**
-   * Méthode pour appeler l'API avec une requête GET.
-   * 
-   * @param routeName c'est le nom de la route à appeler.
-   * @return la réponse de l'API encapsulée.
-   */
-  public Mono<ApiFactory> callAPIGet(String routeName) {
-    logger.INFO("Appel GET vers: " + routeName);
-    return webClient.get()
-            .uri(routeName)
-            .retrieve()
-            .bodyToMono(String.class)  // Récupère le JSON brut comme String
-            .subscribeOn(Schedulers.boundedElastic())
-            .map(rawJson -> {
-              response.parseFromRawJson(rawJson);
-              return response;
-            })
-            .doOnNext(lastResponse::set)
-            .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel GET: " + error.getMessage()));
-  }
+    /**
+     * Method to call the API with a POST request.
+     * @param routeName Name of the route to call.
+     * @param body   Body of the request (can be null for a request without body).
+     * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
+     */
+    public Mono<ApiFactory> callAPIPost(String routeName, Map<String, Object> body) {
+        logger.INFO("Call POST to : " + routeName);
+        return webClient.post()
+                .uri(routeName)
+                .bodyValue(body != null ? body : Map.of())
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribeOn(Schedulers.boundedElastic())
+                .map(rawJson -> {
+                    response.parseFromRawJson(rawJson);
+                    return response;
+                })
+                .doOnNext(lastResponse::set)
+                .doOnError(error -> logger.CRITICAL("Error while call POST: " + error.getMessage()));
+    }
 
+    /**
+     * Method to call the API with a PUT request.
+     * @param routeName Name of the route to call.
+     * @param body  Body of the request (can be null for a request without body).
+     * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
+     */
+    public Mono<ApiFactory> callAPIPut(String routeName, Map<String, Object> body) {
+        logger.INFO("Call PUT to : " + routeName);
+        return webClient.put()
+                .uri(routeName)
+                .bodyValue(body != null ? body : Map.of())
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribeOn(Schedulers.boundedElastic())
+                .map(rawJson -> {
+                    response.parseFromRawJson(rawJson);
+                    return response;
+                })
+                .doOnNext(lastResponse::set)
+                .doOnError(error -> logger.CRITICAL("Error while call PUT: " + error.getMessage()));
+    }
 
-  /**
-   * Méthode pour appeler l'API avec une requête POST.
-   * 
-   * @param routeName Nom de la route à appeler.
-   * @param body      Corps de la requête (peut être null pour une requête sans
-   *                  corps).
-   * @return la réponse de l'API encapsulée.
-   */
-  public Mono<ApiFactory> callAPIPost(String routeName, Map<String, Object> body) {
-    logger.INFO("Appel POST vers: " + routeName);
-    return webClient.post()
-        .uri(routeName)
-        .bodyValue(body != null ? body : Map.of())
-        .retrieve()
-        .bodyToMono(String.class)
-        .subscribeOn(Schedulers.boundedElastic())
-            .map(rawJson -> {
-              response.parseFromRawJson(rawJson);
-              return response;
-            })
-            .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel POST: " + error.getMessage()));
-  }
+    /**
+     * Method to call the API with a PATCH request.
+     * @param routeName Name of the route to call.
+     * @param body Body of the request (can be null for a request without body).
+     * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
+     */
+    public Mono<ApiFactory> callAPIPatch(String routeName, Map<String, Object> body) {
+        logger.INFO("Call PATCH to : " + routeName);
+        return webClient.patch()
+                .uri(routeName)
+                .bodyValue(body != null ? body : Map.of())
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribeOn(Schedulers.boundedElastic())
+                .map(rawJson -> {
+                    response.parseFromRawJson(rawJson);
+                    return response;
+                })
+                .doOnNext(lastResponse::set)
+                .doOnError(error -> logger.CRITICAL("Error while call PATCH: " + error.getMessage()));
+    }
 
-  /**
-   * Méthode pour appeler l'API avec une requête PUT
-   * 
-   * @param routeName Nom de la route à appeler.
-   * @param body     Corps de la requête (peut être null pour une requête sans corps).
-   * @return la réponse de l'API encapsulée.
-   */
-  public Mono<ApiFactory> callAPIPut(String routeName, Map<String, Object> body) {
-    logger.INFO("Appel PUT vers: " + routeName);
-    return webClient.put()
-        .uri(routeName)
-        .bodyValue(body != null ? body : Map.of())
-        .retrieve()
-            .bodyToMono(String.class)
-            .subscribeOn(Schedulers.boundedElastic())
-            .map(rawJson -> {
-              response.parseFromRawJson(rawJson);
-              return response;
-            })
-            .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel PUT: " + error.getMessage()));
-  }
-
-  /**
-   * Méthode pour appeler l'API avec une requête PATCH
-   * 
-   * @param routeName Nom de la route à appeler.
-   * @param body    Corps de la requête (peut être null pour une requête sans corps).
-   * @return la réponse de l'API encapsulée.
-   */
-  public Mono<ApiFactory> callAPIPatch(String routeName, Map<String, Object> body) {
-    logger.INFO("Appel PATCH vers: " + routeName);
-    return webClient.patch()
-        .uri(routeName)
-        .bodyValue(body != null ? body : Map.of())
-        .retrieve()
-            .bodyToMono(String.class)
-            .subscribeOn(Schedulers.boundedElastic())
-            .map(rawJson -> {
-              response.parseFromRawJson(rawJson);
-              return response;
-            })
-            .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel PATCH: " + error.getMessage()));
-  }
-
-  /**
-   * Méthode pour appeler l'API avec une requête DELETE
-   * 
-   * @param routeName Nom de la route à appeler.
-   * @return la réponse de l'API encapsulée.
-   */
-  public Mono<ApiFactory> callAPIDelete(String routeName) {
-    logger.INFO("Appel DELETE vers: " + routeName);
-    return webClient.delete()
-        .uri(routeName)
-        .retrieve()
-            .bodyToMono(String.class)
-            .subscribeOn(Schedulers.boundedElastic())
-            .map(rawJson -> {
-              response.parseFromRawJson(rawJson);
-              return response;
-            })
-            .doOnNext(lastResponse::set)
-        .doOnError(error -> logger.CRITICAL("Erreur lors de l'appel DELETE: " + error.getMessage()));
-  }
+    /**
+     * Method to call the API with a DELETE request.
+     * @param routeName Name of the route to call.
+     * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
+     */
+    public Mono<ApiFactory> callAPIDelete(String routeName) {
+        logger.INFO("Call DELETE to : " + routeName);
+        return webClient.delete()
+                .uri(routeName)
+                .retrieve()
+                .bodyToMono(String.class)
+                .subscribeOn(Schedulers.boundedElastic())
+                .map(rawJson -> {
+                    response.parseFromRawJson(rawJson);
+                    return response;
+                })
+                .doOnNext(lastResponse::set)
+                .doOnError(error -> logger.CRITICAL("Error while call DELETE: " + error.getMessage()));
+    }
 }

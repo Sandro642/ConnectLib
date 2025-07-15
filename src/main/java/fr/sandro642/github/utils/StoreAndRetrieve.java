@@ -3,58 +3,55 @@ package fr.sandro642.github.utils;
 import java.util.HashMap;
 
 /**
- * StoreAndRetrieve est une classe utilitaire pour stocker et récupérer des valeurs associées à des clés.
- * Elle utilise une map concurrente pour assurer la sécurité des threads lors de l'accès aux données.
+ * StoreAndRetrieve is a utility class for storing and retrieving key-value pairs.
+ * It provides methods to add, get, remove, and check for keys in a map.
+ * * This class is used to manage configuration values such as the base URL of an API and file locations.
  *
  * @author Sandro642
  * @version 1.0
- * @since 1.0
  */
 
 public class StoreAndRetrieve {
 
     /**
-     * Clés utilisées pour stocker des valeurs dans la map.
-     * * URL_KEY : Clé pour stocker l'URL de base de l'API.
-     * * FILE_LOCATION_KEY : Clé pour stocker le chemin du fichier de configuration.
-     * * Ces clés sont utilisées pour accéder aux valeurs stockées dans la map.
+     * URL_KEY is the key used to store the base URL of the API.
+     * FILE_LOCATION_KEY is the key used to store the file location for resources.
+     * store is a HashMap that holds key-value pairs for configuration settings.
      */
     public final String URL_KEY = "baseUrl";
     public final String FILE_LOCATION_KEY = "fileLocation";
     public final HashMap<String, Object> store = new HashMap<>();
 
     /**
-     * Ajoute une valeur à la map avec la clé spécifiée.
-     * @param key est la valeur de la clé pour laquelle la valeur sera stockée.
-     * @param value est la valeur à stocker dans la map.
+     * Add a key-value pair to the store.
+     * @param key is the key under which the value will be stored.
+     * @param value is the value to be stored under the specified key.
      */
     public void put(String key, Object value) {
         store.put(key, value);
     }
 
     /**
-     * Récupère une valeur associée à la clé spécifiée.
-     * @param key est la clé pour laquelle la valeur sera récupérée.
-     * @return la valeur associée à la clé, ou null si la clé n'existe pas.
+     * Retrieve a value associated with the specified key.
+     * @param key is the key for which the value will be retrieved.
+     * @return the value associated with the specified key, or null if the key does not exist.
      */
     public Object get(String key) {
         return store.get(key);
     }
 
-
     /**
-     * Supprime une valeur associée à la clé spécifiée.
-     * @param key est la clé pour laquelle la valeur sera supprimée.
+     * Remove a key-value pair from the store.
+     * @param key is the key of the entry to be removed.
      */
     public void remove(String key) {
         store.remove(key);
     }
 
-
     /**
-     * Vérifie si la map contient une clé spécifiée.
-     * @param key est la clé à vérifier dans la map.
-     * @return true si la clé existe dans la map, false sinon.
+     * Check if the store contains a specific key.
+     * @param key is the key to check for existence in the store.
+     * @return true if the key exists, false otherwise.
      */
     public boolean containsKey(String key) {
         return store.containsKey(key);
