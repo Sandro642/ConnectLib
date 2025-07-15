@@ -1,13 +1,13 @@
-# 🚀 ConnectorAPI
+# 🚀 ConnectLib
 
-Bienvenue dans **ConnectorAPI** : la passerelle universelle pour connecter, automatiser et orchestrer vos flux de données !
-Et si vous pensiez que les API étaient compliquées, détrompez-vous ! Avec ConnectorAPI, c’est comme jouer avec des Lego : simple, intuitif et puissant. 
-> Pour information, cette librairie n'est pas destinée à être utilisée pour Minecraft, elle est utilisée afin professionnel dans un projet Java.
+Welcome to **ConnectLib**: the universal gateway to connect, automate and orchestrate your data flows!
+And if you thought APIs were complicated, think again! With ConnectLib, it's like playing with Lego: simple, intuitive and powerful.
+> For information, this library is not intended to be used for Minecraft, it is used professionally in a Java project.
 
 ---
 
 ```java
-Stable Version : 0.2.2-STABLE
+Stable Version: 0.2.2-STABLE
 ```
 
 ---
@@ -18,91 +18,91 @@ Support Lib 23 | Future 24
 Hook -----------------------|
  - Support Minecraft 1.8
 
- - Comming Soon.
+ - Coming Soon.
 ```
 ---
 
-Être tenu au courant des dernières features et mises à jour de ConnectorAPI.
+Stay informed about the latest features and updates of ConnectLib.
 
-- Système de débugging avancé. Disponible prochainement.
+- Advanced debugging system. Available soon.
 
 ---
 
-Changelog : 
+Changelog:
 
 ```java
- - [0.1.3.9-SNAPSHOT] : Ajout de la sérialisation des données pour une compatibilisation parfaite des données avec les HOOK.
- - [0.1.3.17-SNAPSHOT] : Suppresion de la sérialisation des données... Toujours disponible depuis la branche /feature/serializer. Utile si les processus ne sont pas initialisé dans le même environnement.
- - [0.1.9.2-STABLE] : Patch de sécurité en utilisant la méthode getRoutes en utilisant une classe enumération pour la routeName : StackOverflowError... + Création des maps selon le type de variable souhaité.
- - [0.2.0-STABLE] : Woaw arrivé de la 0.2.0 en si peu de temps ? Il y en avait des choses à faire sur ce projet ;)
- - [0.2.2-STABLE] : Ajout de la création de logs.
+ - [0.1.3.9-SNAPSHOT]: Added data serialization for perfect data compatibility with HOOK.
+ - [0.1.3.17-SNAPSHOT]: Removal of data serialization... Still available from the /feature/serializer branch. Useful if processes are not initialized in the same environment.
+ - [0.1.9.2-STABLE]: Security patch using the getRoutes method using an enumeration class for routeName: StackOverflowError... + Creation of maps according to the desired variable type.
+ - [0.2.0-STABLE]: Wow, arrival of 0.2.0 in such a short time? There were things to do on this project ;)
+ - [0.2.2-STABLE]: Added log creation.
 ```
 
 ---
 
-## 🌟 Pourquoi ConnectorAPI ?
+## 🌟 Why ConnectLib?
 
-Imaginez une API qui ne se contente pas de relier des services, mais qui devient le chef d’orchestre de vos intégrations. ConnectorAPI est conçu pour :
+Imagine an API that doesn't just connect services, but becomes the conductor of your integrations. ConnectLib is designed to:
 
-- **Centraliser** vos connexions API
-- **Automatiser** vos tâches récurrentes
-- **Sécuriser** vos échanges de données
-- **Simplifier** l’ajout de nouveaux connecteurs
-
----
-
-## 🛠️ Fonctionnalités principales
-
-- 🔌 **Gestion centralisée des connecteurs**
-- ⚡ **Exécution de jobs automatisés**
-- 🧩 **Extensible et modulaire**
-- 📊 **Logs détaillés et monitoring**
-- 🔒 **Sécurité intégrée**
+- **Centralize** your API connections
+- **Automate** your recurring tasks
+- **Secure** your data exchanges
+- **Simplify** adding new connectors
 
 ---
 
-## 🚦 Démarrage rapide
+## 🛠️ Main Features
 
-1. **Cloner le projet**
+- 🔌 **Centralized connector management**
+- ⚡ **Automated job execution**
+- 🧩 **Extensible and modular**
+- 📊 **Detailed logs and monitoring**
+- 🔒 **Built-in security**
+
+---
+
+## 🚦 Quick Start
+
+1. **Clone the project**
    ```bash
-   git clone https://github.com/votre-utilisateur/ConnectorAPI.git
-   cd ConnectorAPI
+   git clone https://github.com/your-username/ConnectLib.git
+   cd ConnectLib
    ```
-2. **Compiler**
+2. **Compile**
    ```bash
    ./gradlew build
    ```
-3. **Exécuter un exemple**
+3. **Run an example**
    ```bash
    ./gradlew run
    ```
 
 ---
 
-## 🧑‍💻 Exemple d’utilisation
+## 🧑‍💻 Usage Example
 
-Importation de la librairie
+Library Import
 ```java
 repositories {
     
     maven {
-        url = uri("https://sandro642.github.io/connectorapi/jar")
+        url = uri("https://sandro642.github.io/connectlib/jar")
    }
    
 }
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectorAPI:0.2.2-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.2.2-STABLE")
     
 }
 
 ```
-Initialisation de la Librairie
+Library Initialization
 ```java
 public class Example {
     
-    // Initialisation avec une enumération
+    // Initialization with an enumeration
     public enum RouteList implements ConvertEnum.RouteImport {
        VERSION("/api/mcas/info/version"),
        INFO("/api/mcas/info/info");
@@ -119,49 +119,48 @@ public class Example {
        }
     }
     
-    ConnectorAPI.initialize(ResourceType.MAIN_RESOURCES, RouteList.class);
+    ConnectLib.initialize(ResourceType.MAIN_RESOURCES, RouteList.class);
     
     
 ///////////////////////////////////////////////////////////////////////////    
-    ConnectorAPI.initialize(ResourceType.MAIN_RESOURCES);
+    ConnectLib.initialize(ResourceType.MAIN_RESOURCES);
     
-    //Rajouter vos routes dans le fichier infos.yml
+    //Add your routes in the infos.yml file
 }
 ```
 
-Plus d'exemples dans ICI : [ExampleUsage.java](src/main/java/fr/sandro642/github/example/ExampleUsage.java) Non disponible pour le moment dû aux nouvelles features.
+More examples HERE: [ExampleUsage.java](src/main/java/fr/sandro642/github/example/ExampleUsage.java) Not available at the moment due to new features.
 
 ---
 
-## 📚 Structure du projet
+## 📚 Project Structure
 
-- `src/main/java/fr/sandro642/github/` : code source principal
-- `src/test/java/fr/sandro642/github/test/` : tests unitaires
-- `build.gradle` : configuration Gradle
-
----
-
-## 🤝 Contribuer
-
-1. Forkez le repo
-2. Créez une branche (`feature/ma-fonctionnalite`)
-3. Poussez vos modifications et ouvrez une PR
+- `src/main/java/fr/sandro642/github/` : main source code
+- `src/test/java/fr/sandro642/github/test/` : unit tests
+- `build.gradle` : Gradle configuration
 
 ---
 
-## 🧠 Idées d’évolution
+## 🤝 Contributing
 
-- Ajout de connecteurs pour de nouveaux services
-- Interface web de gestion
-- Système de plugins
+1. Fork the repo
+2. Create a branch (`feature/my-feature`)
+3. Push your changes and open a PR
+
+---
+
+## 🧠 Evolution Ideas
+
+- Adding connectors for new services
+- Web management interface
+- Plugin system
 
 ---
 
 ## 📞 Contact
 
-Pour toute question ou suggestion : [sandro33810@gmail.com](mailto:sandro33810@gmail.com)
+For any questions or suggestions: [sandro33810@gmail.com](mailto:sandro33810@gmail.com)
 
 ---
 
-> "ConnectorAPI, c’est la liberté de connecter l’impossible."
-
+> "ConnectLib is the freedom to connect the impossible."
