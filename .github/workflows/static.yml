@@ -31,17 +31,17 @@ jobs:
           cd gh-pages
           git checkout main
 
-      - name: Copy Javadoc to connectorapi/javadoc
+      - name: Copy Javadoc to connectlib/javadoc
         run: |
-          rm -rf gh-pages/connectorapi/javadoc/*
-          mkdir -p gh-pages/connectorapi/javadoc
-          cp -r build/docs/javadoc/* gh-pages/connectorapi/javadoc/
+          rm -rf gh-pages/connectlib/javadoc/*
+          mkdir -p gh-pages/connectlib/javadoc
+          cp -r build/docs/javadoc/* gh-pages/connectlib/javadoc/
 
       - name: Commit and push changes
         run: |
           cd gh-pages
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add connectorapi/javadoc
-          git commit -m "Update Javadoc for connectorapi" || echo "No changes to commit"
+          git add connectlib/javadoc
+          git commit -m "Update Javadoc for connectlib" || echo "No changes to commit"
           git push https://${{ secrets.GH_TOKEN }}@github.com/sandro642/sandro642.github.io.git main
