@@ -7,7 +7,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.2.6-STABLE
+Stable Version: 0.2.6.1-STABLE
 ```
 
 ---
@@ -35,7 +35,8 @@ Changelog:
  - [0.1.3.17-SNAPSHOT]: Removal of data serialization... Still available from the /feature/serializer branch. Useful if processes are not initialized in the same environment.
  - [0.1.9.2-STABLE]: Security patch using the getRoutes method using an enumeration class for routeName: StackOverflowError... + Creation of maps according to the desired variable type.
  - [0.2.0-STABLE]: Wow, arrival of 0.2.0 in such a short time? There were things to do on this project ;)
- - [0.2.2-STABLE]: Added log creation.
+ - [0.2.2-STABLE]: Added log creation. 
+ - [0.2.6.1-STABLE]: Patch dû à la compatibilité avec la création de log et le Hook Minecraft.
 ```
 
 ---
@@ -93,7 +94,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.2.6-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.2.6.1-STABLE")
     
 }
 
