@@ -114,6 +114,9 @@ public class MCSupport {
      * @return The singleton instance of MCSupport.
      */
     public static MCSupport getInstance() {
+        if (instance == null) {
+            instance = new MCSupport();
+        }
         return instance;
     }
 }
