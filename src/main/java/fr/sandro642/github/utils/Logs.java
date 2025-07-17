@@ -30,7 +30,7 @@ public class Logs {
      * Constructor of Logs
      * This constructor is private to ensure that the class is a singleton.
      */
-    private static String pathFile;
+    private String pathFile;
 
     /**
      * Make list for save logs in memory before writing to file.
@@ -43,7 +43,11 @@ public class Logs {
      * This block is executed when the class is loaded, ensuring that the instance is created only once.
      */
     public void setPathFile(ResourceType type) {
-        this.pathFile = type.getPath();
+        if (type == ResourceType.MC_RESOURCES) {
+            this.pathFile = ConnectLib.MCSupport().getPluginPath();
+        } else {
+            this.pathFile = type.getPath();
+        }
     }
 
     /**
