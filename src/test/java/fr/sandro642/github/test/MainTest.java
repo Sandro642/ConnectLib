@@ -53,8 +53,6 @@ public class MainTest {
 
             System.out.println(response.getSpecData("data", "version"));
 
-            System.out.println(ConnectLib.YamlUtils().isLogEnabled());
-
         } catch (Exception e) {
             return;
         }
