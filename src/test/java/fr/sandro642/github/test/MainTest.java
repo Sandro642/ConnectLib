@@ -7,6 +7,7 @@ import fr.sandro642.github.jobs.misc.MethodType;
 import fr.sandro642.github.jobs.misc.ResourceType;
 import fr.sandro642.github.jobs.misc.VersionType;
 import fr.sandro642.github.utils.ConvertEnum;
+import fr.sandro642.github.utils.YamlUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,6 +52,8 @@ public class MainTest {
                     .getResponse();
 
             System.out.println(response.getSpecData("data", "version"));
+
+            System.out.println(ConnectLib.YamlUtils().isLogEnabled());
 
         } catch (Exception e) {
             return;
