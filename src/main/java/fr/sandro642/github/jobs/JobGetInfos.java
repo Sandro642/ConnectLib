@@ -233,20 +233,25 @@ public class JobGetInfos {
 
             ApiFactory response;
 
-            if (method == MethodType.GET) {
-                response = apiClient.callAPIGet(route).block();
-            } else if (method == MethodType.POST) {
-                response = apiClient.callAPIPost(route, body).block();
-            } else if (method == MethodType.PUT) {
-                response = apiClient.callAPIPut(route, body).block();
-            } else if (method == MethodType.PATCH) {
-                response = apiClient.callAPIPatch(route, body).block();
-            } else if (method == MethodType.DELETE) {
-                response = apiClient.callAPIDelete(route).block();
-            } else {
-                ConnectLib.Logger().ERROR("Unsupported method type: " + method);
-
-                return null;
+            switch(method) {
+                case GET:
+                    response = apiClient.callAPIGet(route).block();
+                    break;
+                case POST:
+                    response = apiClient.callAPIPost(route, body).block();
+                    break;
+                case PUT:
+                    response = apiClient.callAPIPut(route, body).block();
+                    break;
+                case PATCH:
+                    response = apiClient.callAPIPatch(route, body).block();
+                    break;
+                case DELETE:
+                    response = apiClient.callAPIDelete(route).block();
+                    break;
+                default:
+                    ConnectLib.Logger().ERROR("Unsupported method type: " + method);
+                    return null;
             }
 
             // Nettoie le store après utilisation
