@@ -1,6 +1,6 @@
 <div align="center">
 
-![ConnectLib Banner](./banner.html)
+![ConnectLib Banner](./banner.png)
 
 # ConnectLib
 
