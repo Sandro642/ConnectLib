@@ -1,4 +1,4 @@
-package fr.sandro642.github.jobs.misc;
+package fr.sandro642.github.enums;
 
 /**
  * VersionType is an enumeration representing different versions of the ConnectLib library.

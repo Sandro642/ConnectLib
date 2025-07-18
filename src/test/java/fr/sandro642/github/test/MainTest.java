@@ -3,11 +3,10 @@ package fr.sandro642.github.test;
 import fr.sandro642.github.ConnectLib;
 
 import fr.sandro642.github.api.ApiFactory;
-import fr.sandro642.github.jobs.misc.MethodType;
-import fr.sandro642.github.jobs.misc.ResourceType;
-import fr.sandro642.github.jobs.misc.VersionType;
+import fr.sandro642.github.enums.MethodType;
+import fr.sandro642.github.enums.ResourceType;
+import fr.sandro642.github.enums.VersionType;
 import fr.sandro642.github.utils.ConvertEnum;
-import fr.sandro642.github.utils.YamlUtils;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -52,7 +51,6 @@ public class MainTest {
                     .getResponse();
 
             System.out.println(response.getSpecData("data", "version"));
-
         } catch (Exception e) {
             return;
         }

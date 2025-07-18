@@ -2,7 +2,7 @@ package fr.sandro642.github.utils;
 
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.hook.MCSupport;
-import fr.sandro642.github.jobs.misc.ResourceType;
+import fr.sandro642.github.enums.ResourceType;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;

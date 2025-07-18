@@ -3,8 +3,8 @@ package fr.sandro642.github.jobs;
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiFactory;
-import fr.sandro642.github.jobs.misc.MethodType;
-import fr.sandro642.github.jobs.misc.VersionType;
+import fr.sandro642.github.enums.MethodType;
+import fr.sandro642.github.enums.VersionType;
 
 import java.util.Map;
 

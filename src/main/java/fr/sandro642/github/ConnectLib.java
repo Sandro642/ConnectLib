@@ -3,7 +3,7 @@ package fr.sandro642.github;
 import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.utils.*;
 import fr.sandro642.github.jobs.JobGetInfos;
-import fr.sandro642.github.jobs.misc.ResourceType;
+import fr.sandro642.github.enums.ResourceType;
 
 import java.util.HashMap;
 import java.util.Map;

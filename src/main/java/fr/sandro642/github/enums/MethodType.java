@@ -1,4 +1,4 @@
-package fr.sandro642.github.jobs.misc;
+package fr.sandro642.github.enums;
 
 /**
  * MethodType is an enumeration representing different HTTP methods used in API requests.

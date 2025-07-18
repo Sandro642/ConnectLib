@@ -1,4 +1,4 @@
-package fr.sandro642.github.jobs.misc;
+package fr.sandro642.github.enums;
 
 /**
  * ResourceType is an enumeration representing different types of resources in the ConnectLib library.
