@@ -1,5 +1,7 @@
 <div align="center">
 
+![ConnectLib Banner](./banner.html)
+
 # ConnectLib
 
 <br>
