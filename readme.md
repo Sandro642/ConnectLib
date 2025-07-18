@@ -2,8 +2,6 @@
 
 ![ConnectLib Banner](./banner.png)
 
-# ConnectLib
-
 <br>
 
 [![Version](https://img.shields.io/github/v/tag/Sandro642/ConnectLib?label=Version&style=for-the-badge&color=blue&logo=github)](https://github.com/Sandro642/ConnectLib/releases)
