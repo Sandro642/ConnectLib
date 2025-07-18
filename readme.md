@@ -7,7 +7,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.2.6.1-STABLE
+Stable Version: 0.2.6.2-STABLE
 ```
 
 ---
@@ -16,7 +16,7 @@ Stable Version: 0.2.6.1-STABLE
 Support Lib : Java 23
 
 Hook -----------------------|
- - Support Minecraft 1.8
+ - Support Minecraft 1.8 - Latest Verion
 
  - Coming Soon.
 ```
@@ -94,7 +94,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.2.6.1-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.2.6.2-STABLE")
     
 }
 
