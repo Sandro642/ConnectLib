@@ -30,7 +30,7 @@ public class Logs {
      * Constructor of Logs
      * This constructor is private to ensure that the class is a singleton.
      */
-    private String pathFile;
+    private static String pathFile;
 
     /**
      * Make list for save logs in memory before writing to file.
