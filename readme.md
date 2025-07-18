@@ -16,7 +16,7 @@ Stable Version: 0.2.6.2-STABLE
 Support Lib : Java 23
 
 Hook -----------------------|
- - Support Minecraft 1.8 - Latest Verion
+ - Support Minecraft 1.8 - Latest Version
 
  - Coming Soon.
 ```
