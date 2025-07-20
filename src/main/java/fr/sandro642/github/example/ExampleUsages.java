@@ -5,11 +5,11 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.VersionType;
-import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.utils.ConvertEnum;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * ExampleUsages is a placeholder class that can be used to demonstrate how to use the ConnectLib library.
