@@ -1,8 +1,6 @@
 package fr.sandro642.github.utils;
 
 import fr.sandro642.github.ConnectLib;
-import fr.sandro642.github.hook.MCSupport;
-import fr.sandro642.github.enums.ResourceType;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -88,17 +86,10 @@ public class YamlUtils {
 	 * Generates a template `infos.yml` file if it does not already exist.
 	 * If the file exists, it updates the routes section with the provided routes.
 	 *
-	 * @param type   the type of resource (e.g., MC_RESOURCES or other types)
 	 * @param routes a map of route names to their corresponding paths
 	 */
-	public void generateTemplateIfNotExists(ResourceType type, Map<Enum<?>, String> routes) {
-		String basePath;
-
-		if (type == ResourceType.MC_RESOURCES) {
-			basePath = MCSupport.getInstance().getPluginPath();
-		} else {
-			basePath = type.getPath();
-		}
+	public void generateTemplateIfNotExists(Map<Enum<?>, String> routes) {
+		String basePath = ConnectLib.HookManager().BASE_PATH();
 
 		File directory = new File(basePath);
 
