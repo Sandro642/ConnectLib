@@ -179,7 +179,7 @@ public class YamlUtils {
 			}
 
 			template.append("\n\n# Logs\n")
-					.append("enableLogs: false\n");
+					.append("enableLogs: true\n");
 
 			try (FileWriter writer = new FileWriter(file)) {
 				writer.write(template.toString());

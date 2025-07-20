@@ -17,12 +17,12 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.2.7-STABLE
+Stable Version: 0.2.7.1-STABLE
 ```
 
 ---
 
-```java
+```java[build.gradle](build.gradle)
 Support Lib : Java 23
 
 Hook -----------------------|
@@ -105,7 +105,9 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.2.7-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.2.7.1-STABLE")
+    // Importation de Project Reactor pour une utilisation complète de ConnectLib
+    implementation ("io.projectreactor:reactor-core:3.6.9")
     
 }
 
