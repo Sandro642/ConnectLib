@@ -42,12 +42,8 @@ public class Logs {
      * Static block to initialize the Logs instance.
      * This block is executed when the class is loaded, ensuring that the instance is created only once.
      */
-    public void setPathFile(ResourceType type) {
-        if (type == ResourceType.MC_RESOURCES) {
-            this.pathFile = ConnectLib.MCSupport().getPluginPath();
-        } else {
-            this.pathFile = type.getPath();
-        }
+    public void setPathFile() {
+        this.pathFile = ConnectLib.HookManager().BASE_PATH();
     }
 
     /**

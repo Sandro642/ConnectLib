@@ -17,7 +17,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.2.6.4-STABLE
+Stable Version: 0.2.7-STABLE
 ```
 
 ---
@@ -105,7 +105,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.2.6.4-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.2.7-STABLE")
     
 }
 

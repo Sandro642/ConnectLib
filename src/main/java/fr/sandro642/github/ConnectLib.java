@@ -1,5 +1,6 @@
 package fr.sandro642.github;
 
+import fr.sandro642.github.hook.HookManager;
 import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.utils.*;
 import fr.sandro642.github.jobs.JobGetInfos;
@@ -18,6 +19,7 @@ import java.util.Map;
  * @see ConnectLib#StoreAndRetrieve()
  * @see ConnectLib#YamlUtils()
  * @see ConnectLib#MCSupport()
+ * @see ConnectLib#HookManager()
  */
 
 public class ConnectLib {
@@ -49,14 +51,12 @@ public class ConnectLib {
             yamlUtils = new YamlUtils();
             logs = new Logs();
 
-            yamlUtils.generateTemplateIfNotExists(resourceType, routesEnums);
-            logs.setPathFile(resourceType);
+            HookManager().initHook(resourceType);
+            HookManager().FILE_LOCATION_KEY();
 
-            if (resourceType == ResourceType.MC_RESOURCES) {
-                storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, MCSupport().getPluginPath());
-            } else {
-                storeAndRetrieve.store.put(storeAndRetrieve.FILE_LOCATION_KEY, resourceType.getPath());
-            }
+            yamlUtils.generateTemplateIfNotExists(routesEnums);
+
+            logs.setPathFile();
 
             String baseUrl = yamlUtils.getURL();
             if (baseUrl != null) {
@@ -143,5 +143,9 @@ public class ConnectLib {
      */
     public static MCSupport MCSupport() {
         return MCSupport.getInstance();
+    }
+
+    public static HookManager HookManager() {
+        return HookManager.getInstance();
     }
 }

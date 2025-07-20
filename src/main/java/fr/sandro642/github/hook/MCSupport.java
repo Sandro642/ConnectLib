@@ -31,22 +31,6 @@ public class MCSupport {
     }
 
     /**
-     * Method to check if the current project is a Minecraft project.
-     * This method checks if the file location contains the Minecraft resources path.
-     * @return true if the project is a Minecraft project, false otherwise.
-     */
-    public boolean isMCProject() {
-        try {
-
-            String fileLocation = (String) ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY);
-            return fileLocation != null && fileLocation.contains(ResourceType.MC_RESOURCES.getPath());
-        } catch (Exception e) {
-            ConnectLib.Logger().ERROR("Error while checking if the project is a Minecraft project: " + e.getMessage());
-            return false;
-        }
-    }
-
-    /**
      * Method to set the plugin instance.
      * This method should be called in a Minecraft project to set the plugin instance.
      *
@@ -97,14 +81,6 @@ public class MCSupport {
      */
     public Plugin getPlugin() {
         return pluginSingleton;
-    }
-
-    /**
-     * Method to reset the plugin instance.
-     * This method sets the pluginSingleton to null, effectively resetting it.
-     */
-    public void resetPlugin() {
-        this.pluginSingleton = null;
     }
 
     /**
