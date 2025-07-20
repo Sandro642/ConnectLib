@@ -77,7 +77,7 @@ public class HookManager {
 
             default:
                 logger.CRITICAL("Unsupported resource type: " + resourceType);
-                return null;
+                throw new IllegalArgumentException("Unsupported resource type: " + resourceType);
         }
     }
 
