@@ -65,11 +65,11 @@ publishing {
             pom {
                 name = 'ConnectLib'
                 description = 'A library for connecting to APIs'
-                url = 'https://sandro642.github.io/connectorapi'
+                url = 'https://sandro642.github.io/connectlib'
                 licenses {
                     license {
                         name = 'The MIT License, Version 2.0'
-                        url = 'https://github.com/Sandro642/ConnectLib/blob/patch/groovy/LICENSE'
+                        url = 'https://github.com/Sandro642/ConnectLib/blob/main/LICENSE'
                     }
                 }
                 developers {

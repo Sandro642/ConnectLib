@@ -47,6 +47,7 @@ Changelog:
  - [0.2.0-STABLE]: Wow, arrival of 0.2.0 in such a short time? There were things to do on this project ;)
  - [0.2.2-STABLE]: Added log creation. 
  - [0.2.6.1-STABLE]: Patch dû à la compatibilité avec la création de log et le Hook Minecraft.
+ - [0.2.6.4-STABLE]: Added asynchronous job execution, allowing you to run tasks in the background without blocking your main application thread.
 ```
 
 ---
@@ -140,7 +141,7 @@ public class Example {
 }
 ```
 
-More examples HERE: [ExampleUsage.java](src/main/java/fr/sandro642/github/example/ExampleUsage.java) Not available at the moment due to new features.
+More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/example/ExampleUsages.java)
 
 ---
 

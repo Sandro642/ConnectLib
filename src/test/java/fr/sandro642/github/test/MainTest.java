@@ -9,6 +9,9 @@ import fr.sandro642.github.enums.VersionType;
 import fr.sandro642.github.utils.ConvertEnum;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+
 /**
  * MainTest is a test class for the ConnectLib library.
  * @author Sandro642
@@ -45,12 +48,21 @@ public class MainTest {
         ConnectLib.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
+            CompletableFuture<ApiFactory> futureResponse = new CompletableFuture<>();
 
-            ApiFactory response = ConnectLib.JobGetInfos()
+             ConnectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
-                    .getResponse();
+                    .getResponse()
+                    .subscribe(
+                            futureResponse::complete,
+                            futureResponse::completeExceptionally
+                    );
 
-            System.out.println(response.getSpecData("data", "version"));
+            ApiFactory response = futureResponse.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Response: " + response.display());
+
+
         } catch (Exception e) {
             return;
         }
@@ -62,8 +74,11 @@ public class MainTest {
 
         try {
             ApiFactory response = ConnectLib.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.POST, TestRoutes.INFO, null, null)
-                    .getResponse();
+                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
+                    .getResponse()
+                    .block();
+
+            System.out.println("Response: " + response.display());
 
         } catch (Exception e) {
             e.printStackTrace();
