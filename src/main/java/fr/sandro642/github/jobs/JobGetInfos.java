@@ -5,6 +5,7 @@ import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.VersionType;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -109,40 +110,6 @@ public class JobGetInfos {
     }
 
     /**
-     * Get routes from the YAML file and builds the full URL with a request body.
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param body Body of the request for POST (can be null for GET)
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutesWithBody(MethodType methodType, String routeName, Map<String, ?> body) {
-        return getRoutes(null, methodType, routeName, body, null);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL with additional parameters.
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param params Additional parameters for the request
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutesWithParams(MethodType methodType, String routeName, Map<String, ?> params) {
-        return getRoutes(null, methodType, routeName, null, params);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL with a request body and additional parameters.
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param body Body of the request for POST (can be null for GET)
-     * @param params Additional parameters for the request
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutesBoth(MethodType methodType, String routeName, Map<String, ?> body, Map<String, ?> params) {
-        return getRoutes(null, methodType, routeName, body, params);
-    }
-
-    /**
      * Récupère les routes depuis le fichier YAML et construit l'URL complète
      * @param versionType Version de l'API (V1_BRANCH, V2_BRANCH)
      * @param methodType Type de méthode HTTP (GET, POST)
@@ -220,7 +187,7 @@ public class JobGetInfos {
      * makes the API call, and returns the response as an ApiFactory object.
      * @return ApiFactory containing the response from the API, or null if an error occurs.
      */
-    public ApiFactory getResponse() {
+    public Mono<ApiFactory> getResponse() {
         try {
 
             String route = (String) ConnectLib.StoreAndRetrieve().store.get("currentRoute");
@@ -231,23 +198,23 @@ public class JobGetInfos {
                 throw new RuntimeException("Route or method not set. Please call getRoutes() first.");
             }
 
-            ApiFactory response;
+            Mono<ApiFactory> response;
 
             switch(method) {
                 case GET:
-                    response = apiClient.callAPIGet(route).block();
+                    response = apiClient.callAPIGet(route);
                     break;
                 case POST:
-                    response = apiClient.callAPIPost(route, body).block();
+                    response = apiClient.callAPIPost(route, body);
                     break;
                 case PUT:
-                    response = apiClient.callAPIPut(route, body).block();
+                    response = apiClient.callAPIPut(route, body);
                     break;
                 case PATCH:
-                    response = apiClient.callAPIPatch(route, body).block();
+                    response = apiClient.callAPIPatch(route, body);
                     break;
                 case DELETE:
-                    response = apiClient.callAPIDelete(route).block();
+                    response = apiClient.callAPIDelete(route);
                     break;
                 default:
                     ConnectLib.Logger().ERROR("Unsupported method type: " + method);
