@@ -80,12 +80,14 @@ public class ExampleUsages {
                     );
 
             // Handle the response when it completes
-            ApiFactory response = futureResponse.get();
+            ApiFactory response = futureResponse.get(10, TimeUnit.SECONDS);
 
             System.out.println(response.display());
             System.out.println("Response Code: " + response.getData("code"));
             System.out.println("Response Message: " + response.getData("message"));
             System.out.println("Response Data: " + response.getSpecData("data", "exampleKey"));
+        } catch (java.util.concurrent.TimeoutException e) {
+            System.err.println("The operation timed out: " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
         }
