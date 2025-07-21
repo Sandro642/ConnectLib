@@ -74,6 +74,8 @@ public class ApiClient extends ApiFactory {
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
+                .doOnNext(thread ->
+                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
@@ -96,6 +98,8 @@ public class ApiClient extends ApiFactory {
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
+                .doOnNext(thread ->
+                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
@@ -118,6 +122,8 @@ public class ApiClient extends ApiFactory {
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
+                .doOnNext(thread ->
+                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
@@ -140,6 +146,8 @@ public class ApiClient extends ApiFactory {
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
+                .doOnNext(thread ->
+                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
@@ -160,6 +168,8 @@ public class ApiClient extends ApiFactory {
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
+                .doOnNext(thread ->
+                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
