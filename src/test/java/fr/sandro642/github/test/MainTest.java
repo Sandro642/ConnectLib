@@ -48,17 +48,12 @@ public class MainTest {
         ConnectLib.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
-            CompletableFuture<ApiFactory> futureResponse = new CompletableFuture<>();
 
-             ConnectLib.JobGetInfos()
+             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = ConnectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
-                    .getResponse()
-                    .subscribe(
-                            futureResponse::complete,
-                            futureResponse::completeExceptionally
-                    );
+                    .getResponse();
 
-            ApiFactory response = futureResponse.get(5, TimeUnit.SECONDS);
+             ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
             System.out.println("Response: " + response.display());
 
@@ -73,10 +68,11 @@ public class MainTest {
         ConnectLib.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
-            ApiFactory response = ConnectLib.JobGetInfos()
+            CompletableFuture<ApiFactory> factoryCompletableFuture = ConnectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
-                    .getResponse()
-                    .block();
+                    .getResponse();
+
+            ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
             System.out.println("Response: " + response.display());
 

@@ -17,7 +17,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.2.7.1-STABLE
+Stable Version: 0.2.7.2-STABLE
 ```
 
 ---
@@ -48,6 +48,7 @@ Changelog:
  - [0.2.2-STABLE]: Added log creation. 
  - [0.2.6.1-STABLE]: Patch dû à la compatibilité avec la création de log et le Hook Minecraft.
  - [0.2.6.4-STABLE]: Added asynchronous job execution, allowing you to run tasks in the background without blocking your main application thread.
+ - [0.2.7.2-STABLE]: Remove implementation Project Reactor
 ```
 
 ---
@@ -105,9 +106,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.2.7.1-STABLE")
-    // Importation de Project Reactor pour une utilisation complète de ConnectLib
-    implementation ("io.projectreactor:reactor-core:3.6.9")
+    implementation("fr.sandro642.github:ConnectLib:0.2.7.2-STABLE")
     
 }
 

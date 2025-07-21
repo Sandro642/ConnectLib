@@ -50,17 +50,22 @@ public class ExampleUsages {
 
     // Example method to demonstrate usage
     public void exampleMethodSync() {
-        // This method can be used to demonstrate how to interact with the API
-        // For example, making a GET request to the EXAMPLE_ROUTE
-        ApiFactory response = ConnectLib.JobGetInfos()
-                .getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE)
-                .getResponse()
-                .block();
+        try {
+            // This method can be used to demonstrate how to interact with the API
+            // For example, making a GET request to the EXAMPLE_ROUTE
+            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = ConnectLib.JobGetInfos()
+                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE)
+                    .getResponse();
 
-        System.out.println(response.display());
-        System.out.println("Response Code: " + response.getData("code"));
-        System.out.println("Response Message: " + response.getData("message"));
-        System.out.println("Response Data: " + response.getSpecData("data", "exampleKey"));
+            ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println(response.display());
+            System.out.println("Response Code: " + response.getData("code"));
+            System.out.println("Response Message: " + response.getData("message"));
+            System.out.println("Response Data: " + response.getSpecData("data", "exampleKey"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Example method to demonstrate asynchronous usage
@@ -68,26 +73,16 @@ public class ExampleUsages {
         try {
             // This method can be used to demonstrate how to interact with the API asynchronously
 
-            // Create a CompletableFuture to handle the asynchronous response
-            CompletableFuture<ApiFactory> futureResponse = new CompletableFuture<>();
-
-            ConnectLib.JobGetInfos()
+            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = ConnectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE)
-                    .getResponse()
-                    .subscribe(
-                            futureResponse::complete,
-                            futureResponse::completeExceptionally
-                    );
+                    .getResponse();
 
-            // Handle the response when it completes
-            ApiFactory response = futureResponse.get(10, TimeUnit.SECONDS);
+            ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
             System.out.println(response.display());
             System.out.println("Response Code: " + response.getData("code"));
             System.out.println("Response Message: " + response.getData("message"));
             System.out.println("Response Data: " + response.getSpecData("data", "exampleKey"));
-        } catch (java.util.concurrent.TimeoutException e) {
-            System.err.println("The operation timed out: " + e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
         }

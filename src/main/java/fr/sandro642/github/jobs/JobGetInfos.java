@@ -6,8 +6,11 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.VersionType;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 /**
  * JobGetInfos is a utility class for managing API requests in the ConnectLib library.
@@ -187,49 +190,77 @@ public class JobGetInfos {
      * makes the API call, and returns the response as an ApiFactory object.
      * @return ApiFactory containing the response from the API, or null if an error occurs.
      */
-    public Mono<ApiFactory> getResponse() {
+    public CompletableFuture<ApiFactory> getResponse() {
         try {
-
             String route = (String) ConnectLib.StoreAndRetrieve().store.get("currentRoute");
             MethodType method = (MethodType) ConnectLib.StoreAndRetrieve().store.get("currentMethod");
             Map<String, Object> body = (Map<String, Object>) ConnectLib.StoreAndRetrieve().store.get("currentBody");
 
             if (route == null || method == null) {
-                throw new RuntimeException("Route or method not set. Please call getRoutes() first.");
+                return CompletableFuture.failedFuture(
+                        new RuntimeException("Route or method not set. Please call getRoutes() first.")
+                );
             }
 
-            Mono<ApiFactory> response;
+            CompletableFuture<ApiFactory> responseFuture = new CompletableFuture<>();
+
+            // Callback to clean up the store after the response
+            Consumer<ApiFactory> onSuccess = response -> {
+                ConnectLib.StoreAndRetrieve().store.remove("currentRoute");
+                ConnectLib.StoreAndRetrieve().store.remove("currentMethod");
+                ConnectLib.StoreAndRetrieve().store.remove("currentBody");
+                responseFuture.complete(response);
+            };
+
+            Consumer<Throwable> onError = error -> {
+                ConnectLib.StoreAndRetrieve().store.remove("currentRoute");
+                ConnectLib.StoreAndRetrieve().store.remove("currentMethod");
+                ConnectLib.StoreAndRetrieve().store.remove("currentBody");
+                responseFuture.completeExceptionally(error);
+            };
 
             switch(method) {
                 case GET:
-                    response = apiClient.callAPIGet(route);
+                    apiClient.callAPIGet(route).subscribe(
+                            response -> onSuccess.accept((ApiFactory) response),
+                            onError
+                    );
                     break;
                 case POST:
-                    response = apiClient.callAPIPost(route, body);
+                    apiClient.callAPIPost(route, body).subscribe(
+                            response -> onSuccess.accept((ApiFactory) response),
+                            onError
+                    );
                     break;
                 case PUT:
-                    response = apiClient.callAPIPut(route, body);
+                    apiClient.callAPIPut(route, body).subscribe(
+                            response -> onSuccess.accept((ApiFactory) response),
+                            onError
+                    );
                     break;
                 case PATCH:
-                    response = apiClient.callAPIPatch(route, body);
+                    apiClient.callAPIPatch(route, body).subscribe(
+                            response -> onSuccess.accept((ApiFactory) response),
+                            onError
+                    );
                     break;
                 case DELETE:
-                    response = apiClient.callAPIDelete(route);
+                    apiClient.callAPIDelete(route).subscribe(
+                            response -> onSuccess.accept((ApiFactory) response),
+                            onError
+                    );
                     break;
                 default:
                     ConnectLib.Logger().ERROR("Unsupported method type: " + method);
-                    return null;
+                    return CompletableFuture.failedFuture(
+                            new IllegalArgumentException("Unsupported method type: " + method)
+                    );
             }
 
-            // Nettoie le store après utilisation
-            ConnectLib.StoreAndRetrieve().store.remove("currentRoute");
-            ConnectLib.StoreAndRetrieve().store.remove("currentMethod");
-            ConnectLib.StoreAndRetrieve().store.remove("currentBody");
-
-            return response;
+            return responseFuture;
 
         } catch (Exception e) {
-            return null;
+            return CompletableFuture.failedFuture(e);
         }
     }
 }
