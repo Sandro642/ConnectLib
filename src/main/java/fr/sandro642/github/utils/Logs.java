@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import fr.sandro642.github.ConnectLib;
-import fr.sandro642.github.enums.ResourceType;
 
 /**
  * Logs is a utility class for managing logging in the ConnectLib library.

@@ -1,7 +1,6 @@
 package fr.sandro642.github.hook;
 
 import fr.sandro642.github.ConnectLib;
-import fr.sandro642.github.enums.ResourceType;
 import org.bukkit.plugin.Plugin;
 
 /**

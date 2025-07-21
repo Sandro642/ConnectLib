@@ -5,8 +5,6 @@ import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.VersionType;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
