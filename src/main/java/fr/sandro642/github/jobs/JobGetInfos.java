@@ -204,7 +204,7 @@ public class JobGetInfos {
 
             CompletableFuture<ApiFactory> responseFuture = new CompletableFuture<>();
 
-            // Callback pour nettoyer le store après la réponse
+            // Callback to clean up the store after the response
             Consumer<ApiFactory> onSuccess = response -> {
                 ConnectLib.StoreAndRetrieve().store.remove("currentRoute");
                 ConnectLib.StoreAndRetrieve().store.remove("currentMethod");
