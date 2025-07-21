@@ -75,7 +75,7 @@ public class ApiClient extends ApiFactory {
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
+                        ConnectLib.Logger().INFO("Current thread in use: " + Thread.currentThread().getName()))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
