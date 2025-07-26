@@ -99,6 +99,7 @@ public class AnnotHandler {
                 }
             }
         } catch (Exception e) {
+            logger.warning("Failed to retrieve classes in package: " + packageName + ". Exception: " + e.getMessage());
         }
         return classes;
     }
