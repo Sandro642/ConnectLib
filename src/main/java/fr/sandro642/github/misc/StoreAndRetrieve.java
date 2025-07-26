@@ -1,4 +1,4 @@
-package fr.sandro642.github.utils;
+package fr.sandro642.github.misc;
 
 import java.util.HashMap;
 

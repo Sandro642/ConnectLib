@@ -1,4 +1,4 @@
-package fr.sandro642.github.utils;
+package fr.sandro642.github.misc;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.Map;
  * @since 1.0
  */
 
-public class ConvertEnum {
+public class EnumLoader {
 
     /**
      * RouteImport is an interface that should be implemented by enums that provide a route.

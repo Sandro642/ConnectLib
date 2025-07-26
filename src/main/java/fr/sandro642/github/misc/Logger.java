@@ -1,4 +1,4 @@
-package fr.sandro642.github.utils;
+package fr.sandro642.github.misc;
 
 /**
  * Logger is a utility class for logging messages in the ConnectLib library.

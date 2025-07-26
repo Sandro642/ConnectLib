@@ -6,7 +6,7 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.VersionType;
-import fr.sandro642.github.utils.ConvertEnum;
+import fr.sandro642.github.misc.EnumLoader;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainTest {
 
-    public enum TestRoutes implements ConvertEnum.RouteImport {
+    public enum TestRoutes implements EnumLoader.RouteImport {
         VERSION("/api/mcas/info/version"),
         INFO("/api/mcas/info/info"),
         UNIX("/api/auth/link/unix/{sessionId}");

@@ -2,7 +2,7 @@ package fr.sandro642.github;
 
 import fr.sandro642.github.hook.HookManager;
 import fr.sandro642.github.hook.MCSupport;
-import fr.sandro642.github.utils.*;
+import fr.sandro642.github.misc.*;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.enums.ResourceType;
 
@@ -43,7 +43,7 @@ public class ConnectLib {
                     ConnectLib.Logger().ERROR("Route class cannot be null.");
                 }
 
-                routesEnums.putAll(ConvertEnum.convertRouteImport(route));
+                routesEnums.putAll(EnumLoader.convertRouteImport(route));
             }
 
             logger = new Logger();

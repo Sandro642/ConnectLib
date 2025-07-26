@@ -5,7 +5,7 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.VersionType;
-import fr.sandro642.github.utils.ConvertEnum;
+import fr.sandro642.github.misc.EnumLoader;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ExampleUsages {
 
-    public enum ExampleRoutes implements ConvertEnum.RouteImport {
+    public enum ExampleRoutes implements EnumLoader.RouteImport {
         EXAMPLE_ROUTE("/api/example/route");
 
         final String route;

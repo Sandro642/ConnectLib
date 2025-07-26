@@ -1,7 +1,7 @@
 package fr.sandro642.github.api;
 
 import fr.sandro642.github.ConnectLib;
-import fr.sandro642.github.utils.Logger;
+import fr.sandro642.github.misc.Logger;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
