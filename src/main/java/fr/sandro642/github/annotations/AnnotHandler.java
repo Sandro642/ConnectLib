@@ -32,7 +32,7 @@ public class AnnotHandler {
      */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
-    @interface AnnotConnect { }
+    public @interface AnnotConnect { }
 
     /**
      * ConnectListener is an interface that should be implemented by classes that want to listen for connection events.
