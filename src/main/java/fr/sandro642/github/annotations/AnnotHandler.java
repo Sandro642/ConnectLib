@@ -66,7 +66,7 @@ public class AnnotHandler {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("Erreur lors de la découverte des listeners", e);
+            throw new RuntimeException("Error during listener discovery", e);
         }
     }
 
