@@ -38,9 +38,7 @@ public class AnnotHandler {
      * ConnectListener is an interface that should be implemented by classes that want to listen for connection events.
      * Classes implementing this interface can have methods annotated with @AnnotConnect to handle specific connection events.
      */
-    interface ConnectListener {
-        <T> void onDebug(T type);
-    }
+    public interface ConnectListener {}
 
     /**
      * listeners is a list that holds instances of classes implementing the ConnectListener interface.

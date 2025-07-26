@@ -17,7 +17,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.2.8-STABLE
+Stable Version: 0.2.8.1-STABLE
 ```
 
 ---
@@ -87,7 +87,7 @@ Imagine an API that doesn't just connect services, but becomes the conductor of 
    ```
 3. **Run an example**
    ```bash
-   ./gradlew run
+   java -jar YourJarFile.jar
    ```
 
 ---
@@ -106,7 +106,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.2.8-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.2.8.1-STABLE")
     
 }
 
