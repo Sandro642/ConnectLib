@@ -1,5 +1,7 @@
 package fr.sandro642.github.annotations;
 
+import fr.sandro642.github.ConnectLib;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -99,7 +101,7 @@ public class AnnotHandler {
                 }
             }
         } catch (Exception e) {
-            logger.warning("Failed to retrieve classes in package: " + packageName + ". Exception: " + e.getMessage());
+            ConnectLib.Logger().WARN("Failed to retrieve classes in package: " + packageName + ". Exception: " + e.getMessage());
         }
         return classes;
     }
