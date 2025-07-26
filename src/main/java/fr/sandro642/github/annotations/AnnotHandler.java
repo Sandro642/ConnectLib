@@ -34,8 +34,6 @@ public class AnnotHandler {
     @Target(ElementType.METHOD)
     public @interface AnnotConnect { }
 
-    copilot retire ça
-
     /**
      * ConnectListener is an interface that should be implemented by classes that want to listen for connection events.
      * Classes implementing this interface can have methods annotated with @AnnotConnect to handle specific connection events.
