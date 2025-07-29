@@ -145,6 +145,10 @@ public class ConnectLib {
         return MCSupport.getInstance();
     }
 
+    /**
+     * Return the instance of HookManager.
+     * @return HookManager instance
+     */
     public static HookManager HookManager() {
         return HookManager.getInstance();
     }
