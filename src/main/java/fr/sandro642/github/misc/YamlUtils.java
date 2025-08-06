@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class YamlUtils {
 
+
 	/**
 	 * Gets the base URL from the YAML configuration file.
 	 * * This method reads the `infos.yml` file located in the directory specified by the
@@ -55,7 +56,7 @@ public class YamlUtils {
 			Map<String, Object> yamlData = yaml.load(inputStream);
 			return (Boolean) yamlData.get("enableLogs");
 		} catch (Exception ex) {
-			ConnectLib.Logger().ERROR("Error while reading enableLogs from infos.yml: " + ex.getMessage());
+			//ConnectLib.Logger().ERROR("Error while reading enableLogs from infos.yml: " + ex.getMessage());
 			return null;
 		}
 	}
@@ -77,7 +78,6 @@ public class YamlUtils {
 
 			return (Map<String, String>) yamlData.get("routes");
 		} catch (Exception ex) {
-			ConnectLib.Logger().ERROR("Error while reading routes from infos.yml: " + ex.getMessage());
 			return null;
 		}
 	}
@@ -183,6 +183,8 @@ public class YamlUtils {
 
 			try (FileWriter writer = new FileWriter(file)) {
 				writer.write(template.toString());
+
+				ConnectLib.Logger().ERROR("Infos.yml need to be changed, please update it with the new routes and the url Path...");
 			} catch (IOException e) {
 				ConnectLib.Logger().ERROR("Error while creating infos.yml: " + e.getMessage());
 			}

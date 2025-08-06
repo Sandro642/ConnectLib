@@ -22,9 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class MainTest {
 
     public enum TestRoutes implements EnumLoader.RouteImport {
-        VERSION("/api/mcas/info/version"),
-        INFO("/api/mcas/info/info"),
-        UNIX("/api/auth/link/unix/{sessionId}");
+        HELLO("/hello");
 
         final String route;
 
@@ -50,7 +48,7 @@ public class MainTest {
         try {
 
              CompletableFuture<ApiFactory> apiFactoryCompletableFuture = ConnectLib.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
+                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.HELLO)
                     .getResponse();
 
              ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
@@ -69,7 +67,7 @@ public class MainTest {
 
         try {
             CompletableFuture<ApiFactory> factoryCompletableFuture = ConnectLib.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.VERSION)
+                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.HELLO)
                     .getResponse();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);

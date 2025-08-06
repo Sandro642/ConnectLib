@@ -12,7 +12,7 @@ public enum ResourceType {
     /**
      * Gradle and Maven Support.
      */
-    MAIN_RESOURCES("src/main/resources"),
+    MAIN_RESOURCES("src/main/data"),
     TEST_RESOURCES("src/test/resources"),
     MC_RESOURCES("");
 
