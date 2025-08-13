@@ -92,10 +92,11 @@ public class ExampleUsages {
     public void exampleJobGetInfos() {
         Map<String, ?> body = Map.of();
         Map<String,?> params = Map.of();
+        Map<String, ?> query = Map.of();
 
-        ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE, body, params);
+        ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE, body, params, query);
         ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.POST, ExampleRoutes.EXAMPLE_ROUTE, body);
-        ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.PUT, ExampleRoutes.EXAMPLE_ROUTE, null, params);
+        ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.PUT, ExampleRoutes.EXAMPLE_ROUTE, null, params, query);
         ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.PATCH, ExampleRoutes.EXAMPLE_ROUTE);
         ConnectLib.JobGetInfos().getRoutes(MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE, body, params);
         ConnectLib.JobGetInfos().getRoutes(MethodType.POST, ExampleRoutes.EXAMPLE_ROUTE, body);

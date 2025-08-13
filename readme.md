@@ -17,7 +17,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.2.8.4-STABLE
+Stable Version: 0.2.9-STABLE
 ```
 
 ---
@@ -49,6 +49,7 @@ Changelog:
  - [0.2.6.1-STABLE]: Patch dû à la compatibilité avec la création de log et le Hook Minecraft.
  - [0.2.6.4-STABLE]: Added asynchronous job execution, allowing you to run tasks in the background without blocking your main application thread.
  - [0.2.7.2-STABLE]: Remove implementation Project Reactor
+ - [0.2.9-STABLE]: Added support query variables in routes, allowing you to pass parameters directly in the URL.
 ```
 
 ---
@@ -106,7 +107,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.2.8.4-STABLE")
+    implementation("fr.sandro642.github:C[JobGetInfos.java](src/main/java/fr/sandro642/github/jobs/JobGetInfos.java)onnectLib:0.2.9-STABLE")
     
 }
 
