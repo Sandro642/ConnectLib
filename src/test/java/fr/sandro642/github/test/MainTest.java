@@ -9,6 +9,7 @@ import fr.sandro642.github.enums.VersionType;
 import fr.sandro642.github.misc.EnumLoader;
 import org.junit.jupiter.api.Test;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +23,9 @@ import java.util.concurrent.TimeUnit;
 public class MainTest {
 
     public enum TestRoutes implements EnumLoader.RouteImport {
-        HELLO("/hello");
+        HELLO("/hello"),
+        GREET("/greet$name$")
+        ;
 
         final String route;
 
@@ -66,8 +69,12 @@ public class MainTest {
         ConnectLib.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
+            Map<String, String> query = Map.of(
+                    "name", "Sandro642"
+            );
+
             CompletableFuture<ApiFactory> factoryCompletableFuture = ConnectLib.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.HELLO)
+                    .getRoutes(MethodType.GET, TestRoutes.GREET, null, null, query)
                     .getResponse();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
