@@ -15,37 +15,59 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * AnnotHandler is a class that manages the discovery and execution of listeners annotated with @AnnotConnect.
- * It scans the package for classes that implement the ConnectListener interface and invokes methods annotated with @AnnotConnect.
+ * AnnotHandler is a class that manages the discovery and execution of listeners annotated with @DisplayLogs.
+ * It scans the package for classes that implement the ConnectListener interface and invokes methods annotated with @DisplayLogs.
  *
  * @author Sandro642
  * @version 1.0
  * @see ConnectListener
- * @see AnnotConnect
  */
-
 public class AnnotHandler {
 
     /**
-     * AnnotConnect is an annotation used to mark methods that should be executed when a connection event occurs.
-     * Methods annotated with this annotation will be invoked by the AnnotHandler when it discovers them.
+     * DisplayLogs is an annotation used to mark methods that should display all logs during execution.
+     * Methods annotated with this annotation will show all INFO, WARN, ERROR, and CRITICAL logs.
      */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
-    public @interface AnnotConnect { }
+    public @interface DisplayLogs { }
 
     /**
      * ConnectListener is an interface that should be implemented by classes that want to listen for connection events.
-     * Classes implementing this interface can have methods annotated with @AnnotConnect to handle specific connection events.
+     * Classes implementing this interface can have methods annotated with @DisplayLogs to handle specific connection events.
      */
     public interface ConnectListener {}
 
     /**
      * listeners is a list that holds instances of classes implementing the ConnectListener interface.
-     * It is populated by the discoverListeners method, which scans the package for classes that implement ConnectListener.
-     * The methods of these classes can be annotated with @AnnotConnect to indicate that they should be executed when a connection event occurs.
      */
     private final List<ConnectListener> listeners = new LinkedList<>();
+
+    /**
+     * Flag to control whether logs should be displayed or not
+     */
+    private static boolean logsEnabled = false;
+
+    /**
+     * Enable logs display - called automatically when executing @DisplayLogs methods
+     */
+    public static void enableLogs() {
+        logsEnabled = true;
+    }
+
+    /**
+     * Disable logs display
+     */
+    public static void disableLogs() {
+        logsEnabled = false;
+    }
+
+    /**
+     * Check if logs are currently enabled
+     */
+    public static boolean areLogsEnabled() {
+        return logsEnabled;
+    }
 
     /**
      * discoverListeners is a method that scans the package of the AnnotHandler class for classes that implement the ConnectListener interface.
@@ -62,6 +84,7 @@ public class AnnotHandler {
                         Object instance = clazz.getDeclaredConstructor().newInstance();
                         listeners.add((ConnectListener) instance);
                     } catch (Exception e) {
+                        // Silent fail during discovery
                     }
                 }
             }
@@ -72,10 +95,6 @@ public class AnnotHandler {
 
     /**
      * getClassesInPackage is a helper method that retrieves all classes in a specified package.
-     * It uses the class loader to find resources in the package and loads them as Class objects.
-     *
-     * @param packageName The name of the package to scan for classes.
-     * @return A list of Class objects found in the specified package.
      */
     private List<Class<?>> getClassesInPackage(String packageName) {
         List<Class<?>> classes = new ArrayList<>();
@@ -93,6 +112,7 @@ public class AnnotHandler {
                             try {
                                 classes.add(Class.forName(className));
                             } catch (ClassNotFoundException e) {
+                                // Ignore classes that can't be loaded
                             }
                         }
                     }
@@ -104,10 +124,9 @@ public class AnnotHandler {
         return classes;
     }
 
-/**
-     * execListener is a method that executes all methods annotated with @AnnotConnect in the discovered listeners.
-     * It first checks if the listeners list is empty and calls discoverListeners if it is.
-     * Then, it iterates through each listener and invokes the annotated methods.
+    /**
+     * execListener executes all methods annotated with @DisplayLogs in the discovered listeners.
+     * It enables log display for methods with @DisplayLogs annotation.
      */
     public void execListener(){
         if (listeners.isEmpty()) {
@@ -116,10 +135,17 @@ public class AnnotHandler {
 
         for(ConnectListener listener : listeners){
             for(Method method : listener.getClass().getDeclaredMethods()){
-                if(method.isAnnotationPresent(AnnotConnect.class)) {
+                if(method.isAnnotationPresent(DisplayLogs.class)) {
                     try {
+                        // Enable logs for this method execution
+                        enableLogs();
+
                         method.setAccessible(true);
                         method.invoke(listener);
+
+                        // Keep logs enabled after execution (you can change this behavior if needed)
+                        // disableLogs();
+
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         throw new RuntimeException(e);
                     }
@@ -129,10 +155,21 @@ public class AnnotHandler {
     }
 
     /**
+     * Method to manually execute a specific method with @DisplayLogs annotation
+     * Useful for static methods or methods outside of ConnectListener classes
+     */
+    public static void executeWithLogs(Runnable method) {
+        enableLogs();
+        try {
+            method.run();
+        } finally {
+            // Optionally disable logs after execution
+            // disableLogs();
+        }
+    }
+
+    /**
      * Main method to execute the AnnotHandler and trigger the execution of annotated methods.
-     * This method serves as an entry point for testing the AnnotHandler functionality.
-     *
-     * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
         AnnotHandler annotLogic = new AnnotHandler();

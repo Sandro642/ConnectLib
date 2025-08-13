@@ -2,6 +2,7 @@ package fr.sandro642.github.test;
 
 import fr.sandro642.github.ConnectLib;
 
+import fr.sandro642.github.annotations.AnnotHandler;
 import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
@@ -41,14 +42,18 @@ public class MainTest {
         ConnectLib.initialize(ResourceType.TEST_RESOURCES);
     }
 
-
     public static void main(String[] args) {
+        callAPI();
+    }
+
+    @AnnotHandler.DisplayLogs
+    public static void callAPI() {
         ConnectLib.initialize(ResourceType.TEST_RESOURCES, TestRoutes.class);
 
         try {
 
              CompletableFuture<ApiFactory> apiFactoryCompletableFuture = ConnectLib.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.HELLO)
+                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
                     .getResponse();
 
              ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
