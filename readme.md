@@ -107,7 +107,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:C[JobGetInfos.java](src/main/java/fr/sandro642/github/jobs/JobGetInfos.java)onnectLib:0.2.9-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.2.9-STABLE")
     
 }
 
