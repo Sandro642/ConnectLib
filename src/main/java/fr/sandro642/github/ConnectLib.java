@@ -1,6 +1,8 @@
 package fr.sandro642.github;
 
+import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.hook.HookManager;
+import fr.sandro642.github.hook.LangSupport;
 import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.misc.*;
 import fr.sandro642.github.jobs.JobGetInfos;
@@ -35,7 +37,7 @@ public class ConnectLib {
      * @param resourceType the type of resource to initialize
      * @param routes the routes to be used in the ConnectLib
      */
-    public static void initialize(ResourceType resourceType, Class<? extends Enum<?>>... routes) {
+    public static void initialize(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
         try {
             Map<Enum<?>, String> routesEnums = new HashMap<>();
             for (Class<? extends Enum<?>> route : routes) {
@@ -52,6 +54,7 @@ public class ConnectLib {
             logs = new Logs();
 
             HookManager().initHook(resourceType);
+            LangSupport().setLangTypeVariable(langType);
             HookManager().FILE_LOCATION_KEY();
 
             yamlUtils.generateTemplateIfNotExists(routesEnums);
@@ -151,5 +154,10 @@ public class ConnectLib {
      */
     public static HookManager HookManager() {
         return HookManager.getInstance();
+    }
+
+    public static LangSupport LangSupport() {
+        return LangSupport.getInstance();
+
     }
 }
