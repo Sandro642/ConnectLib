@@ -1,6 +1,7 @@
 package fr.sandro642.github.misc;
 
 import fr.sandro642.github.ConnectLib;
+import fr.sandro642.github.enums.lang.CategoriesType;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -36,7 +37,7 @@ public class YamlUtils {
 			Map<String, Object> yamlData = yaml.load(inputStream);
 			return (String) yamlData.get("urlPath");
 		} catch (Exception ex) {
-			ConnectLib.Logger().ERROR("Error while reading urlPath from infos.yml: " + ex.getMessage());
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "geturl.error", Map.of("file", "infos.yml", "exception", ex.getMessage())));
 			return null;
 		}
 	}
@@ -56,7 +57,6 @@ public class YamlUtils {
 			Map<String, Object> yamlData = yaml.load(inputStream);
 			return (Boolean) yamlData.get("enableLogs");
 		} catch (Exception ex) {
-			//ConnectLib.Logger().ERROR("Error while reading enableLogs from infos.yml: " + ex.getMessage());
 			return null;
 		}
 	}
@@ -158,7 +158,7 @@ public class YamlUtils {
 				}
 
 			} catch (IOException e) {
-				ConnectLib.Logger().ERROR("Error while updating infos.yml" + e.getMessage());
+                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.error", Map.of("file", "infos.yml", "exception", e.getMessage())));
 			}
 		} else {
 
@@ -185,9 +185,9 @@ public class YamlUtils {
 			try (FileWriter writer = new FileWriter(file)) {
 				writer.write(template.toString());
 
-				ConnectLib.Logger().ERROR("Infos.yml need to be changed, please update it with the new routes and the url Path...");
+                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.needed", Map.of("file", "infos.yml")));
 			} catch (IOException e) {
-				ConnectLib.Logger().ERROR("Error while creating infos.yml: " + e.getMessage());
+                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.errorcreated", Map.of("file", "infos.yml", "exception", e.getMessage())));
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package fr.sandro642.github;
 
-import fr.sandro642.github.enums.LangType;
+import fr.sandro642.github.enums.MethodType;
+import fr.sandro642.github.enums.lang.CategoriesType;
 import fr.sandro642.github.hook.HookManager;
 import fr.sandro642.github.hook.LangSupport;
 import fr.sandro642.github.hook.MCSupport;
@@ -38,7 +39,7 @@ public class ConnectLib {
      * @param resourceType the type of resource to initialize
      * @param routes the routes to be used in the ConnectLib
      */
-    public static void initialize(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
+    public static void initialize(ResourceType resourceType, MethodType.LangType langType, Class<? extends Enum<?>>... routes) {
         try {
             logger = new Logger();
             storeAndRetrieve = new StoreAndRetrieve();
@@ -54,7 +55,7 @@ public class ConnectLib {
             Map<Enum<?>, String> routesEnums = new HashMap<>();
             for (Class<? extends Enum<?>> route : routes) {
                 if (route == null) {
-                    ConnectLib.Logger().ERROR(langManager.getMessage("connectlib.class", "initialise.routeclass"));
+                    ConnectLib.Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "initialise.routeclass"));
                     continue;
                 }
                 routesEnums.putAll(EnumLoader.convertRouteImport(route));
@@ -73,7 +74,7 @@ public class ConnectLib {
                 ConnectLib.routes.putAll(yamlRoutes);
             }
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR(langManager.getMessage("connectlib.class", "initialise.catcherror", Map.of("exception", e.getMessage())));
+            ConnectLib.Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "initialise.catcherror", Map.of("exception", e.getMessage())));
         }
     }
 
@@ -86,7 +87,7 @@ public class ConnectLib {
         if (routes.containsKey(routeName)) {
             return routes.get(routeName);
         } else {
-            ConnectLib.Logger().ERROR(langManager.getMessage("connectlib.class", "getroute.error", Map.of("route", routeName)));
+            ConnectLib.Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "getroute.error", Map.of("route", routeName)));
             return null;
         }
     }

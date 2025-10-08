@@ -11,3 +11,9 @@ getclassesinpackage.error: Error while retrieving classes in package %package%, 
 initialise.routeclass: RouteClass cannot be null.
 initialise.catcherror: An error occurred during ConnectLib initialization, Exception: %exception%.
 getroute.error: Route %route% was not found.
+
+[yamlutils.class]
+geturl.error: Error while retrieving URL from YAML file %file%, Exception: %exception%.
+gentempifnotexist.error: Error while updating %file%, Exception: %exception%.
+gentempifnotexist.needed: File %file% need to be changed, please update it with the new routes and the url Path...
+gentempifnotexist.errorcreated: Error while creating the file %file%, Exception: %exception%.

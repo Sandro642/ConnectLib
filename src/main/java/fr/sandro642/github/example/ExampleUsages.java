@@ -2,7 +2,6 @@ package fr.sandro642.github.example;
 
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.api.ApiFactory;
-import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.VersionType;
@@ -41,9 +40,9 @@ public class ExampleUsages {
     public void initializeLib() {
 
         // Optionally, you can specify routes if needed
-        ConnectLib.initialize(ResourceType.MAIN_RESOURCES, LangType.FRENCH, ExampleRoutes.class);
+        ConnectLib.initialize(ResourceType.MAIN_RESOURCES, MethodType.LangType.FRENCH, ExampleRoutes.class);
         // You can also initialize without specifying routes
-        ConnectLib.initialize(ResourceType.MAIN_RESOURCES, LangType.FRENCH);
+        ConnectLib.initialize(ResourceType.MAIN_RESOURCES, MethodType.LangType.FRENCH);
     }
 
     // Add methods here to demonstrate how to use the ConnectLib library
