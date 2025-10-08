@@ -2,6 +2,7 @@ package fr.sandro642.github.hook;
 
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.enums.ResourceType;
+import fr.sandro642.github.enums.lang.CategoriesType;
 import fr.sandro642.github.misc.Logger;
 
 /**
@@ -20,12 +21,6 @@ public class HookManager {
      * This instance is used to manage hooks for different resource types.
      */
     private static HookManager instance;
-
-    /**
-     * Logger instance for logging messages.
-     * This logger is used to log errors and other messages related to the hook management.
-     */
-    private static Logger logger = new Logger();
 
     /**
      * Initializes the HookManager with the specified resource type.
@@ -62,7 +57,7 @@ public class HookManager {
 
 
             default:
-                logger.CRITICAL("Unsupported resource type: " + resourceType);
+                ConnectLib.Logger().CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.HOOKMANAGER_CLASS, "general.unsupportedtype", "type", resourceType.toString()));
         }
     }
 
@@ -76,8 +71,8 @@ public class HookManager {
 
 
             default:
-                logger.CRITICAL("Unsupported resource type: " + resourceType);
-                throw new IllegalArgumentException("Unsupported resource type: " + resourceType);
+                ConnectLib.Logger().CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.HOOKMANAGER_CLASS, "general.unsupportedtype", "type", resourceType.toString()));
+                return null;
         }
     }
 

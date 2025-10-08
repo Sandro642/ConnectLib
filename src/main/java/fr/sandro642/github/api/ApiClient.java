@@ -1,6 +1,7 @@
 package fr.sandro642.github.api;
 
 import fr.sandro642.github.ConnectLib;
+import fr.sandro642.github.enums.lang.CategoriesType;
 import fr.sandro642.github.misc.Logger;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -54,7 +55,7 @@ public class ApiClient extends ApiFactory {
         String baseUrl = (String) ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().URL_KEY);
 
         if (baseUrl == null) {
-            logger.CRITICAL("Base URL not found in configuration. Please set the base URL in the configuration file.");
+            logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "construct.urlbase"));
         }
 
         this.webClient = WebClient.builder()
@@ -68,20 +69,20 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIGet(String routeName) {
-        logger.INFO("Call GET to : " + routeName);
+        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.get", Map.of("routename", routeName)));
         return webClient.get()
                 .uri(routeName)
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO("Current thread in use: " + Thread.currentThread().getName()))
+                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL("Error while call GET: " + error.getMessage()));
+                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "GET", "exception", error.getMessage()))));
     }
 
     /**
@@ -91,7 +92,7 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPost(String routeName, Map<String, Object> body) {
-        logger.INFO("Call POST to : " + routeName);
+        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.post", Map.of("routename", routeName)));
         return webClient.post()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
@@ -99,13 +100,13 @@ public class ApiClient extends ApiFactory {
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
+                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL("Error while call POST: " + error.getMessage()));
+                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "POST", "exception", error.getMessage()))));
     }
 
     /**
@@ -115,7 +116,7 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPut(String routeName, Map<String, Object> body) {
-        logger.INFO("Call PUT to : " + routeName);
+        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.put", Map.of("routename", routeName)));
         return webClient.put()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
@@ -123,13 +124,13 @@ public class ApiClient extends ApiFactory {
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
+                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL("Error while call PUT: " + error.getMessage()));
+                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "PUT", "exception", error.getMessage()))));
     }
 
     /**
@@ -139,7 +140,7 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPatch(String routeName, Map<String, Object> body) {
-        logger.INFO("Call PATCH to : " + routeName);
+        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.patch", Map.of("routename", routeName)));
         return webClient.patch()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
@@ -147,13 +148,13 @@ public class ApiClient extends ApiFactory {
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
+                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL("Error while call PATCH: " + error.getMessage()));
+                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "PATCH", "exception", error.getMessage()))));
     }
 
     /**
@@ -162,19 +163,19 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIDelete(String routeName) {
-        logger.INFO("Call DELETE to : " + routeName);
+        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.delete", Map.of("routename", routeName)));
         return webClient.delete()
                 .uri(routeName)
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO("Thread en cours d'utilisation: " + Thread.currentThread().getName()))
+                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
                     response.parseFromRawJson(rawJson);
                     return response;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL("Error while call DELETE: " + error.getMessage()));
+                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "DELETE", "exception", error.getMessage()))));
     }
 }

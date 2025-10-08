@@ -14,7 +14,13 @@ public enum CategoriesType {
      */
     CONNECTLIB_CLASS("connectlib.class"),
     ANNOTATION_PACKAGE("annotation.package"),
-    YAMLUTILS_CLASS("yamlutils.class")
+    YAMLUTILS_CLASS("yamlutils.class"),
+    JOBS_PACKAGE("jobs.package"),
+    MCSUPPORT_CLASS("mcsupport.class"),
+    LANGSUPPORT_CLASS("langsupport.class"),
+    HOOKMANAGER_CLASS("hookmanager.class"),
+    APIFACTORY_CLASS("apifactory.class"),
+    APICLIENT_CLASS("apiclient.class"),
     ;
 
     /**

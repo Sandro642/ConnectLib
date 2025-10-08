@@ -1,13 +1,52 @@
 # Fichier de langue ConnectLib par Sandro642 (Sandraw)
-# Surtout ne pas modifier ce fichier.
+# Ne pas modifier ce fichier.
 
-#Lang : FR
+#Lang: FR
 
 [annotation.package]
-discoverlistener.error: Erreur lors de la découverte des listeners.
-getclassesinpackage.error: Erreur lors de la récupération des classes dans le package %package%, Exception : %exception%.
+discoverlistener.error: Erreur lors de la découverte des écouteurs.
+getclassesinpackage.error: Erreur lors de la récupération des classes dans le package %package%, Exception: %exception%.
 
 [connectlib.class]
 initialise.routeclass: RouteClass ne peut pas être null.
-initialise.catcherror: Une erreur est survenue lors de l'initialisation de ConnectLib, Exception : %exception%.
+initialise.catcherror: Une erreur s'est produite lors de l'initialisation de ConnectLib, Exception: %exception%.
 getroute.error: La route %route% n'a pas été trouvée.
+
+[yamlutils.class]
+geturl.error: Erreur lors de la récupération de l'URL depuis le fichier YAML %file%, Exception: %exception%.
+gentempifnotexist.error: Erreur lors de la mise à jour de %file%, Exception: %exception%.
+gentempifnotexist.needed: Le fichier %file% doit être modifié, veuillez le mettre à jour avec les nouvelles routes et le chemin d'URL...
+gentempifnotexist.errorcreated: Erreur lors de la création du fichier %file%, Exception: %exception%.
+
+[jobs.package]
+getroutes.maderoute: Route %route% créée.
+getroutes.error: Erreur lors de la construction de la route: Exception: %exception%.
+getresponse.mustbe: Vous devez d'abord appeler getRoutes();
+getresponse.error: Type de méthode non supporté: %type%.
+
+[mcsupport.class]
+setplugvar.illegalarg: Le plugin ne peut pas être null.
+getplugpath.mustbe: La variable Plugin n'est pas définie. Veuillez d'abord appeler setPluginVariable().
+
+[langsupport.class]
+general.illegalarg: LangType ne peut pas être null.
+
+[hookmanager.class]
+general.unsupportedtype: Type de ressource non supporté: %type%.
+
+[apifactory.class]
+parsefromrawjson.error: Erreur lors de l'analyse du JSON brut: %json%, Exception: %exception%.
+general.mustbe: Les données n'ont pas été initialisées. Veuillez d'abord appeler parseFromRawJson().
+getdata.error: Impossible de récupérer les données pour le type: %type%, Exception: %exception%.
+getspecdata.error: Impossible de récupérer les données spécifiques pour le type: %type% et la valeur %value%. Exception: %exception%.
+display.error: Erreur lors de l'affichage des données. Exception: %exception%.
+
+[apiclient.class]
+construct.urlbase: URL de base introuvable dans la configuration. Veuillez définir l'URL de base dans le fichier de configuration.
+call.get: Appel GET vers %routename%.
+call.post: Appel POST vers %routename%.
+call.put: Appel PUT vers %routename%.
+call.delete: Appel DELETE vers %routename%.
+call.patch: Appel PATCH vers %routename%.
+call.threadinuse: Thread actuellement utilisé: %thread%.
+general.error: Erreur lors de l'appel %method%. Exception : %exception%.

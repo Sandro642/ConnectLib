@@ -1,6 +1,8 @@
 package fr.sandro642.github.hook;
 
+import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.enums.MethodType;
+import fr.sandro642.github.enums.lang.CategoriesType;
 
 /**
  * LangSupport is a placeholder class for future language support implementations.
@@ -18,11 +20,6 @@ public class LangSupport {
     private static LangSupport instance;
 
     /**
-     * Prefix for language files.
-     */
-    private final String PREFIX = "lang/";
-
-    /**
      * Private singleton langType.
      * @return langTypeSingleton
      */
@@ -35,7 +32,8 @@ public class LangSupport {
      */
     public MethodType.LangType setLangTypeVariable(MethodType.LangType langType) {
         if (langType == null) {
-            throw new IllegalArgumentException("LangType cannot be null");
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.LANGSUPPORT_CLASS, "general.illegalarg"));
+
         }
         this.langTypeSingleton = langType;
         return this.langTypeSingleton;
@@ -48,10 +46,10 @@ public class LangSupport {
      */
     public String getPathFile() {
         if (langTypeSingleton == null) {
-            throw new IllegalArgumentException("LangType cannot be null");
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.LANGSUPPORT_CLASS, "general.illegalarg"));
         }
 
-        return PREFIX + langTypeSingleton.getLang() + ".lang";
+        return "lang/" + langTypeSingleton.getLang() + ".lang";
     }
 
     /**

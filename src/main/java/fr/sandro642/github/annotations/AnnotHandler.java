@@ -1,6 +1,7 @@
 package fr.sandro642.github.annotations;
 
 import fr.sandro642.github.ConnectLib;
+import fr.sandro642.github.enums.lang.CategoriesType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * AnnotHandler is a class that manages the discovery and execution of listeners annotated with @AnnotConnect.
@@ -66,7 +68,7 @@ public class AnnotHandler {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error during listener discovery", e);
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.ANNOTATION_PACKAGE, "discoverlistener.error"));
         }
     }
 
@@ -99,7 +101,7 @@ public class AnnotHandler {
                 }
             }
         } catch (Exception e) {
-            ConnectLib.Logger().WARN("Failed to retrieve classes in package: " + packageName + ". Exception: " + e.getMessage());
+            ConnectLib.Logger().WARN(ConnectLib.LangManager().getMessage(CategoriesType.ANNOTATION_PACKAGE, "getclassesinpackage.error", Map.of("package", packageName, "exception", e.getMessage())));
         }
         return classes;
     }
