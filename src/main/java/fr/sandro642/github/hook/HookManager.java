@@ -23,6 +23,12 @@ public class HookManager {
     private static HookManager instance;
 
     /**
+     * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
+     * It is used throughout the HookManager class to log messages and access other functionalities.
+     */
+    private ConnectLib connectLib = new ConnectLib();
+
+    /**
      * Initializes the HookManager with the specified resource type.
      *
      * @param resourceType the type of resource to initialize the hook for
@@ -49,30 +55,30 @@ public class HookManager {
     public void FILE_LOCATION_KEY() {
         switch (resourceType) {
             case MC_RESOURCES:
-               ConnectLib.StoreAndRetrieve().store.put(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY, ConnectLib.MCSupport().getPluginPath());
+               connectLib.StoreAndRetrieve().store.put(connectLib.StoreAndRetrieve().FILE_LOCATION_KEY, connectLib.MCSupport().getPluginPath());
                 break;
             case MAIN_RESOURCES, TEST_RESOURCES:
-                ConnectLib.StoreAndRetrieve().store.put(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY, resourceType.getPath());
+                connectLib.StoreAndRetrieve().store.put(connectLib.StoreAndRetrieve().FILE_LOCATION_KEY, resourceType.getPath());
                 break;
 
 
             default:
-                ConnectLib.Logger().CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.HOOKMANAGER_CLASS, "general.unsupportedtype", "type", resourceType.toString()));
+                connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.HOOKMANAGER_CLASS, "general.unsupportedtype", "type", resourceType.toString()));
         }
     }
 
     public String BASE_PATH() {
         switch (resourceType) {
             case MC_RESOURCES:
-                return ConnectLib.MCSupport().getPluginPath();
+                return connectLib.MCSupport().getPluginPath();
 
             case MAIN_RESOURCES, TEST_RESOURCES:
                 return resourceType.getPath();
 
 
             default:
-                String message = ConnectLib.LangManager().getMessage(CategoriesType.HOOKMANAGER_CLASS, "general.unsupportedtype", "type", resourceType.toString());
-                ConnectLib.Logger().CRITICAL(message);
+                String message = connectLib.LangManager().getMessage(CategoriesType.HOOKMANAGER_CLASS, "general.unsupportedtype", "type", resourceType.toString());
+                connectLib.Logger().CRITICAL(message);
                 throw new IllegalArgumentException(message);
         }
     }

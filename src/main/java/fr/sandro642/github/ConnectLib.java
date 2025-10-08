@@ -1,7 +1,6 @@
 package fr.sandro642.github;
 
 import fr.sandro642.github.enums.LangType;
-import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.lang.CategoriesType;
 import fr.sandro642.github.hook.HookManager;
 import fr.sandro642.github.hook.LangSupport;
@@ -42,7 +41,7 @@ public class ConnectLib {
      * @param resourceType the type of resource to initialize
      * @param routes the routes to be used in the ConnectLib
      */
-    public static void initialize(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
+    public void Init(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
         try {
             logger = new Logger();
             storeAndRetrieve = new StoreAndRetrieve();
@@ -58,7 +57,7 @@ public class ConnectLib {
             Map<Enum<?>, String> routesEnums = new HashMap<>();
             for (Class<? extends Enum<?>> route : routes) {
                 if (route == null) {
-                    ConnectLib.Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "initialise.routeclass"));
+                    Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "initialise.routeclass"));
                     continue;
                 }
                 routesEnums.putAll(EnumLoader.convertRouteImport(route));
@@ -77,7 +76,7 @@ public class ConnectLib {
                 ConnectLib.routes.putAll(yamlRoutes);
             }
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "initialise.catcherror", Map.of("exception", e.getMessage())));
+            Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "initialise.catcherror", Map.of("exception", e.getMessage())));
         }
     }
 
@@ -86,11 +85,11 @@ public class ConnectLib {
      * @param routeName the name of the route to retrieve
      * @return the route as a String
      */
-    public static String getRoute(String routeName) {
+    public String getRoute(String routeName) {
         if (routes.containsKey(routeName)) {
             return routes.get(routeName);
         } else {
-            ConnectLib.Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "getroute.error", Map.of("route", routeName)));
+            Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "getroute.error", Map.of("route", routeName)));
             return null;
         }
     }
@@ -101,7 +100,7 @@ public class ConnectLib {
      * @param routeEnum the Enum representing the route
      * @return the route as a String
      */
-    public static String getRoute(Enum<?> routeEnum) {
+    public String getRoute(Enum<?> routeEnum) {
         return getRoute(routeEnum.name().toLowerCase());
     }
 
@@ -109,7 +108,7 @@ public class ConnectLib {
      * Return an instance of JobGetInfos.
      * @return JobGetInfos instance
      */
-    public static JobGetInfos JobGetInfos() {
+    public JobGetInfos JobGetInfos() {
         return new JobGetInfos();
     }
 
@@ -117,7 +116,7 @@ public class ConnectLib {
      * Return the instance of Logger.
      * @return Logger instance
      */
-    public static Logger Logger() {
+    public Logger Logger() {
         if (logger == null) {
             logger = new Logger();
         }
@@ -128,7 +127,7 @@ public class ConnectLib {
      * Return the instance of StoreAndRetrieve.
      * @return StoreAndRetrieve instance
      */
-    public static StoreAndRetrieve StoreAndRetrieve() {
+    public StoreAndRetrieve StoreAndRetrieve() {
         if (storeAndRetrieve == null) {
             storeAndRetrieve = new StoreAndRetrieve();
         }
@@ -139,7 +138,7 @@ public class ConnectLib {
      * Return the instance of YamlUtils.
      * @return YamlUtils instance
      */
-    public static YamlUtils YamlUtils() {
+    public YamlUtils YamlUtils() {
         if (yamlUtils == null) {
             yamlUtils = new YamlUtils();
         }
@@ -150,7 +149,7 @@ public class ConnectLib {
      * Return the instance of Logs.
      * @return Logs instance
      */
-    public static MCSupport MCSupport() {
+    public MCSupport MCSupport() {
         return MCSupport.getInstance();
     }
 
@@ -158,7 +157,7 @@ public class ConnectLib {
      * Return the instance of HookManager.
      * @return HookManager instance
      */
-    public static HookManager HookManager() {
+    public HookManager HookManager() {
         return HookManager.getInstance();
     }
 
@@ -166,7 +165,7 @@ public class ConnectLib {
      * Return the instance of LangSupport.
      * @return LangSupport instance
      */
-    public static LangSupport LangSupport() {
+    public LangSupport LangSupport() {
         return LangSupport.getInstance();
 
     }
@@ -175,7 +174,7 @@ public class ConnectLib {
      * Return the instance of LangManager.
      * @return LangManager instance
      */
-    public static LangManager LangManager() {
+    public LangManager LangManager() {
         return langManager;
     }
 }

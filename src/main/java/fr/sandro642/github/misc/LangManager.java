@@ -26,6 +26,12 @@ import java.util.regex.Pattern;
  */
 public class LangManager {
 
+    /**
+     * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
+     * It is used throughout the LangManager class to log messages and access other functionalities.
+     */
+    private ConnectLib connectLib = new ConnectLib();
+
     private final Map<CategoriesType, Map<String, String>> messages;
     private static final Pattern CATEGORY_PATTERN = Pattern.compile("\\[(.+)]");
     private static final Pattern MESSAGE_PATTERN = Pattern.compile("(.+?):\\s*(.+)");
@@ -38,7 +44,7 @@ public class LangManager {
         this.loadError = null;
 
         try {
-            String langFilePath = ConnectLib.LangSupport().getPathFile();
+            String langFilePath = connectLib.LangSupport().getPathFile();
 
             if (langFilePath == null) {
                 this.loadError = "LangType has not been defined. Call LangSupport().setLangTypeVariable() first.";

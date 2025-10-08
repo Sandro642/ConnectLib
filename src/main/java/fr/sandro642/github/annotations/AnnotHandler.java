@@ -28,6 +28,8 @@ import java.util.Map;
 
 public class AnnotHandler {
 
+    private ConnectLib connectLib = new ConnectLib();
+
     /**
      * AnnotConnect is an annotation used to mark methods that should be executed when a connection event occurs.
      * Methods annotated with this annotation will be invoked by the AnnotHandler when it discovers them.
@@ -68,7 +70,7 @@ public class AnnotHandler {
                 }
             }
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.ANNOTATION_PACKAGE, "discoverlistener.error"));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.ANNOTATION_PACKAGE, "discoverlistener.error"));
         }
     }
 
@@ -101,7 +103,7 @@ public class AnnotHandler {
                 }
             }
         } catch (Exception e) {
-            ConnectLib.Logger().WARN(ConnectLib.LangManager().getMessage(CategoriesType.ANNOTATION_PACKAGE, "getclassesinpackage.error", Map.of("package", packageName, "exception", e.getMessage())));
+            connectLib.Logger().WARN(connectLib.LangManager().getMessage(CategoriesType.ANNOTATION_PACKAGE, "getclassesinpackage.error", Map.of("package", packageName, "exception", e.getMessage())));
         }
         return classes;
     }

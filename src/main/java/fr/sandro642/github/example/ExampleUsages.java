@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ExampleUsages {
 
+    private ConnectLib connectLib = new ConnectLib();
+
     public enum ExampleRoutes implements EnumLoader.RouteImport {
         EXAMPLE_ROUTE("/api/example/route");
 
@@ -41,9 +43,9 @@ public class ExampleUsages {
     public void initializeLib() {
 
         // Optionally, you can specify routes if needed
-        ConnectLib.initialize(ResourceType.MAIN_RESOURCES, LangType.FRENCH, ExampleRoutes.class);
+        connectLib.Init(ResourceType.MAIN_RESOURCES, LangType.FRENCH, ExampleRoutes.class);
         // You can also initialize without specifying routes
-        ConnectLib.initialize(ResourceType.MAIN_RESOURCES, LangType.FRENCH);
+        connectLib.Init(ResourceType.MAIN_RESOURCES, LangType.FRENCH);
     }
 
     // Example method to demonstrate usage
@@ -51,7 +53,7 @@ public class ExampleUsages {
         try {
             // This method can be used to demonstrate how to interact with the API
             // For example, making a GET request to the EXAMPLE_ROUTE
-            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = ConnectLib.JobGetInfos()
+            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE)
                     .getResponse();
 
@@ -71,7 +73,7 @@ public class ExampleUsages {
         try {
             // This method can be used to demonstrate how to interact with the API asynchronously
 
-            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = ConnectLib.JobGetInfos()
+            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE)
                     .getResponse();
 
@@ -92,13 +94,13 @@ public class ExampleUsages {
         Map<String,?> params = Map.of();
         Map<String, ?> query = Map.of();
 
-        ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE, body, params, query);
-        ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.POST, ExampleRoutes.EXAMPLE_ROUTE, body);
-        ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.PUT, ExampleRoutes.EXAMPLE_ROUTE, null, params, query);
-        ConnectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.PATCH, ExampleRoutes.EXAMPLE_ROUTE);
-        ConnectLib.JobGetInfos().getRoutes(MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE, body, params);
-        ConnectLib.JobGetInfos().getRoutes(MethodType.POST, ExampleRoutes.EXAMPLE_ROUTE, body);
-        ConnectLib.JobGetInfos().getRoutes(MethodType.DELETE, ExampleRoutes.EXAMPLE_ROUTE);
+        connectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE, body, params, query);
+        connectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.POST, ExampleRoutes.EXAMPLE_ROUTE, body);
+        connectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.PUT, ExampleRoutes.EXAMPLE_ROUTE, null, params, query);
+        connectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.PATCH, ExampleRoutes.EXAMPLE_ROUTE);
+        connectLib.JobGetInfos().getRoutes(MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE, body, params);
+        connectLib.JobGetInfos().getRoutes(MethodType.POST, ExampleRoutes.EXAMPLE_ROUTE, body);
+        connectLib.JobGetInfos().getRoutes(MethodType.DELETE, ExampleRoutes.EXAMPLE_ROUTE);
     }
 
 }

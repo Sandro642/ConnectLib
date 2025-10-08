@@ -17,7 +17,22 @@ import java.util.Map;
  */
 
 public class ApiFactory {
+
+    /**
+     * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
+     */
+    private ConnectLib connectLib = new ConnectLib();
+
+    /**
+     * rawData is a Map that holds the parsed JSON data.
+     * It is populated by the parseFromRawJson method.
+     */
     private Map<String, Object> rawData;
+
+    /**
+     * rawJson is a String that holds the raw JSON data.
+     * It is used for logging and debugging purposes.
+     */
     private String rawJson;
 
     /**
@@ -30,7 +45,7 @@ public class ApiFactory {
             ObjectMapper mapper = new ObjectMapper();
             this.rawData = mapper.readValue(rawJson, new TypeReference<Map<String, Object>>() {});
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "parsefromrawjson.error", Map.of("json", rawJson, "exception", e.getMessage())));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "parsefromrawjson.error", Map.of("json", rawJson, "exception", e.getMessage())));
         }
     }
 
@@ -44,13 +59,13 @@ public class ApiFactory {
     public <O> Object getData(O type) {
         try {
             if (rawData == null) {
-                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
                 return null;
             }
 
             return rawData.get(type.toString().toLowerCase());
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getdata.error", Map.of("type", type.toString(), "exception", e.getMessage())));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getdata.error", Map.of("type", type.toString(), "exception", e.getMessage())));
         }
         return null;
     }
@@ -66,7 +81,7 @@ public class ApiFactory {
     public <O, K> Object getSpecData(O type, K value) {
         try {
             if (rawData == null) {
-                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
                 return null;
             }
 
@@ -76,7 +91,7 @@ public class ApiFactory {
                 return nestedMap.get(value.toString().toLowerCase());
             }
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getspecdata.error", Map.of("type", type.toString(), "value", value.toString(), "exception", e.getMessage())));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getspecdata.error", Map.of("type", type.toString(), "value", value.toString(), "exception", e.getMessage())));
         }
         return null;
     }
@@ -90,12 +105,12 @@ public class ApiFactory {
     public Object display() {
         try {
         if (rawData == null) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
             return null;
         }
         return rawData;
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "display.error", "exception", e.getMessage()));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "display.error", "exception", e.getMessage()));
         }
         return null;
     }

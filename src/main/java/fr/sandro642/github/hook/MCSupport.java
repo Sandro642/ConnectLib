@@ -5,7 +5,7 @@ import fr.sandro642.github.enums.lang.CategoriesType;
 import org.bukkit.plugin.Plugin;
 
 /**
- * MCSupport is a utility class for handling Minecraft plugin support in the ConnectLib library.
+ * MCSupport is a utility class for handling Minecraft plugin support in the connectLib library.
  * It provides methods to check if the project is a Minecraft project, set and get the plugin instance,
  * @author Sandro642
  * @version 1.0
@@ -16,6 +16,12 @@ public class MCSupport {
      * Instance of MCSupport.
      */
     private static MCSupport instance;
+
+    /**
+     * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
+     * It is used throughout the MCSupport class to log messages and access other functionalities.
+     */
+    private ConnectLib connectLib = new ConnectLib();
 
     /**
      * Instance of the Minecraft plugin.
@@ -40,7 +46,7 @@ public class MCSupport {
      */
     public Plugin setPluginVariable(Plugin plugin) {
         if (plugin == null) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.MCSUPPORT_CLASS, "setplugvar.illegalarg"));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.MCSUPPORT_CLASS, "setplugvar.illegalarg"));
         }
             this.pluginSingleton = plugin;
             return this.pluginSingleton;
@@ -56,7 +62,7 @@ public class MCSupport {
     public String getPluginPath() {
 
         if (pluginSingleton == null) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.MCSUPPORT_CLASS, "getplugpath.mustbe"));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.MCSUPPORT_CLASS, "getplugpath.mustbe"));
         }
 
         return pluginSingleton.getDataFolder().getAbsolutePath();

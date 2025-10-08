@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * JobGetInfos is a utility class for managing API requests in the ConnectLib library.
+ * JobGetInfos is a utility class for managing API requests in the connectLib library.
  * It provides methods to construct API routes based on the configuration defined in a YAML file.
  * @author Sandro642
  * @version 1.0
@@ -30,12 +30,17 @@ public class JobGetInfos {
     private final ApiClient apiClient;
 
     /**
+     * connectLib instance to access its methods and properties.
+     */
+    private ConnectLib connectLib = new ConnectLib();
+
+    /**
      * Constructor of JobGetInfos.
      * Initializes the ApiClient and loads the YAML configuration.
      */
     public JobGetInfos() {
         this.apiClient = new ApiClient();
-        ConnectLib.YamlUtils();
+        connectLib.YamlUtils();
     }
 
     /**
@@ -173,7 +178,7 @@ public class JobGetInfos {
      */
     public <R> JobGetInfos getRoutes(VersionType versionType, MethodType methodType, R routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
         try {
-            String route = ConnectLib.getRoute(routeName.toString().toLowerCase());
+            String route = connectLib.getRoute(routeName.toString().toLowerCase());
 
             String fullRoute;
 
@@ -222,20 +227,20 @@ public class JobGetInfos {
                 }
             }
 
-            ConnectLib.StoreAndRetrieve().store.put("currentRoute", fullRoute);
-            ConnectLib.StoreAndRetrieve().store.put("currentMethod", methodType);
+            connectLib.StoreAndRetrieve().store.put("currentRoute", fullRoute);
+            connectLib.StoreAndRetrieve().store.put("currentMethod", methodType);
 
             if (body != null) {
-                ConnectLib.StoreAndRetrieve().store.put("currentBody", body);
+                connectLib.StoreAndRetrieve().store.put("currentBody", body);
             }
 
             if (params != null) {
-                ConnectLib.StoreAndRetrieve().store.put("currentParams", params);
+                connectLib.StoreAndRetrieve().store.put("currentParams", params);
             }
 
-            ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getroutes.maderoute", "route", fullRoute));
+            connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getroutes.maderoute", "route", fullRoute));
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getroutes.error", "exception", e.getMessage()));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getroutes.error", "exception", e.getMessage()));
         }
         return this;
     }
@@ -248,28 +253,28 @@ public class JobGetInfos {
      */
     public CompletableFuture<ApiFactory> getResponse() {
         try {
-            String route = (String) ConnectLib.StoreAndRetrieve().store.get("currentRoute");
-            MethodType method = (MethodType) ConnectLib.StoreAndRetrieve().store.get("currentMethod");
-            Map<String, Object> body = (Map<String, Object>) ConnectLib.StoreAndRetrieve().store.get("currentBody");
+            String route = (String) connectLib.StoreAndRetrieve().store.get("currentRoute");
+            MethodType method = (MethodType) connectLib.StoreAndRetrieve().store.get("currentMethod");
+            Map<String, Object> body = (Map<String, Object>) connectLib.StoreAndRetrieve().store.get("currentBody");
 
             if (route == null || method == null) {
-                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getresponse.mustbe"));
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getresponse.mustbe"));
             }
 
             CompletableFuture<ApiFactory> responseFuture = new CompletableFuture<>();
 
             // Callback to clean up the store after the response
             Consumer<ApiFactory> onSuccess = response -> {
-                ConnectLib.StoreAndRetrieve().store.remove("currentRoute");
-                ConnectLib.StoreAndRetrieve().store.remove("currentMethod");
-                ConnectLib.StoreAndRetrieve().store.remove("currentBody");
+                connectLib.StoreAndRetrieve().store.remove("currentRoute");
+                connectLib.StoreAndRetrieve().store.remove("currentMethod");
+                connectLib.StoreAndRetrieve().store.remove("currentBody");
                 responseFuture.complete(response);
             };
 
             Consumer<Throwable> onError = error -> {
-                ConnectLib.StoreAndRetrieve().store.remove("currentRoute");
-                ConnectLib.StoreAndRetrieve().store.remove("currentMethod");
-                ConnectLib.StoreAndRetrieve().store.remove("currentBody");
+                connectLib.StoreAndRetrieve().store.remove("currentRoute");
+                connectLib.StoreAndRetrieve().store.remove("currentMethod");
+                connectLib.StoreAndRetrieve().store.remove("currentBody");
                 responseFuture.completeExceptionally(error);
             };
 
@@ -305,7 +310,7 @@ public class JobGetInfos {
                     );
                     break;
                 default:
-                    ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getresponse.error", "type", method.toString()));
+                    connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getresponse.error", "type", method.toString()));
                     System.exit(2);
             }
 

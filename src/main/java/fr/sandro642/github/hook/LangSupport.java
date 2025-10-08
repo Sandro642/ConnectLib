@@ -21,6 +21,12 @@ public class LangSupport {
     private static LangSupport instance;
 
     /**
+     * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
+     * It is used throughout the LangSupport class to log messages and access other functionalities.
+     */
+    private ConnectLib connectLib = new ConnectLib();
+
+    /**
      * Private singleton langType.
      * @return langTypeSingleton
      */
@@ -33,7 +39,7 @@ public class LangSupport {
      */
     public LangType setLangTypeVariable(LangType langType) {
         if (langType == null) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.LANGSUPPORT_CLASS, "general.illegalarg"));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.LANGSUPPORT_CLASS, "general.illegalarg"));
 
         }
         this.langTypeSingleton = langType;
@@ -47,7 +53,7 @@ public class LangSupport {
      */
     public String getPathFile() {
         if (langTypeSingleton == null) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.LANGSUPPORT_CLASS, "general.illegalarg"));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.LANGSUPPORT_CLASS, "general.illegalarg"));
         }
 
         return "lang/" + langTypeSingleton.getLang() + ".lang";

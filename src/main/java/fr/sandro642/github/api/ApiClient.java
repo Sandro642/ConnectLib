@@ -2,7 +2,6 @@ package fr.sandro642.github.api;
 
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.enums.lang.CategoriesType;
-import fr.sandro642.github.misc.Logger;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -23,6 +22,11 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ApiClient extends ApiFactory {
 
     /**
+     * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
+     */
+    private ConnectLib connectLib = new ConnectLib();
+
+    /**
      * WebClient is a non-blocking, reactive HTTP client for making requests to the API.
      * It is initialized with the base URL from the ConnectLib configuration.
      */
@@ -35,16 +39,10 @@ public class ApiClient extends ApiFactory {
     private final AtomicReference<ApiFactory> lastResponse = new AtomicReference<>();
 
     /**
-     * logger is an instance of Logger used for logging messages at different levels.
-     * It provides methods to log informational, warning, error, and critical messages.
-     */
-    private final Logger logger = new Logger();
-
-    /**
      * response is an instance of ApiFactory that is used to parse and store the raw JSON response from the API.
      * It provides methods to handle the response data.
      */
-    private final ApiFactory response = new ApiFactory();
+    private final ApiFactory apiFactory = new ApiFactory();
 
     /**
      * Constructor for ApiClient.
@@ -52,10 +50,10 @@ public class ApiClient extends ApiFactory {
      * If the base URL is not found, it throws a RuntimeException.
      */
     public ApiClient() {
-        String baseUrl = (String) ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().URL_KEY);
+        String baseUrl = (String) connectLib.StoreAndRetrieve().store.get(connectLib.StoreAndRetrieve().URL_KEY);
 
         if (baseUrl == null) {
-            logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "construct.urlbase"));
+            connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "construct.urlbase"));
         }
 
         this.webClient = WebClient.builder()
@@ -69,20 +67,20 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIGet(String routeName) {
-        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.get", Map.of("routename", routeName)));
+        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.get", Map.of("routename", routeName)));
         return webClient.get()
                 .uri(routeName)
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
+                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
-                    response.parseFromRawJson(rawJson);
-                    return response;
+                    apiFactory.parseFromRawJson(rawJson);
+                    return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "GET", "exception", error.getMessage()))));
+                .doOnError(error -> connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "GET", "exception", error.getMessage()))));
     }
 
     /**
@@ -92,7 +90,7 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPost(String routeName, Map<String, Object> body) {
-        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.post", Map.of("routename", routeName)));
+        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.post", Map.of("routename", routeName)));
         return webClient.post()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
@@ -100,13 +98,13 @@ public class ApiClient extends ApiFactory {
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
+                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
-                    response.parseFromRawJson(rawJson);
-                    return response;
+                    apiFactory.parseFromRawJson(rawJson);
+                    return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "POST", "exception", error.getMessage()))));
+                .doOnError(error -> connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "POST", "exception", error.getMessage()))));
     }
 
     /**
@@ -116,7 +114,7 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPut(String routeName, Map<String, Object> body) {
-        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.put", Map.of("routename", routeName)));
+        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.put", Map.of("routename", routeName)));
         return webClient.put()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
@@ -124,13 +122,13 @@ public class ApiClient extends ApiFactory {
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
+                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
-                    response.parseFromRawJson(rawJson);
-                    return response;
+                    apiFactory.parseFromRawJson(rawJson);
+                    return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "PUT", "exception", error.getMessage()))));
+                .doOnError(error -> connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "PUT", "exception", error.getMessage()))));
     }
 
     /**
@@ -140,7 +138,7 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPatch(String routeName, Map<String, Object> body) {
-        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.patch", Map.of("routename", routeName)));
+        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.patch", Map.of("routename", routeName)));
         return webClient.patch()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
@@ -148,13 +146,13 @@ public class ApiClient extends ApiFactory {
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
+                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
-                    response.parseFromRawJson(rawJson);
-                    return response;
+                    apiFactory.parseFromRawJson(rawJson);
+                    return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "PATCH", "exception", error.getMessage()))));
+                .doOnError(error -> connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "PATCH", "exception", error.getMessage()))));
     }
 
     /**
@@ -163,19 +161,19 @@ public class ApiClient extends ApiFactory {
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIDelete(String routeName) {
-        logger.INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.delete", Map.of("routename", routeName)));
+        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.delete", Map.of("routename", routeName)));
         return webClient.delete()
                 .uri(routeName)
                 .retrieve()
                 .bodyToMono(String.class)
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(thread ->
-                        ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
+                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
                 .map(rawJson -> {
-                    response.parseFromRawJson(rawJson);
-                    return response;
+                    apiFactory.parseFromRawJson(rawJson);
+                    return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
-                .doOnError(error -> logger.CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "DELETE", "exception", error.getMessage()))));
+                .doOnError(error -> connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "DELETE", "exception", error.getMessage()))));
     }
 }

@@ -26,6 +26,12 @@ public class Logs {
     private static Logs instance;
 
     /**
+     * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
+     * It is used throughout the Logs class to log messages and access other functionalities.
+     */
+    private ConnectLib connectLib = new ConnectLib();
+
+    /**
      * Constructor of Logs
      * This constructor is private to ensure that the class is a singleton.
      */
@@ -42,7 +48,7 @@ public class Logs {
      * This block is executed when the class is loaded, ensuring that the instance is created only once.
      */
     public void setPathFile() {
-        this.pathFile = ConnectLib.HookManager().BASE_PATH();
+        this.pathFile = connectLib.HookManager().BASE_PATH();
     }
 
     /**
@@ -65,7 +71,7 @@ public class Logs {
 
             logBuffer.add(logContent.toString());
 
-            if (ConnectLib.YamlUtils().isLogEnabled()) {
+            if (connectLib.YamlUtils().isLogEnabled()) {
 
                 if (logType.toString().toUpperCase().equals("CRITICAL") || logType.toString().toUpperCase().equals("ERROR")) {
                     File directory = new File(pathFile, "logs");

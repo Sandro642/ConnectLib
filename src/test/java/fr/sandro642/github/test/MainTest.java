@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 public class MainTest {
 
+    private static ConnectLib connectLib = new ConnectLib();
+
     public enum TestRoutes implements EnumLoader.RouteImport {
         HELLO("/hello"),
         GREET("/greet$name$")
@@ -42,16 +44,16 @@ public class MainTest {
 
     @Test
     public void initializeCAPI() {
-        ConnectLib.initialize(ResourceType.TEST_RESOURCES, LangType.ENGLISH);
+        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH);
     }
 
 
     public static void main(String[] args) {
-        ConnectLib.initialize(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
 
         try {
 
-             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = ConnectLib.JobGetInfos()
+             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.HELLO)
                     .getResponse();
 
@@ -67,14 +69,14 @@ public class MainTest {
 
     @Test
     public void testUseFullRoute() {
-        ConnectLib.initialize(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
 
         try {
             Map<String, String> query = Map.of(
                     "name", "Sandro642"
             );
 
-            CompletableFuture<ApiFactory> factoryCompletableFuture = ConnectLib.JobGetInfos()
+            CompletableFuture<ApiFactory> factoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(MethodType.GET, TestRoutes.GREET, null, null, query)
                     .getResponse();
 
@@ -89,7 +91,7 @@ public class MainTest {
 
     @Test
     public void testLangType() {
-        ConnectLib.initialize(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
+        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
     }
 
 }

@@ -21,6 +21,7 @@ import java.util.Map;
 
 public class YamlUtils {
 
+    private ConnectLib connectLib = new ConnectLib();
 
 	/**
 	 * Gets the base URL from the YAML configuration file.
@@ -29,7 +30,7 @@ public class YamlUtils {
 	 */
 	public String getURL() {
 
-		String yamlFilePath = ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
+		String yamlFilePath = connectLib.StoreAndRetrieve().store.get(connectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
 				+ "/infos.yml";
 
 		try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
@@ -37,7 +38,7 @@ public class YamlUtils {
 			Map<String, Object> yamlData = yaml.load(inputStream);
 			return (String) yamlData.get("urlPath");
 		} catch (Exception ex) {
-            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "geturl.error", Map.of("file", "infos.yml", "exception", ex.getMessage())));
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "geturl.error", Map.of("file", "infos.yml", "exception", ex.getMessage())));
 			return null;
 		}
 	}
@@ -49,7 +50,7 @@ public class YamlUtils {
 	 * @return true if logging is enabled, false if disabled, or null if an error occurs.
 	 */
 	public Boolean isLogEnabled() {
-		String yamlFilePath = ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
+		String yamlFilePath = connectLib.StoreAndRetrieve().store.get(connectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
 				+ "/infos.yml";
 
 		try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
@@ -69,7 +70,7 @@ public class YamlUtils {
 	 */
 	public Map<String, String> getRoutes() {
 
-		String yamlFilePath = ConnectLib.StoreAndRetrieve().store.get(ConnectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
+		String yamlFilePath = connectLib.StoreAndRetrieve().store.get(connectLib.StoreAndRetrieve().FILE_LOCATION_KEY)
 				+ "/infos.yml";
 
 		try (InputStream inputStream = Files.newInputStream(Paths.get(yamlFilePath))) {
@@ -89,7 +90,7 @@ public class YamlUtils {
 	 * @param routes a map of route names to their corresponding paths
 	 */
 	public void generateTemplateIfNotExists(Map<Enum<?>, String> routes) {
-		String basePath = ConnectLib.HookManager().BASE_PATH();
+		String basePath = connectLib.HookManager().BASE_PATH();
 
 		File directory = new File(basePath);
 
@@ -158,14 +159,13 @@ public class YamlUtils {
 				}
 
 			} catch (IOException e) {
-                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.error", Map.of("file", "infos.yml", "exception", e.getMessage())));
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.error", Map.of("file", "infos.yml", "exception", e.getMessage())));
 			}
 		} else {
 
 			StringBuilder template = new StringBuilder(
 					"# properties ConnectLib By Sandro642\n\n" +
 							"urlPath: \"http://localhost:8080/api\"\n\n" +
-                            "language: \"en_US\"\n\n" +
 							"routes:\n" +
 							"  #info: \"/info/version\"\n" +
 							"  #ping: \"/ping\"\n" +
@@ -185,9 +185,9 @@ public class YamlUtils {
 			try (FileWriter writer = new FileWriter(file)) {
 				writer.write(template.toString());
 
-                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.needed", Map.of("file", "infos.yml")));
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.needed", Map.of("file", "infos.yml")));
 			} catch (IOException e) {
-                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.errorcreated", Map.of("file", "infos.yml", "exception", e.getMessage())));
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.YAMLUTILS_CLASS, "gentempifnotexist.errorcreated", Map.of("file", "infos.yml", "exception", e.getMessage())));
 			}
 		}
 	}

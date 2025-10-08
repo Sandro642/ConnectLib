@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'fr.sandro642.github'
-version = '0.3.2.1-STABLE'
+version = '0.3.3-STABLE'
 
 tasks.register('printVersion') {
     doLast {
