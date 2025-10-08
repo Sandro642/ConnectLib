@@ -46,9 +46,6 @@ public class ExampleUsages {
         ConnectLib.initialize(ResourceType.MAIN_RESOURCES, LangType.FRENCH);
     }
 
-    // Add methods here to demonstrate how to use the ConnectLib library
-    // For example, you can create methods to make API calls, handle responses, etc.
-
     // Example method to demonstrate usage
     public void exampleMethodSync() {
         try {
