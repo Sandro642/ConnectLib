@@ -30,9 +30,9 @@ public class LangSupport {
     private LangType langTypeSingleton;
 
     /**
-     * Method to set the LangType variable.
-     * @param langType
-     * @return
+     * Sets the LangType variable for this instance.
+     * @param langType The language type to set. Must not be null.
+     * @return The LangType that was set.
      */
     public LangType setLangTypeVariable(LangType langType) {
         if (langType == null) {
