@@ -31,7 +31,7 @@ public enum LangType {
 
     /**
      * Get the language code.
-     * @return
+     * @return the language code string
      */
     public String getLang() {
         return lang;
