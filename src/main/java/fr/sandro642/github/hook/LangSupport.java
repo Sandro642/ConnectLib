@@ -52,26 +52,7 @@ public class LangSupport {
             throw new IllegalArgumentException("LangType cannot be null");
         }
 
-        switch (langTypeSingleton) {
-            case FRENCH:
-                return PREFIX + langTypeSingleton.getLang() + ".lang";
-            case ENGLISH:
-                return PREFIX + langTypeSingleton.getLang() + ".lang";
-            case SPANISH:
-                return PREFIX + langTypeSingleton.getLang() + ".lang";
-            case GERMAN:
-                return PREFIX + langTypeSingleton.getLang() + ".lang";
-            case ITALIAN:
-                return PREFIX + langTypeSingleton.getLang() + ".lang";
-            case PORTUGUESE:
-                return PREFIX + langTypeSingleton.getLang() + ".lang";
-            case RUSSIAN:
-                return PREFIX + langTypeSingleton.getLang() + ".lang";
-
-            default:
-                ConnectLib.Logger().CRITICAL("Unsupported LangType: " + langTypeSingleton);
-                throw new IllegalArgumentException("Unsupported LangType: " + langTypeSingleton);
-        }
+        return PREFIX + langTypeSingleton.getLang() + ".lang";
     }
 
     /**
