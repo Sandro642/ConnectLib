@@ -71,8 +71,9 @@ public class HookManager {
 
 
             default:
-                ConnectLib.Logger().CRITICAL(ConnectLib.LangManager().getMessage(CategoriesType.HOOKMANAGER_CLASS, "general.unsupportedtype", "type", resourceType.toString()));
-                return null;
+                String message = ConnectLib.LangManager().getMessage(CategoriesType.HOOKMANAGER_CLASS, "general.unsupportedtype", "type", resourceType.toString());
+                ConnectLib.Logger().CRITICAL(message);
+                throw new IllegalArgumentException(message);
         }
     }
 
