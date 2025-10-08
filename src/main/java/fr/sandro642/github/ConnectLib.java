@@ -86,7 +86,7 @@ public class ConnectLib {
         if (routes.containsKey(routeName)) {
             return routes.get(routeName);
         } else {
-            ConnectLib.Logger().ERROR("Route '" + routeName + "' not found in the ConnectorAPI routes.");
+            ConnectLib.Logger().ERROR(langManager.getMessage("connectlib.class", "getroute.error", Map.of("route", routeName)));
             return null;
         }
     }
