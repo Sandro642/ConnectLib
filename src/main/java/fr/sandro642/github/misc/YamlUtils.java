@@ -165,6 +165,7 @@ public class YamlUtils {
 			StringBuilder template = new StringBuilder(
 					"# properties ConnectLib By Sandro642\n\n" +
 							"urlPath: \"http://localhost:8080/api\"\n\n" +
+                            "language: \"en_US\"\n\n" +
 							"routes:\n" +
 							"  #info: \"/info/version\"\n" +
 							"  #ping: \"/ping\"\n" +
