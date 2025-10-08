@@ -17,7 +17,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.3.0-STABLE
+Stable Version: 0.3.1-STABLE
 ```
 
 ---
@@ -43,7 +43,7 @@ Hook -----------------------|
 Stay informed about the latest features and updates of ConnectLib.
 
 - Advanced debugging system. Available soon.
-
+[readme.md](readme.md)
 ---
 
 Changelog:
@@ -115,7 +115,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.3.0-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.3.1-STABLE")
     
 }
 
