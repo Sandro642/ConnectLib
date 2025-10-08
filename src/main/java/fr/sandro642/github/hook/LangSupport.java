@@ -1,6 +1,7 @@
 package fr.sandro642.github.hook;
 
 import fr.sandro642.github.ConnectLib;
+import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.lang.CategoriesType;
 
@@ -23,14 +24,14 @@ public class LangSupport {
      * Private singleton langType.
      * @return langTypeSingleton
      */
-    private MethodType.LangType langTypeSingleton;
+    private LangType langTypeSingleton;
 
     /**
      * Sets the LangType variable for this instance.
      * @param langType The language type to set. Must not be null.
      * @return The LangType that was set.
      */
-    public MethodType.LangType setLangTypeVariable(MethodType.LangType langType) {
+    public LangType setLangTypeVariable(LangType langType) {
         if (langType == null) {
             ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.LANGSUPPORT_CLASS, "general.illegalarg"));
 
