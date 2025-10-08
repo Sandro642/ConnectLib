@@ -1,5 +1,6 @@
 package fr.sandro642.github;
 
+import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.lang.CategoriesType;
 import fr.sandro642.github.hook.HookManager;
@@ -23,6 +24,8 @@ import java.util.Map;
  * @see ConnectLib#YamlUtils()
  * @see ConnectLib#MCSupport()
  * @see ConnectLib#HookManager()
+ * @see ConnectLib#LangSupport()
+ * @see ConnectLib#LangManager()
  */
 
 public class ConnectLib {
@@ -39,7 +42,7 @@ public class ConnectLib {
      * @param resourceType the type of resource to initialize
      * @param routes the routes to be used in the ConnectLib
      */
-    public static void initialize(ResourceType resourceType, MethodType.LangType langType, Class<? extends Enum<?>>... routes) {
+    public static void initialize(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
         try {
             logger = new Logger();
             storeAndRetrieve = new StoreAndRetrieve();
