@@ -115,8 +115,6 @@ public class LangManager {
      * @param messagePath The message path (e.g., "initialise.catcherror")
      * @param arguments Arguments to replace in the message (e.g., "exception", "NullPointerException")
      * @return The formatted message with replaced arguments
-     *
-     * @example
      * <pre>
      * getMessage("connectlib.class", "initialise.catcherror", "exception", "NullPointerException")
      * </pre>
@@ -142,8 +140,6 @@ public class LangManager {
      * @param messagePath The message path (e.g., "initialise.catcherror")
      * @param arguments Map containing key-value pairs to replace placeholders
      * @return The formatted message with replaced arguments
-     *
-     * @example
      * <pre>
      * Map&lt;String, String&gt; args = new HashMap&lt;&gt;();
      * args.put("exception", "NullPointerException");
