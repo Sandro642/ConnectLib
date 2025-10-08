@@ -1,7 +1,6 @@
 package fr.sandro642.github.hook;
 
-import fr.sandro642.github.ConnectLib;
-import fr.sandro642.github.enums.LangType;
+import fr.sandro642.github.enums.MethodType;
 
 /**
  * LangSupport is a placeholder class for future language support implementations.
@@ -27,14 +26,14 @@ public class LangSupport {
      * Private singleton langType.
      * @return langTypeSingleton
      */
-    private LangType langTypeSingleton;
+    private MethodType.LangType langTypeSingleton;
 
     /**
      * Sets the LangType variable for this instance.
      * @param langType The language type to set. Must not be null.
      * @return The LangType that was set.
      */
-    public LangType setLangTypeVariable(LangType langType) {
+    public MethodType.LangType setLangTypeVariable(MethodType.LangType langType) {
         if (langType == null) {
             throw new IllegalArgumentException("LangType cannot be null");
         }

@@ -27,15 +27,15 @@ Support Lib : Java 23
 
 Hook -----------------------|
  - Support Minecraft 1.16 - Latest Version
- - Support LangType 0.1.0 - Latest Version
+ - Support LangType 2.0 - Latest Version
 
  - Coming Soon.
 ```
 ---
 ## LangManager
 ```
- EN : Released - Latest Version
- FR : Sorti - Dernière Version
+ EN : Released - Version 0.1.1
+ FR : Sorti - Version 0.1.0
  ```
 
 ---
