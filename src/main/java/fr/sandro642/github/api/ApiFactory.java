@@ -3,6 +3,7 @@ package fr.sandro642.github.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.sandro642.github.ConnectLib;
+import fr.sandro642.github.enums.lang.CategoriesType;
 
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class ApiFactory {
             ObjectMapper mapper = new ObjectMapper();
             this.rawData = mapper.readValue(rawJson, new TypeReference<Map<String, Object>>() {});
         } catch (Exception e) {
-            throw new RuntimeException("Erreur while parsing " + e.getMessage(), e);
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "parsefromrawjson.error", Map.of("json", rawJson, "exception", e.getMessage())));
         }
     }
 
@@ -43,13 +44,13 @@ public class ApiFactory {
     public <O> Object getData(O type) {
         try {
             if (rawData == null) {
-                ConnectLib.Logger().ERROR("Data has not been initialized. Please call parseFromRawJson() first.");
+                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
                 return null;
             }
 
             return rawData.get(type.toString().toLowerCase());
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR("Unable to retrieve data for type: " + type + ". " + e.getMessage());
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getdata.error", Map.of("type", type.toString(), "exception", e.getMessage())));
         }
         return null;
     }
@@ -65,7 +66,7 @@ public class ApiFactory {
     public <O, K> Object getSpecData(O type, K value) {
         try {
             if (rawData == null) {
-                ConnectLib.Logger().ERROR("Data has not been initialized. Please call parseFromRawJson() first.");
+                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
                 return null;
             }
 
@@ -75,7 +76,7 @@ public class ApiFactory {
                 return nestedMap.get(value.toString().toLowerCase());
             }
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR("Unable to retrieve specific data for type: " + type + " and value: " + value + ". " + e.getMessage());
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getspecdata.error", Map.of("type", type.toString(), "value", value.toString(), "exception", e.getMessage())));
         }
         return null;
     }
@@ -89,12 +90,12 @@ public class ApiFactory {
     public Object display() {
         try {
         if (rawData == null) {
-            ConnectLib.Logger().ERROR("Data has not been initialized. Please call parseFromRawJson() first.");
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
             return null;
         }
         return rawData;
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR("Unable to display data: " + e.getMessage());
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "display.error", "exception", e.getMessage()));
         }
         return null;
     }

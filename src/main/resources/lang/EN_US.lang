@@ -17,3 +17,36 @@ geturl.error: Error while retrieving URL from YAML file %file%, Exception: %exce
 gentempifnotexist.error: Error while updating %file%, Exception: %exception%.
 gentempifnotexist.needed: File %file% need to be changed, please update it with the new routes and the url Path...
 gentempifnotexist.errorcreated: Error while creating the file %file%, Exception: %exception%.
+
+[jobs.package]
+getroutes.maderoute: Route %route% created.
+getroutes.error: Error while constructing route: Exception: %exception%.
+getresponse.mustbe: You need to call first getRoutes();
+getresponse.error: Unsupported method type: %type%.
+
+[mcsupport.class]
+setplugvar.illegalarg: Plugin cannot be null.
+getplugpath.mustbe: Plugin variable is not set. Please call setPluginVariable() first.
+
+[langsupport.class]
+general.illegalarg: LangType cannot be null.
+
+[hookmanager.class]
+general.unsupportedtype: Unsupported resource type: %type%.
+
+[apifactory.class]
+parsefromrawjson.error: Error while parsing raw JSON: %json%, Exception: %exception%.
+general.mustbe: Data has not been initialized. Please call parseFromRawJson() first.
+getdata.error: Unable to retrieve data for type: %type%, Exception: %exception%.
+getspecdata.error: Unable to retrieve specific data for type: %type% and value %value%. Exception: %exception%.
+display.error: Error while displaying data. Exception: %exception%.
+
+[apiclient.class]
+construct.urlbase: Base URL not found in configuration. Please set the base URL in the configuration file.
+call.get: Call GET to %routename%.
+call.post: Call POST to %routename%.
+call.put: Call PUT to %routename%.
+call.delete: Call DELETE to %routename%.
+call.patch: Call PATCH to %routename%.
+call.threadinuse: Current thread in use: %thread%.
+general.error: Error while call %method%. Exception : %exception%.

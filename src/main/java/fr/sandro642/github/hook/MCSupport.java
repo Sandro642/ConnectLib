@@ -1,6 +1,7 @@
 package fr.sandro642.github.hook;
 
 import fr.sandro642.github.ConnectLib;
+import fr.sandro642.github.enums.lang.CategoriesType;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -39,7 +40,7 @@ public class MCSupport {
      */
     public Plugin setPluginVariable(Plugin plugin) {
         if (plugin == null) {
-            throw new IllegalArgumentException("Plugin cannot be null.");
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.MCSUPPORT_CLASS, "setplugvar.illegalarg"));
         }
             this.pluginSingleton = plugin;
             return this.pluginSingleton;
@@ -55,7 +56,7 @@ public class MCSupport {
     public String getPluginPath() {
 
         if (pluginSingleton == null) {
-            ConnectLib.Logger().ERROR("Plugin variable is not set. Please call setPluginVariable() first.");
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.MCSUPPORT_CLASS, "getplugpath.mustbe"));
         }
 
         return pluginSingleton.getDataFolder().getAbsolutePath();

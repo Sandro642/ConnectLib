@@ -5,6 +5,7 @@ import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.VersionType;
+import fr.sandro642.github.enums.lang.CategoriesType;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -232,12 +233,10 @@ public class JobGetInfos {
                 ConnectLib.StoreAndRetrieve().store.put("currentParams", params);
             }
 
-            ConnectLib.Logger().INFO("Route construite: " + fullRoute);
-
+            ConnectLib.Logger().INFO(ConnectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getroutes.maderoute", "route", fullRoute));
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR("Error while constructing the route : " + e.getMessage());
+            ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getroutes.error", "exception", e.getMessage()));
         }
-
         return this;
     }
 
@@ -254,9 +253,7 @@ public class JobGetInfos {
             Map<String, Object> body = (Map<String, Object>) ConnectLib.StoreAndRetrieve().store.get("currentBody");
 
             if (route == null || method == null) {
-                return CompletableFuture.failedFuture(
-                        new RuntimeException("Route or method not set. Please call getRoutes() first.")
-                );
+                ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getresponse.mustbe"));
             }
 
             CompletableFuture<ApiFactory> responseFuture = new CompletableFuture<>();
@@ -279,39 +276,37 @@ public class JobGetInfos {
             switch(method) {
                 case GET:
                     apiClient.callAPIGet(route).subscribe(
-                            response -> onSuccess.accept((ApiFactory) response),
+                            response -> onSuccess.accept(response),
                             onError
                     );
                     break;
                 case POST:
                     apiClient.callAPIPost(route, body).subscribe(
-                            response -> onSuccess.accept((ApiFactory) response),
+                            response -> onSuccess.accept(response),
                             onError
                     );
                     break;
                 case PUT:
                     apiClient.callAPIPut(route, body).subscribe(
-                            response -> onSuccess.accept((ApiFactory) response),
+                            response -> onSuccess.accept(response),
                             onError
                     );
                     break;
                 case PATCH:
                     apiClient.callAPIPatch(route, body).subscribe(
-                            response -> onSuccess.accept((ApiFactory) response),
+                            response -> onSuccess.accept(response),
                             onError
                     );
                     break;
                 case DELETE:
                     apiClient.callAPIDelete(route).subscribe(
-                            response -> onSuccess.accept((ApiFactory) response),
+                            response -> onSuccess.accept(response),
                             onError
                     );
                     break;
                 default:
-                    ConnectLib.Logger().ERROR("Unsupported method type: " + method);
-                    return CompletableFuture.failedFuture(
-                            new IllegalArgumentException("Unsupported method type: " + method)
-                    );
+                    ConnectLib.Logger().ERROR(ConnectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getresponse.error", "type", method.toString()));
+                    System.exit(2);
             }
 
             return responseFuture;
