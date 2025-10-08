@@ -32,6 +32,13 @@ Hook -----------------------|
  - Coming Soon.
 ```
 ---
+## LangManager
+```
+ EN : Released - Latest Version
+ FR : Sorti - Dernière Version
+ ```
+
+---
 
 Stay informed about the latest features and updates of ConnectLib.
 
