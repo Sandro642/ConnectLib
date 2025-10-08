@@ -87,4 +87,9 @@ public class MainTest {
         }
     }
 
+    @Test
+    public void testLangType() {
+        ConnectLib.initialize(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
+    }
+
 }

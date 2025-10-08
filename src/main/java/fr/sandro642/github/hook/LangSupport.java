@@ -21,25 +21,7 @@ public class LangSupport {
     /**
      * Prefix for language files.
      */
-    private final String PREFIX = "lang";
-
-    /**
-     * Paths for different languages.
-     * FRENCH_PATH, ENGLISH_PATH, SPANISH_PATH, GERMAN_PATH, ITALIAN_PATH, PORTUGUESE_PATH, RUSSIAN_PATH
-     */
-    private final String FRENCH_PATH = ConnectLib.HookManager().BASE_PATH() + "/" + PREFIX + "/";
-
-    private final String ENGLISH_PATH = ConnectLib.HookManager().BASE_PATH() + "/" + PREFIX + "/";
-
-    private final String SPANISH_PATH = ConnectLib.HookManager().BASE_PATH() + "/" + PREFIX + "/";
-
-    private final String GERMAN_PATH = ConnectLib.HookManager().BASE_PATH() + "/" + PREFIX + "/";
-
-    private final String ITALIAN_PATH = ConnectLib.HookManager().BASE_PATH() + "/" + PREFIX + "/";
-
-    private final String PORTUGUESE_PATH = ConnectLib.HookManager().BASE_PATH() + "/" + PREFIX + "/";
-
-    private final String RUSSIAN_PATH = ConnectLib.HookManager().BASE_PATH() + "/" + PREFIX + "/";
+    private final String PREFIX = "lang/";
 
     /**
      * Private singleton langType.
@@ -72,19 +54,19 @@ public class LangSupport {
 
         switch (langTypeSingleton) {
             case FRENCH:
-                return FRENCH_PATH + langTypeSingleton.getLang() + ".lang";
+                return PREFIX + langTypeSingleton.getLang() + ".lang";
             case ENGLISH:
-                return ENGLISH_PATH + langTypeSingleton.getLang() + ".lang";
+                return PREFIX + langTypeSingleton.getLang() + ".lang";
             case SPANISH:
-                return SPANISH_PATH + langTypeSingleton.getLang() + ".lang";
+                return PREFIX + langTypeSingleton.getLang() + ".lang";
             case GERMAN:
-                return GERMAN_PATH + langTypeSingleton.getLang() + ".lang";
+                return PREFIX + langTypeSingleton.getLang() + ".lang";
             case ITALIAN:
-                return ITALIAN_PATH + langTypeSingleton.getLang() + ".lang";
+                return PREFIX + langTypeSingleton.getLang() + ".lang";
             case PORTUGUESE:
-                return PORTUGUESE_PATH + langTypeSingleton.getLang() + ".lang";
+                return PREFIX + langTypeSingleton.getLang() + ".lang";
             case RUSSIAN:
-                return RUSSIAN_PATH + langTypeSingleton.getLang() + ".lang";
+                return PREFIX + langTypeSingleton.getLang() + ".lang";
 
             default:
                 ConnectLib.Logger().CRITICAL("Unsupported LangType: " + langTypeSingleton);

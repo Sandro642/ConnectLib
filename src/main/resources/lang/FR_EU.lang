@@ -1,0 +1,13 @@
+# Fichier de langue ConnectLib par Sandro642 (Sandraw)
+# Surtout ne pas modifier ce fichier.
+
+#Lang : FR
+
+[annotation.package]
+discoverlistener.error: Erreur lors de la découverte des listeners.
+getclassesinpackage.error: Erreur lors de la récupération des classes dans le package %package%, Exception : %exception%.
+
+[connectlib.class]
+initialise.routeclass: RouteClass ne peut pas être null.
+initialise.catcherror: Une erreur est survenue lors de l'initialisation de ConnectLib, Exception : %exception%.
+getroute.error: La route %route% n'a pas été trouvée.

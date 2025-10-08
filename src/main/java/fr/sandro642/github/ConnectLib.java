@@ -31,6 +31,7 @@ public class ConnectLib {
     private static YamlUtils yamlUtils = new YamlUtils();
     private static final Map<String,String> routes = new HashMap<>();
     private static Logs logs = new Logs();
+    private static LangManager langManager;
 
     /**
      * Init the ConnectLib with the specified resource type and routes.
@@ -39,15 +40,6 @@ public class ConnectLib {
      */
     public static void initialize(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
         try {
-            Map<Enum<?>, String> routesEnums = new HashMap<>();
-            for (Class<? extends Enum<?>> route : routes) {
-                if (route == null) {
-                    ConnectLib.Logger().ERROR("Route class cannot be null.");
-                }
-
-                routesEnums.putAll(EnumLoader.convertRouteImport(route));
-            }
-
             logger = new Logger();
             storeAndRetrieve = new StoreAndRetrieve();
             yamlUtils = new YamlUtils();
@@ -57,8 +49,18 @@ public class ConnectLib {
             LangSupport().setLangTypeVariable(langType);
             HookManager().FILE_LOCATION_KEY();
 
-            yamlUtils.generateTemplateIfNotExists(routesEnums);
+            langManager = new LangManager();
 
+            Map<Enum<?>, String> routesEnums = new HashMap<>();
+            for (Class<? extends Enum<?>> route : routes) {
+                if (route == null) {
+                    ConnectLib.Logger().ERROR(langManager.getMessage("connectlib.class", "initialise.routeclass"));
+                    continue;
+                }
+                routesEnums.putAll(EnumLoader.convertRouteImport(route));
+            }
+
+            yamlUtils.generateTemplateIfNotExists(routesEnums);
             logs.setPathFile();
 
             String baseUrl = yamlUtils.getURL();
@@ -71,7 +73,7 @@ public class ConnectLib {
                 ConnectLib.routes.putAll(yamlRoutes);
             }
         } catch (Exception e) {
-            ConnectLib.Logger().ERROR("Error while initializing ConnectLib: " + e.getMessage());
+            ConnectLib.Logger().ERROR(langManager.getMessage("connectlib.class", "initialise.catcherror", Map.of("exception", e.getMessage())));
         }
     }
 
@@ -156,8 +158,20 @@ public class ConnectLib {
         return HookManager.getInstance();
     }
 
+    /**
+     * Return the instance of LangSupport.
+     * @return LangSupport instance
+     */
     public static LangSupport LangSupport() {
         return LangSupport.getInstance();
 
+    }
+
+    /**
+     * Return the instance of LangManager.
+     * @return LangManager instance
+     */
+    public static LangManager LangManager() {
+        return langManager;
     }
 }

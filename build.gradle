@@ -19,6 +19,7 @@ repositories {
     maven {
         url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
+
     maven {
         url 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
@@ -31,7 +32,8 @@ dependencies {
     implementation 'io.projectreactor:reactor-core:3.6.9'
     implementation 'org.springframework.boot:spring-boot-starter-webflux:3.2.2'
 
-    compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
+    // Version moderne sans problèmes de dépendances
+    compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
 }
 
 application {
