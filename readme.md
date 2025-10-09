@@ -12,7 +12,7 @@
 
 ---
 
-You can see the Javadoc <a href="https://sandro642.github.io/connectlib/javadoc"></a>
+You can see the Javadoc <a href="https://sandro642.github.io/connectlib/javadoc">here</a>
 
 ---
 
