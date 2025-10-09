@@ -17,7 +17,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.3.3-STABLE
+Stable Version: 0.3.4-STABLE
 ```
 
 ---
@@ -58,6 +58,7 @@ Changelog:
  - [0.2.6.4-STABLE]: Added asynchronous job execution, allowing you to run tasks in the background without blocking your main application thread.
  - [0.2.7.2-STABLE]: Remove implementation Project Reactor
  - [0.2.9-STABLE]: Added support query variables in routes, allowing you to pass parameters directly in the URL.
+ - [0.3.3-STABLE]: Minecraft Version 1.16 - Latest Version support + LangType 2.0 - Remove AnnotHandler, you can use logger.showLogs(); to display logs.
 ```
 
 ---

@@ -8,6 +8,7 @@ import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.VersionType;
 import fr.sandro642.github.misc.EnumLoader;
+import fr.sandro642.github.misc.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -49,12 +50,12 @@ public class MainTest {
 
 
     public static void main(String[] args) {
-        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
-
+        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
         try {
+            connectLib.Logger().showLogs();
 
              CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(VersionType.V1_BRANCH, MethodType.GET, TestRoutes.HELLO)
+                    .getRoutes( MethodType.GET, TestRoutes.HELLO)
                     .getResponse();
 
              ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
@@ -66,6 +67,7 @@ public class MainTest {
             return;
         }
     }
+
 
     @Test
     public void testUseFullRoute() {
