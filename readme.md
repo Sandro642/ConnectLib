@@ -169,15 +169,7 @@ More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/examp
 1. Fork the repo
 2. Create a branch (`feature/my-feature`)
 3. Push your changes and open a PR
-
----
-
-## 🧠 Evolution Ideas
-
-- Adding connectors for new services
-- Web management interface
-- Plugin system
-
+   
 ---
 
 ## 📞 Contact
