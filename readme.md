@@ -116,7 +116,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.3.3-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.3.4-STABLE")
     
 }
 
