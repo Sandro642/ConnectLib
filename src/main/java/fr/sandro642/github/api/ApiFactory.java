@@ -56,7 +56,7 @@ public class ApiFactory {
     }
 
     /**
-     * Method to retrieve the raw JSON data as a string.
+     * Method to retrieve the statusCode from response.
      */
     protected void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
