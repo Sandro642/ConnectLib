@@ -1,8 +1,4 @@
-# Welcome on ConnectLib Docs
-
 ![ConnectLib Banner](banner.png)
-
-\
 
 
 ![Version](https://img.shields.io/github/v/tag/Sandro642/ConnectLib?label=Version\&style=for-the-badge\&color=blue\&logo=github) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge\&logo=openjdk\&logoColor=white) ![Project Reactor](https://img.shields.io/badge/Project%20Reactor-6DB33F?style=for-the-badge\&logo=spring\&logoColor=white)
