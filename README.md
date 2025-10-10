@@ -17,7 +17,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.3.2-STABLE
+Stable Version: 0.3.5-STABLE
 ```
 
 ---
@@ -34,8 +34,8 @@ Hook -----------------------|
 ---
 ## LangManager
 ```
- EN : Released - Version 1.2
- FR : Sorti - Version 1.1
+ EN : Released - Version 1.3 - Latest Version
+ FR : Sorti - Version 1.2 - Dernière version
  ```
 
 ---
@@ -115,40 +115,10 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.3.2-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.3.5-STABLE")
     
 }
 
-```
-Library Initialization
-```java
-public class Example {
-    
-    // Initialization with an enumeration
-    public enum RouteList implements ConvertEnum.RouteImport {
-       VERSION("/api/mcas/info/version"),
-       INFO("/api/mcas/info/info");
-
-       String route;
-
-       TestRoutes(String route) {
-          this.route = route;
-       }
-
-       @Override
-       public String route() {
-          return route;
-       }
-    }
-    
-    ConnectLib.initialize(ResourceType.MAIN_RESOURCES, RouteList.class);
-    
-    
-///////////////////////////////////////////////////////////////////////////    
-    ConnectLib.initialize(ResourceType.MAIN_RESOURCES);
-    
-    //Add your routes in the infos.yml file
-}
 ```
 
 More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/example/ExampleUsages.java)
