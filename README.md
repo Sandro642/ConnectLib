@@ -1,5 +1,5 @@
 <center>
- ![ConnectLib Banner](banner.png)
+ <img href="banner.png">
 </center>
 
 
