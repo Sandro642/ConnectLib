@@ -40,6 +40,7 @@ general.mustbe: Les données n'ont pas été initialisées. Veuillez d'abord app
 getdata.error: Impossible de récupérer les données pour le type: %type%, Exception: %exception%.
 getspecdata.error: Impossible de récupérer les données spécifiques pour le type: %type% et la valeur %value%. Exception: %exception%.
 display.error: Erreur lors de l'affichage des données. Exception: %exception%.
+getstatus.error: Erreur lors de la récupération du code d'état. Exception: %exception%.
 
 [apiclient.class]
 construct.urlbase: URL de base introuvable dans la configuration. Veuillez définir l'URL de base dans le fichier de configuration.

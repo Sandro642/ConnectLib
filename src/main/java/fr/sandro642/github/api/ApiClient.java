@@ -68,15 +68,22 @@ public class ApiClient extends ApiFactory {
      */
     public Mono<ApiFactory> callAPIGet(String routeName) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.get", Map.of("routename", routeName)));
+
+        record ResponseData(int statusCode, String body) {}
+
         return webClient.get()
                 .uri(routeName)
-                .retrieve()
-                .bodyToMono(String.class)
+                .exchangeToMono(response ->
+                        response.bodyToMono(String.class)
+                                .map(rawJson -> new ResponseData(response.statusCode().value(), rawJson))
+                )
                 .subscribeOn(Schedulers.boundedElastic())
-                .doOnNext(thread ->
-                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
-                .map(rawJson -> {
-                    apiFactory.parseFromRawJson(rawJson);
+                .doOnNext(responseData -> {
+                    connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+                })
+                .map(responseData -> {
+                    apiFactory.setStatusCode(responseData.statusCode());
+                    apiFactory.parseFromRawJson(responseData.body);
                     return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
@@ -91,16 +98,23 @@ public class ApiClient extends ApiFactory {
      */
     public Mono<ApiFactory> callAPIPost(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.post", Map.of("routename", routeName)));
+
+        record ResponseData(int statusCode, String body) {}
+
         return webClient.post()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
-                .retrieve()
-                .bodyToMono(String.class)
+                .exchangeToMono(response ->
+                        response.bodyToMono(String.class)
+                                .map(rawJson -> new ResponseData(response.statusCode().value(), rawJson))
+                )
                 .subscribeOn(Schedulers.boundedElastic())
-                .doOnNext(thread ->
-                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
-                .map(rawJson -> {
-                    apiFactory.parseFromRawJson(rawJson);
+                .doOnNext(responseData -> {
+                    connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+                })
+                .map(responseData -> {
+                    apiFactory.setStatusCode(responseData.statusCode());
+                    apiFactory.parseFromRawJson(responseData.body());
                     return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
@@ -115,16 +129,23 @@ public class ApiClient extends ApiFactory {
      */
     public Mono<ApiFactory> callAPIPut(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.put", Map.of("routename", routeName)));
+
+        record ResponseData(int statusCode, String body) {}
+
         return webClient.put()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
-                .retrieve()
-                .bodyToMono(String.class)
+                .exchangeToMono(response ->
+                        response.bodyToMono(String.class)
+                                .map(rawJson -> new ResponseData(response.statusCode().value(), rawJson))
+                )
                 .subscribeOn(Schedulers.boundedElastic())
-                .doOnNext(thread ->
-                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
-                .map(rawJson -> {
-                    apiFactory.parseFromRawJson(rawJson);
+                .doOnNext(responseData -> {
+                    connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+                })
+                .map(responseData -> {
+                    apiFactory.setStatusCode(responseData.statusCode());
+                    apiFactory.parseFromRawJson(responseData.body());
                     return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
@@ -139,16 +160,23 @@ public class ApiClient extends ApiFactory {
      */
     public Mono<ApiFactory> callAPIPatch(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.patch", Map.of("routename", routeName)));
+
+        record ResponseData(int statusCode, String body) {}
+
         return webClient.patch()
                 .uri(routeName)
                 .bodyValue(body != null ? body : Map.of())
-                .retrieve()
-                .bodyToMono(String.class)
+                .exchangeToMono(response ->
+                        response.bodyToMono(String.class)
+                                .map(rawJson -> new ResponseData(response.statusCode().value(), rawJson))
+                )
                 .subscribeOn(Schedulers.boundedElastic())
-                .doOnNext(thread ->
-                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
-                .map(rawJson -> {
-                    apiFactory.parseFromRawJson(rawJson);
+                .doOnNext(responseData -> {
+                    connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+                })
+                .map(responseData -> {
+                    apiFactory.setStatusCode(responseData.statusCode());
+                    apiFactory.parseFromRawJson(responseData.body());
                     return apiFactory;
                 })
                 .doOnNext(lastResponse::set)
@@ -162,15 +190,22 @@ public class ApiClient extends ApiFactory {
      */
     public Mono<ApiFactory> callAPIDelete(String routeName) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.delete", Map.of("routename", routeName)));
+
+        record ResponseData(int statusCode, String body) {}
+
         return webClient.delete()
                 .uri(routeName)
-                .retrieve()
-                .bodyToMono(String.class)
+                .exchangeToMono(response ->
+                        response.bodyToMono(String.class)
+                                .map(rawJson -> new ResponseData(response.statusCode().value(), rawJson))
+                )
                 .subscribeOn(Schedulers.boundedElastic())
-                .doOnNext(thread ->
-                        connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName())))
-                .map(rawJson -> {
-                    apiFactory.parseFromRawJson(rawJson);
+                .doOnNext(responseData -> {
+                    connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+                })
+                .map(responseData -> {
+                    apiFactory.setStatusCode(responseData.statusCode());
+                    apiFactory.parseFromRawJson(responseData.body());
                     return apiFactory;
                 })
                 .doOnNext(lastResponse::set)

@@ -40,6 +40,7 @@ general.mustbe: Data has not been initialized. Please call parseFromRawJson() fi
 getdata.error: Unable to retrieve data for type: %type%, Exception: %exception%.
 getspecdata.error: Unable to retrieve specific data for type: %type% and value %value%. Exception: %exception%.
 display.error: Error while displaying data. Exception: %exception%.
+getstatus.error: Error while retrieving status code. Exception: %exception%.
 
 [apiclient.class]
 construct.urlbase: Base URL not found in configuration. Please set the base URL in the configuration file.

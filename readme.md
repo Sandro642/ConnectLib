@@ -17,7 +17,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.3.4-STABLE
+Stable Version: 0.3.5-STABLE
 ```
 
 ---
@@ -34,8 +34,8 @@ Hook -----------------------|
 ---
 ## LangManager
 ```
- EN : Released - Version 1.2
- FR : Sorti - Version 1.1
+ EN : Released - Version 1.3 - Latest Version
+ FR : Sorti - Version 1.2 - Latest Version
  ```
 
 ---
@@ -59,6 +59,7 @@ Changelog:
  - [0.2.7.2-STABLE]: Remove implementation Project Reactor
  - [0.2.9-STABLE]: Added support query variables in routes, allowing you to pass parameters directly in the URL.
  - [0.3.3-STABLE]: Minecraft Version 1.16 - Latest Version support + LangType 2.0 - Remove AnnotHandler, you can use logger.showLogs(); to display logs.
+ - [0.3.5-STABLE]: Now you can print the StatusCode of the response with ( response.getStatusCode(); )
 ```
 
 ---
@@ -116,7 +117,7 @@ repositories {
 
 dependencies {
     
-    implementation("fr.sandro642.github:ConnectLib:0.3.3-STABLE")
+    implementation("fr.sandro642.github:ConnectLib:0.3.5-STABLE")
     
 }
 

@@ -36,6 +36,12 @@ public class ApiFactory {
     private String rawJson;
 
     /**
+     * statusCode is an integer that holds the HTTP status code of the API response.
+     * It can be set using the setStatusCode method.
+     */
+    private int statusCode;
+
+    /**
      * Default constructor for ApiFactory.
      * Initializes the rawData and rawJson fields to null.
      */
@@ -47,6 +53,15 @@ public class ApiFactory {
         } catch (Exception e) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "parsefromrawjson.error", Map.of("json", rawJson, "exception", e.getMessage())));
         }
+    }
+
+    /**
+     * Method to retrieve the raw JSON data as a string.
+     *
+     * @return The raw JSON data as a string, or null if not initialized.
+     */
+    protected void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
     /**
@@ -94,6 +109,25 @@ public class ApiFactory {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getspecdata.error", Map.of("type", type.toString(), "value", value.toString(), "exception", e.getMessage())));
         }
         return null;
+    }
+
+    /**
+     * Method to retrieve the HTTP status code of the API response.
+     *
+     * @return The HTTP status code of the API response.
+     */
+    public int getStatusCode() {
+        try {
+            if (rawData == null) {
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
+                return -1;
+            }
+
+            return statusCode;
+        } catch (Exception e) {
+            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getstatus.error", "exception", e.getMessage()));
+        }
+        return -1;
     }
 
     /**

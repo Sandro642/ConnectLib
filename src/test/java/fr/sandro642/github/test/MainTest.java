@@ -73,6 +73,7 @@ public class MainTest {
     public void testUseFullRoute() {
         connectLib.Init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
 
+        connectLib.Logger().showLogs();
         try {
             Map<String, String> query = Map.of(
                     "name", "Sandro642"
@@ -85,6 +86,7 @@ public class MainTest {
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
             System.out.println("Response: " + response.display());
+            System.out.println("Status Code: " + response.getStatusCode());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +95,45 @@ public class MainTest {
 
     @Test
     public void testLangType() {
-        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
+        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+
+        connectLib.Logger().showLogs();
+
+        try {
+            CompletableFuture<ApiFactory> factoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
+                    .getResponse();
+
+            ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Response: " + response.display());
+            System.out.println("Status Code: " + response.getStatusCode());
+
+            Thread.sleep(5000);
+
+            factoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(MethodType.GET, TestRoutes.GREET, null, null, Map.of("name", "Sandro642"))
+                    .getResponse();
+
+            response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Response: " + response.display());
+            System.out.println("Status Code: " + response.getStatusCode());
+
+            Thread.sleep(5000);
+
+            factoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(MethodType.GET, TestRoutes.GREET, null, null, Map.of("name", "Sandro642"))
+                    .getResponse();
+
+            response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Response: " + response.display());
+            System.out.println("Status Code: " + response.getStatusCode());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

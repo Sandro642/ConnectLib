@@ -63,6 +63,7 @@ public class ExampleUsages {
             System.out.println("Response Code: " + response.getData("code"));
             System.out.println("Response Message: " + response.getData("message"));
             System.out.println("Response Data: " + response.getSpecData("data", "exampleKey"));
+            System.out.println("Status Code: " + response.getStatusCode());
         } catch (Exception e) {
             e.printStackTrace();
         }
