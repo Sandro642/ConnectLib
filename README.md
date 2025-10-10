@@ -1,26 +1,23 @@
-<div align="center">
+# Welcome on ConnectLib Docs
 
-![ConnectLib Banner](./banner.png)
+![ConnectLib Banner](banner.png)
 
-<br>
+\
 
-![Version](https://img.shields.io/github/v/tag/Sandro642/ConnectLib?label=Version&style=for-the-badge&color=blue&logo=github)
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Project Reactor](https://img.shields.io/badge/Project%20Reactor-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 
-</div>
+![Version](https://img.shields.io/github/v/tag/Sandro642/ConnectLib?label=Version\&style=for-the-badge\&color=blue\&logo=github) ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge\&logo=openjdk\&logoColor=white) ![Project Reactor](https://img.shields.io/badge/Project%20Reactor-6DB33F?style=for-the-badge\&logo=spring\&logoColor=white)
 
-Welcome to **ConnectLib**: the universal gateway to connect, automate and orchestrate your data flows!
-And if you thought APIs were complicated, think again! With ConnectLib, it's like playing with Lego: simple, intuitive and powerful.
+Welcome to **ConnectLib**: the universal gateway to connect, automate and orchestrate your data flows! And if you thought APIs were complicated, think again! With ConnectLib, it's like playing with Lego: simple, intuitive and powerful.
+
 > For information, this library is not intended to be used for Minecraft, it is used professionally in a Java project.
 
----
+***
 
 ```java
 Stable Version: 0.3.5-STABLE
 ```
 
----
+***
 
 ```java[build.gradle](build.gradle)
 Support Lib : Java 23
@@ -31,20 +28,23 @@ Hook -----------------------|
 
  - Coming Soon.
 ```
----
-## LangManager
+
+***
+
+### LangManager
+
 ```
  EN : Released - Version 1.3 - Latest Version
  FR : Sorti - Version 1.2 - Latest Version
- ```
+```
 
----
+***
 
 Stay informed about the latest features and updates of ConnectLib.
 
-- Advanced debugging system. Available soon.
-[readme.md](readme.md)
----
+* Advanced debugging system. Available soon. [readme.md](./)
+
+***
 
 Changelog:
 
@@ -62,50 +62,54 @@ Changelog:
  - [0.3.5-STABLE]: Now you can print the StatusCode of the response with ( response.getStatusCode(); )
 ```
 
----
+***
 
-## 🌟 Why ConnectLib?
+### 🌟 Why ConnectLib?
 
 Imagine an API that doesn't just connect services, but becomes the conductor of your integrations. ConnectLib is designed to:
 
-- **Centralize** your API connections
-- **Automate** your recurring tasks
-- **Secure** your data exchanges
-- **Simplify** adding new connectors
+* **Centralize** your API connections
+* **Automate** your recurring tasks
+* **Secure** your data exchanges
+* **Simplify** adding new connectors
 
----
+***
 
-## 🛠️ Main Features
+### 🛠️ Main Features
 
-- 🔌 **Centralized connector management**
-- ⚡ **Automated job execution**
-- 🧩 **Extensible and modular**
-- 📊 **Detailed logs and monitoring**
-- 🔒 **Built-in security**
+* 🔌 **Centralized connector management**
+* ⚡ **Automated job execution**
+* 🧩 **Extensible and modular**
+* 📊 **Detailed logs and monitoring**
+* 🔒 **Built-in security**
 
----
+***
 
-## 🚦 Quick Start
+### 🚦 Quick Start
 
-1. **Clone the project**
-   ```bash
-   git clone https://github.com/your-username/ConnectLib.git
-   cd ConnectLib
-   ```
-2. **Compile**
-   ```bash
-   ./gradlew build
-   ```
-3. **Run an example**
-   ```bash
-   java -jar YourJarFile.jar
-   ```
+1.  **Clone the project**
 
----
+    ```bash
+    git clone https://github.com/your-username/ConnectLib.git
+    cd ConnectLib
+    ```
+2.  **Compile**
 
-## 🧑‍💻 Usage Example
+    ```bash
+    ./gradlew build
+    ```
+3.  **Run an example**
+
+    ```bash
+    java -jar YourJarFile.jar
+    ```
+
+***
+
+### 🧑‍💻 Usage Example
 
 Library Import
+
 ```java
 repositories {
     
@@ -122,69 +126,39 @@ dependencies {
 }
 
 ```
-Library Initialization
-```java
-public class Example {
-    
-    // Initialization with an enumeration
-    public enum RouteList implements ConvertEnum.RouteImport {
-       VERSION("/api/mcas/info/version"),
-       INFO("/api/mcas/info/info");
-
-       String route;
-
-       TestRoutes(String route) {
-          this.route = route;
-       }
-
-       @Override
-       public String route() {
-          return route;
-       }
-    }
-    
-    ConnectLib.initialize(ResourceType.MAIN_RESOURCES, RouteList.class);
-    
-    
-///////////////////////////////////////////////////////////////////////////    
-    ConnectLib.initialize(ResourceType.MAIN_RESOURCES);
-    
-    //Add your routes in the infos.yml file
-}
-```
 
 More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/example/ExampleUsages.java)
 
----
+***
 
-## 📚 Project Structure
+### 📚 Project Structure
 
-- `src/main/java/fr/sandro642/github/` : main source code
-- `src/test/java/fr/sandro642/github/test/` : unit tests
-- `build.gradle` : Gradle configuration
+* `src/main/java/fr/sandro642/github/` : main source code
+* `src/test/java/fr/sandro642/github/test/` : unit tests
+* `build.gradle` : Gradle configuration
 
----
+***
 
-## 🤝 Contributing
+### 🤝 Contributing
 
 1. Fork the repo
 2. Create a branch (`feature/my-feature`)
 3. Push your changes and open a PR
 
----
+***
 
-## 🧠 Evolution Ideas
+### 🧠 Evolution Ideas
 
-- Adding connectors for new services
-- Web management interface
-- Plugin system
+* Adding connectors for new services
+* Web management interface
+* Plugin system
 
----
+***
 
-## 📞 Contact
+### 📞 Contact
 
 For any questions or suggestions: [sandro33810@gmail.com](mailto:sandro33810@gmail.com)
 
----
+***
 
 > "ConnectLib is the freedom to connect the impossible."
