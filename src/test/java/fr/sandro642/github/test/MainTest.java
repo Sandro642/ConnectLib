@@ -6,9 +6,8 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
-import fr.sandro642.github.enums.VersionType;
+import fr.sandro642.github.jobs.VersionProvider;
 import fr.sandro642.github.misc.EnumLoader;
-import fr.sandro642.github.misc.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -43,9 +42,25 @@ public class MainTest {
         }
     }
 
+    public enum TestCustomVersion implements VersionProvider {
+        DEV_BRANCH("dev"),
+        ;
+
+        private final String version;
+
+        TestCustomVersion(String version) {
+            this.version = version;
+        }
+
+        @Override
+        public String getVersion() {
+            return version;
+        }
+    }
+
     @Test
     public void initializeCAPI() {
-        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH);
+        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
     }
 
 

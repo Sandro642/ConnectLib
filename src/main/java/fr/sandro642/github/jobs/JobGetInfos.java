@@ -61,7 +61,7 @@ public class JobGetInfos {
      * @param body Body of the request for POST (can be null for GET)
      * @return JobGetInfos for chaining
      */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, Enum<?> routeName, Map<String, ?> body) {
+    public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, Enum<?> routeName, Map<String, ?> body) {
         return getRoutes(versionType, methodType, getRouteName(routeName), body, null, null);
     }
 
@@ -72,7 +72,7 @@ public class JobGetInfos {
      * @param routeName Name of the route in the YAML file
      * @return JobGetInfos for chaining
      */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, Enum<?> routeName) {
+    public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, Enum<?> routeName) {
         return getRoutes(versionType, methodType, getRouteName(routeName), null, null, null);
     }
 
@@ -125,7 +125,7 @@ public class JobGetInfos {
      * @param routeName Nom de la route dans le fichier YAML
      * @return JobGetInfos pour chaînage
      */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, String routeName) {
+    public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, String routeName) {
         return getRoutes(versionType, methodType, routeName, null, null, null);
     }
 
@@ -137,7 +137,7 @@ public class JobGetInfos {
      * @param body Body of the request for POST (can be null for GET)
      * @return JobGetInfos for chaining
      */
-    public JobGetInfos getRoutes(VersionType versionType, MethodType methodType, String routeName, Map<String, ?> body) {
+    public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, String routeName, Map<String, ?> body) {
         return getRoutes(versionType, methodType, routeName, body, null, null);
     }
 
@@ -176,7 +176,7 @@ public class JobGetInfos {
      * @param query Additional query parameters for the request
      * @return JobGetInfos for chaining
      */
-    public <R> JobGetInfos getRoutes(VersionType versionType, MethodType methodType, R routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
+    public <R> JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, R routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
         try {
             String route = connectLib.getRoute(routeName.toString().toLowerCase());
 
