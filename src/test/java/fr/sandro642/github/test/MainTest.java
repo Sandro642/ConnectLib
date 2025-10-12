@@ -6,6 +6,7 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
+import fr.sandro642.github.jobs.RouteImport;
 import fr.sandro642.github.jobs.VersionProvider;
 import fr.sandro642.github.misc.EnumLoader;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ public class MainTest {
 
     private static ConnectLib connectLib = new ConnectLib();
 
-    public enum TestRoutes implements EnumLoader.RouteImport {
+    public enum TestRoutes implements RouteImport {
         HELLO("/hello"),
         GREET("/greet$name$")
         ;
@@ -37,7 +38,7 @@ public class MainTest {
         }
 
         @Override
-        public String route() {
+        public String getRoute() {
             return route;
         }
     }

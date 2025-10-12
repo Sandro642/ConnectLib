@@ -6,6 +6,7 @@ import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.VersionType;
+import fr.sandro642.github.jobs.RouteImport;
 import fr.sandro642.github.misc.EnumLoader;
 
 import java.util.Map;
@@ -25,7 +26,7 @@ public class ExampleUsages {
 
     private ConnectLib connectLib = new ConnectLib();
 
-    public enum ExampleRoutes implements EnumLoader.RouteImport {
+    public enum ExampleRoutes implements RouteImport {
         EXAMPLE_ROUTE("/api/example/route");
 
         final String route;
@@ -35,7 +36,7 @@ public class ExampleUsages {
         }
 
         @Override
-        public String route() {
+        public String getRoute() {
             return route;
         }
     }

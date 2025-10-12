@@ -1,5 +1,7 @@
 package fr.sandro642.github.misc;
 
+import fr.sandro642.github.jobs.RouteImport;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,14 +16,6 @@ import java.util.Map;
 public class EnumLoader {
 
     /**
-     * RouteImport is an interface that should be implemented by enums that provide a route.
-     * Enums implementing this interface must define the route() method to return their associated route as a String.
-     */
-    public interface RouteImport {
-        String route();
-    }
-
-    /**
      * Converts an enum class that implements RouteImport into a map.
      * The keys of the map are the enum constants, and the values are their corresponding routes.
      *
@@ -33,7 +27,7 @@ public class EnumLoader {
         HashMap<Enum<?>, String> map = new HashMap<>();
         for (Enum<?> e : enums) {
             if (e instanceof RouteImport routeImport) {
-                map.put((Enum<?>) routeImport, routeImport.route());
+                map.put((Enum<?>) routeImport, routeImport.getRoute());
             }
         }
         return map;
