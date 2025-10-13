@@ -5,7 +5,25 @@ plugins {
 }
 
 group = 'fr.sandro642.github'
-version = '0.3.6-STABLE'
+version = '0.3.7-STABLE'
+
+// Générer une classe de version automatiquement
+task generateVersionClass {
+    doLast {
+        def versionFile = file("$buildDir/generated/source/version/fr/sandro642/github/update/Version.java")
+        versionFile.parentFile.mkdirs()
+        versionFile.text = """
+package fr.sandro642.github.update;
+
+public class Version {
+    public static final String VERSION = "${project.version}";
+}
+"""
+    }
+}
+
+compileJava.dependsOn generateVersionClass
+sourceSets.main.java.srcDir "$buildDir/generated/source/version"
 
 tasks.register('printVersion') {
     doLast {
@@ -34,6 +52,8 @@ dependencies {
 
     // Version moderne sans problèmes de dépendances
     compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 application {
