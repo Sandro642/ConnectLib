@@ -49,8 +49,8 @@ public class ApiClient extends ApiFactory {
      * It initializes the WebClient with the base URL from the ConnectLib configuration.
      * If the base URL is not found, it throws a RuntimeException.
      */
-    public ApiClient() {
-        String baseUrl = (String) connectLib.StoreAndRetrieve().store.get(connectLib.StoreAndRetrieve().URL_KEY);
+    public ApiClient(String baseUrlLambda) {
+        String baseUrl = baseUrlLambda;
 
         if (baseUrl == null) {
             connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "construct.urlbase"));
