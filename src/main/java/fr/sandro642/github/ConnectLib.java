@@ -8,6 +8,7 @@ import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.misc.*;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.enums.ResourceType;
+import fr.sandro642.github.update.RetrieveLastVersion;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class ConnectLib {
     private static final Map<String,String> routes = new HashMap<>();
     private static Logs logs = new Logs();
     private static LangManager langManager;
+    private static RetrieveLastVersion rlv;
 
     /**
      * Init the ConnectLib with the specified resource type and routes.
@@ -47,6 +49,9 @@ public class ConnectLib {
             storeAndRetrieve = new StoreAndRetrieve();
             yamlUtils = new YamlUtils();
             logs = new Logs();
+            rlv = new RetrieveLastVersion();
+
+            rlv.isLatestVersion();
 
             HookManager().initHook(resourceType);
             LangSupport().setLangTypeVariable(langType);
@@ -92,16 +97,6 @@ public class ConnectLib {
             Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "getroute.error", Map.of("route", routeName)));
             return null;
         }
-    }
-
-    /**
-     * Return the route associated with the given Enum route.
-     * The Enum name is converted to lowercase to match the route names.
-     * @param routeEnum the Enum representing the route
-     * @return the route as a String
-     */
-    public String getRoute(Enum<?> routeEnum) {
-        return getRoute(routeEnum.name().toLowerCase());
     }
 
     /**
