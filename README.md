@@ -17,12 +17,6 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 ---
 
 ```java
-Stable Version: 0.3.8-STABLE
-```
-
----
-
-```java[build.gradle](build.gradle)
 Support Lib : Java 23
 
 Hook -----------------------|
@@ -102,24 +96,6 @@ Imagine an API that doesn't just connect services, but becomes the conductor of 
 ---
 
 ## 🧑‍💻 Usage Example
-
-Library Import
-```java
-repositories {
-    
-    maven {
-        url = uri("https://sandro642.github.io/connectlib/jar")
-   }
-   
-}
-
-dependencies {
-    
-    implementation("fr.sandro642.github:ConnectLib:0.3.8-STABLE")
-    
-}
-
-```
 
 More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/example/ExampleUsages.java)
 
