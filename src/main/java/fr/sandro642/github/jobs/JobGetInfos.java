@@ -4,7 +4,6 @@ import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
-import fr.sandro642.github.enums.VersionType;
 import fr.sandro642.github.enums.lang.CategoriesType;
 
 import java.util.Map;
@@ -27,7 +26,7 @@ public class JobGetInfos {
      * ApiClient is used to make API calls.
      * It is initialized in the constructor of JobGetInfos.
      */
-    private final ApiClient apiClient;
+    private ApiClient apiClient;
 
     /**
      * connectLib instance to access its methods and properties.
@@ -35,11 +34,16 @@ public class JobGetInfos {
     private ConnectLib connectLib = new ConnectLib();
 
     /**
+     * URLProvider instance to provide custom URL branches.
+     * If not set, the default URL from the configuration will be used.
+     */
+    private URLProvider urlBranch;
+
+    /**
      * Constructor of JobGetInfos.
      * Initializes the ApiClient and loads the YAML configuration.
      */
     public JobGetInfos() {
-        this.apiClient = new ApiClient();
         connectLib.YamlUtils();
     }
 
@@ -246,6 +250,18 @@ public class JobGetInfos {
     }
 
     /**
+     * Set a custom URL branch for the API calls.
+     * If not set, the default URL from the configuration will be used.
+     * @param urlBranch The URLProvider instance providing the custom URL branch.
+     * @return JobGetInfos for chaining
+     */
+    public JobGetInfos urlBranch(URLProvider urlBranch) {
+
+        this.urlBranch = urlBranch;
+        return this;
+    }
+
+    /**
      * Get the response from the API based on the current route and method.
      * This method retrieves the stored route, method, and body from the store,
      * makes the API call, and returns the response as an ApiFactory object.
@@ -260,6 +276,16 @@ public class JobGetInfos {
             if (route == null || method == null) {
                 connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getresponse.mustbe"));
             }
+
+            /** Determine the URL branch to use */
+            String urlBranchLambda;
+
+            if (urlBranch == null) {
+                urlBranchLambda = (String) connectLib.StoreAndRetrieve().store.get(connectLib.StoreAndRetrieve().URL_KEY);
+            } else {
+                urlBranchLambda = urlBranch.getURL();
+            }
+            apiClient = new ApiClient(urlBranchLambda);
 
             CompletableFuture<ApiFactory> responseFuture = new CompletableFuture<>();
 

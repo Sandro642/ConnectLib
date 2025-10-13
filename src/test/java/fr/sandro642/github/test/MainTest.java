@@ -7,6 +7,7 @@ import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.jobs.RouteImport;
+import fr.sandro642.github.jobs.URLProvider;
 import fr.sandro642.github.jobs.VersionProvider;
 import fr.sandro642.github.misc.EnumLoader;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,22 @@ public class MainTest {
         }
     }
 
+    public enum TestUrl implements URLProvider {
+        LOCALHOST("http://localhost:8080")
+        ;
+
+        private final String url;
+
+        TestUrl(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public String getURL() {
+            return url;
+        }
+    }
+
     public enum TestCustomVersion implements VersionProvider {
         DEV_BRANCH("dev"),
         ;
@@ -71,7 +88,7 @@ public class MainTest {
             connectLib.Logger().showLogs();
 
              CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes( MethodType.GET, TestRoutes.HELLO)
+                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
                     .getResponse();
 
              ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
@@ -121,28 +138,6 @@ public class MainTest {
                     .getResponse();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
-
-            System.out.println("Response: " + response.display());
-            System.out.println("Status Code: " + response.getStatusCode());
-
-            Thread.sleep(5000);
-
-            factoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(MethodType.GET, TestRoutes.GREET, null, null, Map.of("name", "Sandro642"))
-                    .getResponse();
-
-            response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
-
-            System.out.println("Response: " + response.display());
-            System.out.println("Status Code: " + response.getStatusCode());
-
-            Thread.sleep(5000);
-
-            factoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(MethodType.GET, TestRoutes.GREET, null, null, Map.of("name", "Sandro642"))
-                    .getResponse();
-
-            response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
             System.out.println("Response: " + response.display());
             System.out.println("Status Code: " + response.getStatusCode());
