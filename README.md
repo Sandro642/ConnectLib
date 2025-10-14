@@ -100,7 +100,7 @@ Imagine an API that doesn't just connect services, but becomes the conductor of 
 More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/example/ExampleUsages.java)
 
 ---
-
+[build.gradle](build.gradle)
 ## 📚 Project Structure
 
 - `src/main/java/fr/sandro642/github/` : main source code

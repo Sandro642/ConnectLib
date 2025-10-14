@@ -7,7 +7,6 @@ import org.bukkit.plugin.Plugin;
 /**
  * MCSupport is a utility class for handling Minecraft plugin support in the connectLib library.
  * It provides methods to check if the project is a Minecraft project, set and get the plugin instance,
- *
  * @author Sandro642
  * @version 1.0
  */
@@ -22,7 +21,7 @@ public class MCSupport {
      * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
      * It is used throughout the MCSupport class to log messages and access other functionalities.
      */
-    private final ConnectLib connectLib = new ConnectLib();
+    private ConnectLib connectLib = new ConnectLib();
 
     /**
      * Instance of the Minecraft plugin.
@@ -49,8 +48,8 @@ public class MCSupport {
         if (plugin == null) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.MCSUPPORT_CLASS, "setplugvar.illegalarg"));
         }
-        this.pluginSingleton = plugin;
-        return this.pluginSingleton;
+            this.pluginSingleton = plugin;
+            return this.pluginSingleton;
     }
 
     /**

@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 /**
  * JobGetInfos is a utility class for managing API requests in the connectLib library.
  * It provides methods to construct API routes based on the configuration defined in a YAML file.
- *
  * @author Sandro642
  * @version 1.0
  * @since 1.0
@@ -32,7 +31,7 @@ public class JobGetInfos {
     /**
      * connectLib instance to access its methods and properties.
      */
-    private final ConnectLib connectLib = new ConnectLib();
+    private ConnectLib connectLib = new ConnectLib();
 
     /**
      * URLProvider instance to provide custom URL branches.
@@ -51,7 +50,6 @@ public class JobGetInfos {
     /**
      * Converts the route name to lowercase.
      * This method is used to ensure that the route names match the keys in the YAML configuration.
-     *
      * @param routeName The enum representing the route name.
      * @return The lowercase string representation of the route name.
      */
@@ -61,11 +59,10 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL.
-     *
      * @param versionType Version of the API (V1_BRANCH, V2_BRANCH)
-     * @param methodType  Type of HTTP method (GET, POST)
-     * @param routeName   Name of the route in the YAML file
-     * @param body        Body of the request for POST (can be null for GET)
+     * @param methodType Type of HTTP method (GET, POST)
+     * @param routeName Name of the route in the YAML file
+     * @param body Body of the request for POST (can be null for GET)
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, Enum<?> routeName, Map<String, ?> body) {
@@ -74,10 +71,9 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL with parameters.
-     *
      * @param versionType Version of the API (V1_BRANCH, V2_BRANCH)
-     * @param methodType  Type of HTTP method (GET, POST)
-     * @param routeName   Name of the route in the YAML file
+     * @param methodType Type of HTTP method (GET, POST)
+     * @param routeName Name of the route in the YAML file
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, Enum<?> routeName) {
@@ -86,9 +82,8 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL with a request body.
-     *
      * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName  Name of the route in the YAML file
+     * @param routeName Name of the route in the YAML file
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName) {
@@ -97,10 +92,9 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL with a request body and parameters.
-     *
      * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName  Name of the route in the YAML file
-     * @param body       Body of the request for POST (can be null for GET)
+     * @param routeName Name of the route in the YAML file
+     * @param body Body of the request for POST (can be null for GET)
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body) {
@@ -109,10 +103,9 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL with additional parameters.
-     *
      * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName  Name of the route in the YAML file
-     * @param params     Additional parameters for the request
+     * @param routeName Name of the route in the YAML file
+     * @param params Additional parameters for the request
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body, Map<String, ?> params) {
@@ -121,9 +114,8 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL.
-     *
      * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName  Name of the route in the YAML file
+     * @param routeName Name of the route in the YAML file
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(MethodType methodType, String routeName) {
@@ -132,10 +124,9 @@ public class JobGetInfos {
 
     /**
      * Récupère les routes depuis le fichier YAML et construit l'URL complète
-     *
      * @param versionType Version de l'API (V1_BRANCH, V2_BRANCH)
-     * @param methodType  Type de méthode HTTP (GET, POST)
-     * @param routeName   Nom de la route dans le fichier YAML
+     * @param methodType Type de méthode HTTP (GET, POST)
+     * @param routeName Nom de la route dans le fichier YAML
      * @return JobGetInfos pour chaînage
      */
     public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, String routeName) {
@@ -144,11 +135,10 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL with a request body.
-     *
      * @param versionType Version of the API (V1_BRANCH, V2_BRANCH)
-     * @param methodType  Type of HTTP method (GET, POST)
-     * @param routeName   Name of the route in the YAML file
-     * @param body        Body of the request for POST (can be null for GET)
+     * @param methodType Type of HTTP method (GET, POST)
+     * @param routeName Name of the route in the YAML file
+     * @param body Body of the request for POST (can be null for GET)
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, String routeName, Map<String, ?> body) {
@@ -157,12 +147,11 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL with a request body and parameters.
-     *
      * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName  Name of the route in the YAML file
-     * @param body       Body of the request for POST (can be null for GET)
-     * @param params     Additional parameters for the request
-     * @param query      Additional query parameters for the request
+     * @param routeName Name of the route in the YAML file
+     * @param body Body of the request for POST (can be null for GET)
+     * @param params Additional parameters for the request
+     * @param query Additional query parameters for the request
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(MethodType methodType, String routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
@@ -171,12 +160,11 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL with additional parameters.
-     *
      * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName  Name of the route in the YAML file
-     * @param body       Body of the request for POST (can be null for GET)
-     * @param params     Additional parameters for the request
-     * @param query      Additional query parameters for the request
+     * @param routeName Name of the route in the YAML file
+     * @param body Body of the request for POST (can be null for GET)
+     * @param params Additional parameters for the request
+     * @param query Additional query parameters for the request
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
@@ -185,12 +173,11 @@ public class JobGetInfos {
 
     /**
      * Get routes from the YAML file and builds the full URL with additional parameters.
-     *
      * @param versionType Version of the API (V1_BRANCH, V2_BRANCH)
-     * @param methodType  Type of HTTP method (GET, POST)
-     * @param routeName   Name of the route in the YAML file
-     * @param params      Additional parameters for the request
-     * @param query       Additional query parameters for the request
+     * @param methodType Type of HTTP method (GET, POST)
+     * @param routeName Name of the route in the YAML file
+     * @param params Additional parameters for the request
+     * @param query Additional query parameters for the request
      * @return JobGetInfos for chaining
      */
     public <R> JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, R routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
@@ -240,7 +227,7 @@ public class JobGetInfos {
                 if (queryString.length() > 1) {
                     // Clean the route by removing $parameter$ placeholders and extra &
                     String cleanRoute = fullRoute.replaceAll("\\$[^$]+\\$", "").replaceAll("&+", "");
-                    fullRoute = cleanRoute + queryString;
+                    fullRoute = cleanRoute + queryString.toString();
                 }
             }
 
@@ -265,7 +252,6 @@ public class JobGetInfos {
     /**
      * Set a custom URL branch for the API calls.
      * If not set, the default URL from the configuration will be used.
-     *
      * @param urlBranch The URLProvider instance providing the custom URL branch.
      * @return JobGetInfos for chaining
      */
@@ -279,7 +265,6 @@ public class JobGetInfos {
      * Get the response from the API based on the current route and method.
      * This method retrieves the stored route, method, and body from the store,
      * makes the API call, and returns the response as an ApiFactory object.
-     *
      * @return ApiFactory containing the response from the API, or null if an error occurs.
      */
     public CompletableFuture<ApiFactory> getResponse() {
@@ -319,7 +304,7 @@ public class JobGetInfos {
                 responseFuture.completeExceptionally(error);
             };
 
-            switch (method) {
+            switch(method) {
                 case GET:
                     apiClient.callAPIGet(route).subscribe(
                             response -> onSuccess.accept(response),

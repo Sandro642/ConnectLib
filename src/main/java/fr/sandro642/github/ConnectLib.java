@@ -1,13 +1,13 @@
 package fr.sandro642.github;
 
 import fr.sandro642.github.enums.LangType;
-import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.lang.CategoriesType;
 import fr.sandro642.github.hook.HookManager;
 import fr.sandro642.github.hook.LangSupport;
 import fr.sandro642.github.hook.MCSupport;
-import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.misc.*;
+import fr.sandro642.github.jobs.JobGetInfos;
+import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.update.RetrieveLastVersion;
 
 import java.util.HashMap;
@@ -16,7 +16,6 @@ import java.util.Map;
 /**
  * ConnectLib is the main class of the ConnectorAPI library for Standard API.
  * It provides methods to initialize the library with resource types, routes, and schemas,
- *
  * @author Sandro642
  * @version 1.0
  * @see ConnectLib#JobGetInfos()
@@ -34,16 +33,15 @@ public class ConnectLib {
     private static Logger logger = new Logger();
     private static StoreAndRetrieve storeAndRetrieve = new StoreAndRetrieve();
     private static YamlUtils yamlUtils = new YamlUtils();
-    private static final Map<String, String> routes = new HashMap<>();
+    private static final Map<String,String> routes = new HashMap<>();
     private static Logs logs = new Logs();
     private static LangManager langManager;
     private static RetrieveLastVersion rlv;
 
     /**
      * Init the ConnectLib with the specified resource type and routes.
-     *
      * @param resourceType the type of resource to initialize
-     * @param routes       the routes to be used in the ConnectLib
+     * @param routes the routes to be used in the ConnectLib
      */
     public void Init(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
         try {
@@ -60,6 +58,8 @@ public class ConnectLib {
             HookManager().FILE_LOCATION_KEY();
 
             langManager = new LangManager();
+
+
 
             Map<Enum<?>, String> routesEnums = new HashMap<>();
             for (Class<? extends Enum<?>> route : routes) {
@@ -89,7 +89,6 @@ public class ConnectLib {
 
     /**
      * Return the route associated with the given route name.
-     *
      * @param routeName the name of the route to retrieve
      * @return the route as a String
      */
@@ -104,7 +103,6 @@ public class ConnectLib {
 
     /**
      * Return an instance of JobGetInfos.
-     *
      * @return JobGetInfos instance
      */
     public JobGetInfos JobGetInfos() {
@@ -113,7 +111,6 @@ public class ConnectLib {
 
     /**
      * Return the instance of Logger.
-     *
      * @return Logger instance
      */
     public Logger Logger() {
@@ -125,7 +122,6 @@ public class ConnectLib {
 
     /**
      * Return the instance of StoreAndRetrieve.
-     *
      * @return StoreAndRetrieve instance
      */
     public StoreAndRetrieve StoreAndRetrieve() {
@@ -137,7 +133,6 @@ public class ConnectLib {
 
     /**
      * Return the instance of YamlUtils.
-     *
      * @return YamlUtils instance
      */
     public YamlUtils YamlUtils() {
@@ -149,7 +144,6 @@ public class ConnectLib {
 
     /**
      * Return the instance of Logs.
-     *
      * @return Logs instance
      */
     public MCSupport MCSupport() {
@@ -158,7 +152,6 @@ public class ConnectLib {
 
     /**
      * Return the instance of HookManager.
-     *
      * @return HookManager instance
      */
     public HookManager HookManager() {
@@ -167,7 +160,6 @@ public class ConnectLib {
 
     /**
      * Return the instance of LangSupport.
-     *
      * @return LangSupport instance
      */
     public LangSupport LangSupport() {
@@ -177,7 +169,6 @@ public class ConnectLib {
 
     /**
      * Return the instance of LangManager.
-     *
      * @return LangManager instance
      */
     public LangManager LangManager() {

@@ -3,15 +3,15 @@ package fr.sandro642.github.hook;
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.lang.CategoriesType;
+import fr.sandro642.github.misc.Logger;
 
 /**
  * HookManager is a class that manages hooks for different resource types.
  * It allows for the initialization and management of hooks based on the specified resource type.
- *
- * @author Sandro642
- * @version 1.0
  * @see HookManager#BASE_PATH()
  * @see HookManager#FILE_LOCATION_KEY()
+ * @author Sandro642
+ * @version 1.0
  */
 
 public class HookManager {
@@ -26,7 +26,7 @@ public class HookManager {
      * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
      * It is used throughout the HookManager class to log messages and access other functionalities.
      */
-    private final ConnectLib connectLib = new ConnectLib();
+    private ConnectLib connectLib = new ConnectLib();
 
     /**
      * Initializes the HookManager with the specified resource type.
@@ -43,8 +43,8 @@ public class HookManager {
      * @return the initialized resource type
      */
     public ResourceType initHook(ResourceType resourceType) {
-        HookManager.resourceType = resourceType;
-        return HookManager.resourceType;
+        this.resourceType = resourceType;
+        return this.resourceType;
     }
 
     /**
@@ -55,7 +55,7 @@ public class HookManager {
     public void FILE_LOCATION_KEY() {
         switch (resourceType) {
             case MC_RESOURCES:
-                connectLib.StoreAndRetrieve().store.put(connectLib.StoreAndRetrieve().FILE_LOCATION_KEY, connectLib.MCSupport().getPluginPath());
+               connectLib.StoreAndRetrieve().store.put(connectLib.StoreAndRetrieve().FILE_LOCATION_KEY, connectLib.MCSupport().getPluginPath());
                 break;
             case MAIN_RESOURCES, TEST_RESOURCES:
                 connectLib.StoreAndRetrieve().store.put(connectLib.StoreAndRetrieve().FILE_LOCATION_KEY, resourceType.getPath());

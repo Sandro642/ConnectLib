@@ -23,7 +23,6 @@ public enum LangType {
 
     /**
      * Constructor to initialize the language code.
-     *
      * @param lang
      */
     LangType(String lang) {
@@ -32,7 +31,6 @@ public enum LangType {
 
     /**
      * Get the language code.
-     *
      * @return the language code string
      */
     public String getLang() {

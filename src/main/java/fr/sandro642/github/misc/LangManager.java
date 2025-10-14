@@ -16,10 +16,10 @@ import java.util.regex.Pattern;
 /**
  * LangManager handles loading and retrieving language messages
  * from .lang files with placeholder support.
- * <p>
+ *
  * This version uses only enum-based categories (CategoriesType).
- * <p>
- * WARNING : THE ONLY FILE YOU CAN'T ADD IN LANG FILE, ENGLISH DEFAULT LANG.
+ *
+ *  WARNING : THE ONLY FILE YOU CAN'T ADD IN LANG FILE, ENGLISH DEFAULT LANG.
  *
  * @author Sandro642
  * @version 2.0
@@ -30,7 +30,7 @@ public class LangManager {
      * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
      * It is used throughout the LangManager class to log messages and access other functionalities.
      */
-    private final ConnectLib connectLib = new ConnectLib();
+    private ConnectLib connectLib = new ConnectLib();
 
     private final Map<CategoriesType, Map<String, String>> messages;
     private static final Pattern CATEGORY_PATTERN = Pattern.compile("\\[(.+)]");
@@ -117,9 +117,9 @@ public class LangManager {
     /**
      * Récupère un message localisé avec remplacement de variables.
      *
-     * @param category    La catégorie (enum)
+     * @param category La catégorie (enum)
      * @param messagePath Le chemin du message
-     * @param arguments   Les arguments sous forme de paires clé-valeur
+     * @param arguments Les arguments sous forme de paires clé-valeur
      */
     public String getMessage(CategoriesType category, String messagePath, String... arguments) {
         if (arguments == null || arguments.length == 0) {

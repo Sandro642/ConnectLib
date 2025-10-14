@@ -140,7 +140,7 @@ public class MainTest {
                     /**
                      * You can change the URL of the API here if you want to use another URL than the one in the config file.
                      */
-                    .urlBranch(ExampleUrlBranch.LOCALHOST)
+                    //.urlBranch(ExampleUrlBranch.LOCALHOST)
 
                     .getResponse();
 

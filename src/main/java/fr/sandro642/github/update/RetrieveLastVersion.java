@@ -20,13 +20,12 @@ public class RetrieveLastVersion {
      * The latest version of the software.
      * Default is set to the current version defined in the Version class.
      */
-    private final String latestVersion = Version.VERSION;
+    private String latestVersion = Version.VERSION;
 
     /**
      * Fetches the latest version from the GitHub API.
      * It sends a GET request to the tags endpoint of the ConnectLib repository
      * and retrieves the name of the first tag, which represents the latest version.
-     *
      * @return
      */
     public String fetchVersion() {

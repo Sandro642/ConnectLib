@@ -24,7 +24,7 @@ public class ApiClient extends ApiFactory {
     /**
      * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
      */
-    private final ConnectLib connectLib = new ConnectLib();
+    private ConnectLib connectLib = new ConnectLib();
 
     /**
      * WebClient is a non-blocking, reactive HTTP client for making requests to the API.
@@ -63,15 +63,13 @@ public class ApiClient extends ApiFactory {
 
     /**
      * Method to call the API with a GET request.
-     *
      * @param routeName Name of the route to call.
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIGet(String routeName) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.get", Map.of("routename", routeName)));
 
-        record ResponseData(int statusCode, String body) {
-        }
+        record ResponseData(int statusCode, String body) {}
 
         return webClient.get()
                 .uri(routeName)
@@ -94,16 +92,14 @@ public class ApiClient extends ApiFactory {
 
     /**
      * Method to call the API with a POST request.
-     *
      * @param routeName Name of the route to call.
-     * @param body      Body of the request (can be null for a request without body).
+     * @param body   Body of the request (can be null for a request without body).
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPost(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.post", Map.of("routename", routeName)));
 
-        record ResponseData(int statusCode, String body) {
-        }
+        record ResponseData(int statusCode, String body) {}
 
         return webClient.post()
                 .uri(routeName)
@@ -127,16 +123,14 @@ public class ApiClient extends ApiFactory {
 
     /**
      * Method to call the API with a PUT request.
-     *
      * @param routeName Name of the route to call.
-     * @param body      Body of the request (can be null for a request without body).
+     * @param body  Body of the request (can be null for a request without body).
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPut(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.put", Map.of("routename", routeName)));
 
-        record ResponseData(int statusCode, String body) {
-        }
+        record ResponseData(int statusCode, String body) {}
 
         return webClient.put()
                 .uri(routeName)
@@ -160,16 +154,14 @@ public class ApiClient extends ApiFactory {
 
     /**
      * Method to call the API with a PATCH request.
-     *
      * @param routeName Name of the route to call.
-     * @param body      Body of the request (can be null for a request without body).
+     * @param body Body of the request (can be null for a request without body).
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIPatch(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.patch", Map.of("routename", routeName)));
 
-        record ResponseData(int statusCode, String body) {
-        }
+        record ResponseData(int statusCode, String body) {}
 
         return webClient.patch()
                 .uri(routeName)
@@ -193,15 +185,13 @@ public class ApiClient extends ApiFactory {
 
     /**
      * Method to call the API with a DELETE request.
-     *
      * @param routeName Name of the route to call.
      * @return a Mono that emits the ApiFactory response containing the parsed JSON data.
      */
     public Mono<ApiFactory> callAPIDelete(String routeName) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.delete", Map.of("routename", routeName)));
 
-        record ResponseData(int statusCode, String body) {
-        }
+        record ResponseData(int statusCode, String body) {}
 
         return webClient.delete()
                 .uri(routeName)

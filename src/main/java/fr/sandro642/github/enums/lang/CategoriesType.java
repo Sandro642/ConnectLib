@@ -30,7 +30,6 @@ public enum CategoriesType {
 
     /**
      * Constructor to initialize the category.
-     *
      * @param category
      */
     CategoriesType(String category) {
@@ -39,7 +38,6 @@ public enum CategoriesType {
 
     /**
      * Get the category.
-     *
      * @return the category string
      */
     public String getCategory() {

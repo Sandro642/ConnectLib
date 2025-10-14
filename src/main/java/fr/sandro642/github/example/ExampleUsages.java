@@ -7,6 +7,7 @@ import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.VersionType;
 import fr.sandro642.github.jobs.RouteImport;
+import fr.sandro642.github.misc.EnumLoader;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ExampleUsages {
 
-    private final ConnectLib connectLib = new ConnectLib();
+    private ConnectLib connectLib = new ConnectLib();
 
     public enum ExampleRoutes implements RouteImport {
         EXAMPLE_ROUTE("/api/example/route");
@@ -92,7 +93,7 @@ public class ExampleUsages {
     // Example to use all methods in JobGetInfos
     public void exampleJobGetInfos() {
         Map<String, ?> body = Map.of();
-        Map<String, ?> params = Map.of();
+        Map<String,?> params = Map.of();
         Map<String, ?> query = Map.of();
 
         connectLib.JobGetInfos().getRoutes(VersionType.V1_BRANCH, MethodType.GET, ExampleRoutes.EXAMPLE_ROUTE, body, params, query);

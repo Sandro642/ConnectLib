@@ -9,7 +9,6 @@ public interface VersionProvider {
 
     /**
      * Gets the version of the class implementing this interface.
-     *
      * @return the version as a String
      */
     String getVersion();
