@@ -5,6 +5,8 @@ import fr.sandro642.github.api.ApiClient;
 import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.lang.CategoriesType;
+import fr.sandro642.github.provider.URLProvider;
+import fr.sandro642.github.provider.VersionProvider;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;

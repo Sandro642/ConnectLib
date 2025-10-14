@@ -6,8 +6,7 @@ import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.VersionType;
-import fr.sandro642.github.jobs.RouteImport;
-import fr.sandro642.github.misc.EnumLoader;
+import fr.sandro642.github.provider.RouteImport;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;

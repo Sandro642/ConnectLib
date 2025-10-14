@@ -6,9 +6,9 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
-import fr.sandro642.github.jobs.RouteImport;
-import fr.sandro642.github.jobs.URLProvider;
-import fr.sandro642.github.jobs.VersionProvider;
+import fr.sandro642.github.provider.RouteImport;
+import fr.sandro642.github.provider.URLProvider;
+import fr.sandro642.github.provider.VersionProvider;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -27,8 +27,8 @@ public class MainTest {
     private static final ConnectLib connectLib = new ConnectLib();
 
     public enum TestRoutes implements RouteImport {
-        HELLO("/hello"),
-        GREET("/greet$name$")
+        HELLO("hello"),
+        GREET("greet$name$")
         ;
 
         final String route;

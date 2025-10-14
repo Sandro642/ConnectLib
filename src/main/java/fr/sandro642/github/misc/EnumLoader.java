@@ -1,6 +1,6 @@
 package fr.sandro642.github.misc;
 
-import fr.sandro642.github.jobs.RouteImport;
+import fr.sandro642.github.provider.RouteImport;
 
 import java.util.HashMap;
 import java.util.Map;

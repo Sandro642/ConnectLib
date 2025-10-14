@@ -1,4 +1,4 @@
-package fr.sandro642.github.jobs;
+package fr.sandro642.github.provider;
 
 /**
  * RouteImport is an interface that should be implemented by enums that provide a route.

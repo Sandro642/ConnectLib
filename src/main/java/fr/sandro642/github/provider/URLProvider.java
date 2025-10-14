@@ -1,4 +1,4 @@
-package fr.sandro642.github.jobs;
+package fr.sandro642.github.provider;
 
 /**
  * URLProvider is an interface that provides a method to get the URL of a class implementing it.

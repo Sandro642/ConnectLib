@@ -1,6 +1,6 @@
 package fr.sandro642.github.enums;
 
-import fr.sandro642.github.jobs.VersionProvider;
+import fr.sandro642.github.provider.VersionProvider;
 
 /**
  * VersionType is an enumeration representing different versions of the ConnectLib library.

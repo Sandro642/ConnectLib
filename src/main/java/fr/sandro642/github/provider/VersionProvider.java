@@ -1,4 +1,4 @@
-package fr.sandro642.github.jobs;
+package fr.sandro642.github.provider;
 
 /**
  * VersionProvider is an interface that provides a method to get the version of a class implementing it.
