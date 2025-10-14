@@ -27,7 +27,7 @@ public class MainTest {
     private static final ConnectLib connectLib = new ConnectLib();
 
     public enum TestRoutes implements RouteImport {
-        HELLO("hello"),
+        HELLO("/hello"),
         GREET("greet$name$")
         ;
 
@@ -135,7 +135,7 @@ public class MainTest {
 
         try {
             CompletableFuture<ApiFactory> factoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
+                    .getRoutes(TestCustomVersion.DEV_BRANCH, MethodType.GET, TestRoutes.HELLO)
 
                     /**
                      * You can change the URL of the API here if you want to use another URL than the one in the config file.

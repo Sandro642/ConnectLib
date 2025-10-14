@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'fr.sandro642.github'
-version = '0.3.8.3-STABLE'
+version = '0.3.9-STABLE'
 
 // Générer une classe de version automatiquement
 task generateVersionClass {

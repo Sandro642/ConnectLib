@@ -189,7 +189,8 @@ public class JobGetInfos {
             String fullRoute;
 
             if (versionType != null && versionType.getVersion() != null) {
-                fullRoute = "/" + versionType.getVersion() + route;
+                String cleanRoute = route.startsWith("/") ? route.substring(1) : route;
+                fullRoute = "/" + versionType.getVersion() + "/" + cleanRoute;
             } else {
                 fullRoute = route;
             }

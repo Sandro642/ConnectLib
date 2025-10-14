@@ -57,11 +57,13 @@ public class RetrieveLastVersion {
      * If they are different, it prints a message indicating that a new version is available.
      */
     public void isLatestVersion() {
+        String CONNECTLIB = "\u001B[94m[ConnectLib] \u001B[0m";
+
         String fetchedVersion = fetchVersion();
         if (fetchedVersion.equals("Error") || fetchedVersion.equals("No tags found")) {
-            System.out.println("Could not fetch the latest version.");
+            System.out.println(CONNECTLIB + "Could not fetch the latest version.");
         } else if (!fetchedVersion.equals(Version.VERSION)) {
-            System.out.println("A new version is available: " + fetchedVersion + ". You can download it from https://connectlib.xyz/#downloads");
+            System.out.println(CONNECTLIB + "A new version is available: " + fetchedVersion + ". You can download it from https://connectlib.xyz/#downloads");
         }
     }
 
