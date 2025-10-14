@@ -24,7 +24,8 @@ public class StoreAndRetrieve {
 
     /**
      * Add a key-value pair to the store.
-     * @param key is the key under which the value will be stored.
+     *
+     * @param key   is the key under which the value will be stored.
      * @param value is the value to be stored under the specified key.
      */
     public void put(String key, Object value) {
@@ -33,6 +34,7 @@ public class StoreAndRetrieve {
 
     /**
      * Retrieve a value associated with the specified key.
+     *
      * @param key is the key for which the value will be retrieved.
      * @return the value associated with the specified key, or null if the key does not exist.
      */
@@ -42,6 +44,7 @@ public class StoreAndRetrieve {
 
     /**
      * Remove a key-value pair from the store.
+     *
      * @param key is the key of the entry to be removed.
      */
     public void remove(String key) {
@@ -50,6 +53,7 @@ public class StoreAndRetrieve {
 
     /**
      * Check if the store contains a specific key.
+     *
      * @param key is the key to check for existence in the store.
      * @return true if the key exists, false otherwise.
      */

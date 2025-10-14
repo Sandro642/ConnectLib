@@ -9,6 +9,7 @@ public interface URLProvider {
 
     /**
      * Gets the URL of the class implementing this interface.
+     *
      * @return the URL as a String
      */
     String getURL();

@@ -1,5 +1,7 @@
 package fr.sandro642.github.misc;
 
+import fr.sandro642.github.ConnectLib;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,8 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import fr.sandro642.github.ConnectLib;
 
 /**
  * Logs is a utility class for managing logging in the ConnectLib library.
@@ -29,7 +29,7 @@ public class Logs {
      * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
      * It is used throughout the Logs class to log messages and access other functionalities.
      */
-    private ConnectLib connectLib = new ConnectLib();
+    private final ConnectLib connectLib = new ConnectLib();
 
     /**
      * Constructor of Logs
@@ -41,19 +41,20 @@ public class Logs {
      * Make list for save logs in memory before writing to file.
      * This buffer is used to store log messages temporarily before they are written to a file.
      */
-    private static List<String> logBuffer = new ArrayList<>();
+    private static final List<String> logBuffer = new ArrayList<>();
 
     /**
      * Static block to initialize the Logs instance.
      * This block is executed when the class is loaded, ensuring that the instance is created only once.
      */
     public void setPathFile() {
-        this.pathFile = connectLib.HookManager().BASE_PATH();
+        pathFile = connectLib.HookManager().BASE_PATH();
     }
 
     /**
      * * Static block to initialize the Logs instance.
      * This block is executed when the class is loaded, ensuring that the instance is created only once.
+     *
      * @param logType The type of resource for which the logs are being created.
      * @param <P>
      * @param logText The text to be logged.
@@ -64,16 +65,15 @@ public class Logs {
             SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timestamp = timestampFormat.format(date);
 
-            StringBuilder logContent = new StringBuilder();
-            logContent.append("[").append(timestamp).append("] ");
-            logContent.append("[").append(logType.toString().toUpperCase()).append("] ");
-            logContent.append(logText).append("\n");
+            String logContent = "[" + timestamp + "] " +
+                    "[" + logType.toString().toUpperCase() + "] " +
+                    logText + "\n";
 
-            logBuffer.add(logContent.toString());
+            logBuffer.add(logContent);
 
             if (connectLib.YamlUtils().isLogEnabled()) {
 
-                if (logType.toString().toUpperCase().equals("CRITICAL") || logType.toString().toUpperCase().equals("ERROR")) {
+                if (logType.toString().equalsIgnoreCase("CRITICAL") || logType.toString().equalsIgnoreCase("ERROR")) {
                     File directory = new File(pathFile, "logs");
                     if (!directory.exists()) {
                         directory.mkdirs();
@@ -102,6 +102,7 @@ public class Logs {
 
     /**
      * Get the instance of Logs.
+     *
      * @return instance of Logs
      */
     public static Logs getLogs() {
