@@ -2,7 +2,6 @@ package fr.sandro642.github.hook;
 
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.enums.LangType;
-import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.lang.CategoriesType;
 
 /**
@@ -24,16 +23,18 @@ public class LangSupport {
      * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
      * It is used throughout the LangSupport class to log messages and access other functionalities.
      */
-    private ConnectLib connectLib = new ConnectLib();
+    private final ConnectLib connectLib = new ConnectLib();
 
     /**
      * Private singleton langType.
+     *
      * @return langTypeSingleton
      */
     private LangType langTypeSingleton;
 
     /**
      * Sets the LangType variable for this instance.
+     *
      * @param langType The language type to set. Must not be null.
      * @return The LangType that was set.
      */
@@ -48,6 +49,7 @@ public class LangSupport {
 
     /**
      * Method to get the path of the language file based on the LangType.
+     *
      * @return The path of the language file.
      * @throws IllegalArgumentException If the LangType is null or unsupported.
      */
@@ -63,6 +65,7 @@ public class LangSupport {
      * Public Getter of LangSupport instance.
      * This method returns the singleton instance of LangSupport.
      * If the instance is null, it creates a new instance.
+     *
      * @return instance
      */
     public static LangSupport getInstance() {

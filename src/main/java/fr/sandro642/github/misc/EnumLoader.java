@@ -8,6 +8,7 @@ import java.util.Map;
 /**
  * ConvertEnum is a utility class for converting enums that implement the RouteImport interface into a map of routes.
  * This class provides a method to convert an enum class into a map where the keys are the enum constants and the values are their corresponding routes.
+ *
  * @author Sandro642
  * @version 1.0
  * @since 1.0

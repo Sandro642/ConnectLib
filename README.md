@@ -16,7 +16,7 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 
 ---
 
-```java
+```java[build.gradle](build.gradle)
 Support Lib : Java 23
 
 Hook -----------------------|

@@ -9,7 +9,6 @@ import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.jobs.RouteImport;
 import fr.sandro642.github.jobs.URLProvider;
 import fr.sandro642.github.jobs.VersionProvider;
-import fr.sandro642.github.misc.EnumLoader;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -25,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainTest {
 
-    private static ConnectLib connectLib = new ConnectLib();
+    private static final ConnectLib connectLib = new ConnectLib();
 
     public enum TestRoutes implements RouteImport {
         HELLO("/hello"),
@@ -44,13 +43,16 @@ public class MainTest {
         }
     }
 
-    public enum TestUrl implements URLProvider {
+    /**
+     * Example of URL branches, you can add multiple branches if you have multiple environments (dev, prod, etc.)
+     */
+    public enum ExampleUrlBranch implements URLProvider {
         LOCALHOST("http://localhost:8080")
         ;
 
         private final String url;
 
-        TestUrl(String url) {
+        ExampleUrlBranch(String url) {
             this.url = url;
         }
 
@@ -97,7 +99,6 @@ public class MainTest {
 
 
         } catch (Exception e) {
-            return;
         }
     }
 
@@ -135,6 +136,12 @@ public class MainTest {
         try {
             CompletableFuture<ApiFactory> factoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(MethodType.GET, TestRoutes.HELLO)
+
+                    /**
+                     * You can change the URL of the API here if you want to use another URL than the one in the config file.
+                     */
+                    .urlBranch(ExampleUrlBranch.LOCALHOST)
+
                     .getResponse();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
