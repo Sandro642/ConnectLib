@@ -4,7 +4,7 @@ package fr.sandro642.github.misc;
  * Logger is a utility class for logging messages in the ConnectLib library.
  * It provides methods to log messages with different severity levels:
  * INFO, WARN, ERROR, and CRITICAL.
- *
+ * <p>
  * Use setShowLogs(true/false) to control console output.
  * Logs are always saved to file regardless of the setting.
  *
@@ -14,7 +14,7 @@ package fr.sandro642.github.misc;
 
 public class Logger {
 
-    private Logs logs = new Logs();
+    private final Logs logs = new Logs();
     private static boolean showLogs = false; // Default: logs are hidden
 
     /**
@@ -31,6 +31,7 @@ public class Logger {
      * Method to display an informational message in the console.
      * This method prints the message in green color if showLogs is enabled,
      * and always logs it to file.
+     *
      * @param msg The message to log
      */
     public void INFO(String msg) {
@@ -47,6 +48,7 @@ public class Logger {
      * Method to display a warning message in the console.
      * This method prints the message in yellow color if showLogs is enabled,
      * and always logs it to file.
+     *
      * @param msg The message to log
      */
     public void WARN(String msg) {
@@ -63,6 +65,7 @@ public class Logger {
      * Method to display an error message in the console.
      * This method prints the message in red color if showLogs is enabled,
      * and always logs it to file.
+     *
      * @param msg The message to log
      */
     public void ERROR(String msg) {
@@ -79,6 +82,7 @@ public class Logger {
      * Method to display a critical message in the console.
      * This method prints the message in magenta color if showLogs is enabled,
      * and always logs it to file.
+     *
      * @param msg The message to log
      */
     public void CRITICAL(String msg) {

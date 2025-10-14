@@ -21,7 +21,7 @@ public class ApiFactory {
     /**
      * connectLib is an instance of ConnectLib that provides access to the library's configuration and utilities.
      */
-    private ConnectLib connectLib = new ConnectLib();
+    private final ConnectLib connectLib = new ConnectLib();
 
     /**
      * rawData is a Map that holds the parsed JSON data.
@@ -49,7 +49,8 @@ public class ApiFactory {
         this.rawJson = rawJson;
         try {
             ObjectMapper mapper = new ObjectMapper();
-            this.rawData = mapper.readValue(rawJson, new TypeReference<Map<String, Object>>() {});
+            this.rawData = mapper.readValue(rawJson, new TypeReference<Map<String, Object>>() {
+            });
         } catch (Exception e) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "parsefromrawjson.error", Map.of("json", rawJson, "exception", e.getMessage())));
         }
@@ -99,8 +100,7 @@ public class ApiFactory {
             }
 
             Object nested = rawData.get(type.toString().toLowerCase());
-            if (nested instanceof Map) {
-                Map<?, ?> nestedMap = (Map<?, ?>) nested;
+            if (nested instanceof Map<?, ?> nestedMap) {
                 return nestedMap.get(value.toString().toLowerCase());
             }
         } catch (Exception e) {
@@ -136,11 +136,11 @@ public class ApiFactory {
      */
     public Object display() {
         try {
-        if (rawData == null) {
-            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
-            return null;
-        }
-        return rawData;
+            if (rawData == null) {
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
+                return null;
+            }
+            return rawData;
         } catch (Exception e) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "display.error", "exception", e.getMessage()));
         }

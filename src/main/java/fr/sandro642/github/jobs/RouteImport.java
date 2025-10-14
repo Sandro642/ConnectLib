@@ -9,6 +9,7 @@ public interface RouteImport {
 
     /**
      * Gets the route associated with the enum constant.
+     *
      * @return the route as a String
      */
     String getRoute();
