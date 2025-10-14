@@ -117,14 +117,6 @@ More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/examp
 
 ---
 
-## 🧠 Evolution Ideas
-
-- Adding connectors for new services
-- Web management interface
-- Plugin system
-
----
-
 ## 📞 Contact
 
 For any questions or suggestions: [sandro33810@gmail.com](mailto:sandro33810@gmail.com)
