@@ -28,7 +28,8 @@ public class MainTest {
 
     public enum TestRoutes implements RouteImport {
         HELLO("/hello"),
-        GREET("greet$name$")
+        GREET("greet$name$"),
+        REQUEST_TOKEN("/auth/request/token")
         ;
 
         final String route;
@@ -47,7 +48,9 @@ public class MainTest {
      * Example of URL branches, you can add multiple branches if you have multiple environments (dev, prod, etc.)
      */
     public enum ExampleUrlBranch implements URLProvider {
-        LOCALHOST("http://localhost:8080")
+        LOCALHOST("http://localhost:8080"),
+        POST_PROD("https://post-prod.systemsolutiongroup.xyz/"),
+        PROD("https://api.safe-project.systemsolutiongroup.xyz/")
         ;
 
         private final String url;
@@ -64,6 +67,7 @@ public class MainTest {
 
     public enum TestCustomVersion implements VersionProvider {
         DEV_BRANCH("dev"),
+        V1_API("v1/api")
         ;
 
         private final String version;
@@ -148,6 +152,31 @@ public class MainTest {
 
             System.out.println("Response: " + response.display());
             System.out.println("Status Code: " + response.getStatusCode());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void testSpecData() {
+        try {
+
+            connectLib.Init(ResourceType.MAIN_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+
+            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(TestCustomVersion.V1_API, MethodType.GET, TestRoutes.REQUEST_TOKEN)
+                    .urlBranch(ExampleUrlBranch.PROD)
+                    .getResponse();
+
+            ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Réponse brute: " + apiFactory.display());
+
+            System.out.println("Data: " + apiFactory.getData("data"));
+
+            System.out.println(apiFactory.getSpecData("data", "accessToken"));
 
         } catch (Exception e) {
             e.printStackTrace();
