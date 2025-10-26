@@ -170,7 +170,7 @@ public class MainTest {
                     .urlBranch(ExampleUrlBranch.PROD)
                     .getResponse();
 
-            ApiFactory apiFactory = apiFactoryCompletableFuture.get(5000, TimeUnit.SECONDS);
+            ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
             System.out.println("Réponse brute: " + apiFactory.display());
 
