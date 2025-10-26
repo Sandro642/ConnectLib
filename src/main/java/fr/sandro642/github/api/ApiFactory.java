@@ -76,7 +76,7 @@ public class ApiFactory {
                 return null;
             }
 
-            return rawData.get(type.toString().toLowerCase());
+            return rawData.get(type.toString());
         } catch (Exception e) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getdata.error", Map.of("type", type.toString(), "exception", e.getMessage())));
         }
@@ -98,10 +98,11 @@ public class ApiFactory {
                 return null;
             }
 
-            Object nested = rawData.get(type.toString().toLowerCase());
+            Object nested = rawData.get(type.toString());
             if (nested instanceof Map) {
                 Map<?, ?> nestedMap = (Map<?, ?>) nested;
-                return nestedMap.get(value.toString().toLowerCase());
+
+                return nestedMap.get(value.toString());
             }
         } catch (Exception e) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "getspecdata.error", Map.of("type", type.toString(), "value", value.toString(), "exception", e.getMessage())));
