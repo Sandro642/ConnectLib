@@ -101,7 +101,6 @@ public class ApiFactory {
             Object nested = rawData.get(type.toString());
             if (nested instanceof Map) {
                 Map<?, ?> nestedMap = (Map<?, ?>) nested;
-
                 return nestedMap.get(value.toString());
             }
         } catch (Exception e) {
@@ -137,11 +136,11 @@ public class ApiFactory {
      */
     public Object display() {
         try {
-        if (rawData == null) {
-            connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
-            return null;
-        }
-        return rawData;
+            if (rawData == null) {
+                connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "general.mustbe"));
+                return null;
+            }
+            return rawData;
         } catch (Exception e) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "display.error", "exception", e.getMessage()));
         }
