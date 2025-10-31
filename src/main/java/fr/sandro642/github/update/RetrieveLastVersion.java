@@ -26,7 +26,6 @@ public class RetrieveLastVersion {
      * Fetches the latest version from the GitHub API.
      * It sends a GET request to the tags endpoint of the ConnectLib repository
      * and retrieves the name of the first tag, which represents the latest version.
-     * @return
      */
     public String fetchVersion() {
         try {
@@ -40,7 +39,7 @@ public class RetrieveLastVersion {
             Gson gson = new Gson();
             JsonArray data = gson.fromJson(response.body(), JsonArray.class);
 
-            if (data != null && data.size() > 0) {
+            if (data != null && !data.isEmpty()) {
                 JsonObject firstTag = data.get(0).getAsJsonObject();
                 return firstTag.get("name").getAsString();
             } else {
