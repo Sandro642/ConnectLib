@@ -14,6 +14,7 @@
 
 [ConnectLib Website](https://connectlib.xyz/)
 [ConnectLib Documentation](https://docs.connectlib.xyz/)
+[ConnectLib Javadoc](https://sandro642.github.io/connectlib/javadoc/)
 
 ---
 
