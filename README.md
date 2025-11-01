@@ -10,6 +10,13 @@
 
 </div>
 
+---
+
+[ConnectLib Website](https://connectlib.xyz/)
+[ConnectLib Documentation](https://docs.connectlib.xyz/)
+
+---
+
 Welcome to **ConnectLib**: the universal gateway to connect, automate and orchestrate your data flows!
 And if you thought APIs were complicated, think again! With ConnectLib, it's like playing with Lego: simple, intuitive and powerful.
 > For information, this library is not intended to be used for Minecraft, it is used professionally in a Java project.
