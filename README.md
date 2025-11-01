@@ -52,6 +52,7 @@ Changelog:
  - [0.2.6.4-STABLE]: Added asynchronous job execution, allowing you to run tasks in the background without blocking your main application thread.
  - [0.2.7.2-STABLE]: Remove implementation Project Reactor
  - [0.2.9-STABLE]: Added support query variables in routes, allowing you to pass parameters directly in the URL.
+ - [0.4.0-STABLE]: Web implementation, now you can have a dashboard to see your connectors and jobs.
 ```
 
 ---
