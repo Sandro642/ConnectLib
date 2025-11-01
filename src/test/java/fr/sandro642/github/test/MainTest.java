@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
  * MainTest is a test class for the ConnectLib library.
  * @author Sandro642
  * @version 1.0
- * @since 1.0
  */
 
 public class MainTest {
@@ -182,5 +181,26 @@ public class MainTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void startAppServices() {
+        try {
+            connectLib.Logger().showLogs();
+            connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
+                    .webServices();
+
+            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
+                    .getResponse();
+
+            ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Response: " + apiFactory.display());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

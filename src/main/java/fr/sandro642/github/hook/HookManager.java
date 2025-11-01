@@ -48,6 +48,15 @@ public class HookManager {
     }
 
     /**
+     * Returns the current resource type.
+     *
+     * @return the current resource type
+     */
+    public ResourceType getResourceType() {
+        return resourceType;
+    }
+
+    /**
      * Sets the file location key based on the resource type.
      * This method updates the store with the file location key based on the resource type.
      * It handles different resource types such as MC_RESOURCES, MAIN_RESOURCES, and TEST_RESOURCES.

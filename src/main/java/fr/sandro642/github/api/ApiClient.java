@@ -2,6 +2,8 @@ package fr.sandro642.github.api;
 
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.enums.lang.CategoriesType;
+import fr.sandro642.github.spring.controller.DataController;
+import fr.sandro642.github.spring.dto.Request;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -45,12 +47,18 @@ public class ApiClient extends ApiFactory {
     private final ApiFactory apiFactory = new ApiFactory();
 
     /**
+     * baseUrl is a static string that holds the base URL for the API.
+     * It is initialized in the constructor and used for making requests.
+     */
+    private static String baseUrl;
+
+    /**
      * Constructor for ApiClient.
      * It initializes the WebClient with the base URL from the ConnectLib configuration.
      * If the base URL is not found, it throws a RuntimeException.
      */
     public ApiClient(String baseUrlLambda) {
-        String baseUrl = baseUrlLambda;
+        baseUrl = baseUrlLambda;
 
         if (baseUrl == null) {
             connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "construct.urlbase"));
@@ -69,6 +77,8 @@ public class ApiClient extends ApiFactory {
     public Mono<ApiFactory> callAPIGet(String routeName) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.get", Map.of("routename", routeName)));
 
+        Request r = DataController.getInstance().createRequest(routeName, baseUrl);
+
         record ResponseData(int statusCode, String body) {}
 
         return webClient.get()
@@ -80,6 +90,13 @@ public class ApiClient extends ApiFactory {
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(responseData -> {
                     connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+
+                    String newStatus = (responseData.statusCode() >= 200 && responseData.statusCode() < 300) ? "success" : "error";
+                    try {
+                        DataController.getInstance().updateRequestStatus(r.getId(), newStatus);
+                    } catch (Exception e) {
+                        connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "GET", "exception", e.getMessage())));
+                    }
                 })
                 .map(responseData -> {
                     apiFactory.setStatusCode(responseData.statusCode());
@@ -99,6 +116,8 @@ public class ApiClient extends ApiFactory {
     public Mono<ApiFactory> callAPIPost(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.post", Map.of("routename", routeName)));
 
+        Request r = DataController.getInstance().createRequest(routeName, baseUrl);
+
         record ResponseData(int statusCode, String body) {}
 
         return webClient.post()
@@ -111,6 +130,13 @@ public class ApiClient extends ApiFactory {
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(responseData -> {
                     connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+
+                    String newStatus = (responseData.statusCode() >= 200 && responseData.statusCode() < 300) ? "success" : "error";
+                    try {
+                        DataController.getInstance().updateRequestStatus(r.getId(), newStatus);
+                    } catch (Exception e) {
+                        connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "GET", "exception", e.getMessage())));
+                    }
                 })
                 .map(responseData -> {
                     apiFactory.setStatusCode(responseData.statusCode());
@@ -130,6 +156,8 @@ public class ApiClient extends ApiFactory {
     public Mono<ApiFactory> callAPIPut(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.put", Map.of("routename", routeName)));
 
+        Request r = DataController.getInstance().createRequest(routeName, baseUrl);
+
         record ResponseData(int statusCode, String body) {}
 
         return webClient.put()
@@ -142,6 +170,13 @@ public class ApiClient extends ApiFactory {
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(responseData -> {
                     connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+
+                    String newStatus = (responseData.statusCode() >= 200 && responseData.statusCode() < 300) ? "success" : "error";
+                    try {
+                        DataController.getInstance().updateRequestStatus(r.getId(), newStatus);
+                    } catch (Exception e) {
+                        connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "GET", "exception", e.getMessage())));
+                    }
                 })
                 .map(responseData -> {
                     apiFactory.setStatusCode(responseData.statusCode());
@@ -161,6 +196,8 @@ public class ApiClient extends ApiFactory {
     public Mono<ApiFactory> callAPIPatch(String routeName, Map<String, Object> body) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.patch", Map.of("routename", routeName)));
 
+        Request r = DataController.getInstance().createRequest(routeName, baseUrl);
+
         record ResponseData(int statusCode, String body) {}
 
         return webClient.patch()
@@ -173,6 +210,13 @@ public class ApiClient extends ApiFactory {
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(responseData -> {
                     connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+
+                    String newStatus = (responseData.statusCode() >= 200 && responseData.statusCode() < 300) ? "success" : "error";
+                    try {
+                        DataController.getInstance().updateRequestStatus(r.getId(), newStatus);
+                    } catch (Exception e) {
+                        connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "GET", "exception", e.getMessage())));
+                    }
                 })
                 .map(responseData -> {
                     apiFactory.setStatusCode(responseData.statusCode());
@@ -191,6 +235,8 @@ public class ApiClient extends ApiFactory {
     public Mono<ApiFactory> callAPIDelete(String routeName) {
         connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.delete", Map.of("routename", routeName)));
 
+        Request r = DataController.getInstance().createRequest(routeName, baseUrl);
+
         record ResponseData(int statusCode, String body) {}
 
         return webClient.delete()
@@ -202,6 +248,13 @@ public class ApiClient extends ApiFactory {
                 .subscribeOn(Schedulers.boundedElastic())
                 .doOnNext(responseData -> {
                     connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "call.threadinuse", "thread", Thread.currentThread().getName()));
+
+                    String newStatus = (responseData.statusCode() >= 200 && responseData.statusCode() < 300) ? "success" : "error";
+                    try {
+                        DataController.getInstance().updateRequestStatus(r.getId(), newStatus);
+                    } catch (Exception e) {
+                        connectLib.Logger().CRITICAL(connectLib.LangManager().getMessage(CategoriesType.APICLIENT_CLASS, "general.error", Map.of("method", "GET", "exception", e.getMessage())));
+                    }
                 })
                 .map(responseData -> {
                     apiFactory.setStatusCode(responseData.statusCode());

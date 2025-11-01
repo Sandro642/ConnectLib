@@ -8,9 +8,13 @@ import fr.sandro642.github.hook.MCSupport;
 import fr.sandro642.github.misc.*;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.enums.ResourceType;
+import fr.sandro642.github.spring.Application;
+import fr.sandro642.github.spring.controller.DataController;
 import fr.sandro642.github.update.RetrieveLastVersion;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,18 +42,25 @@ public class ConnectLib {
     private static LangManager langManager;
     private static RetrieveLastVersion rlv;
 
+    private static boolean isInitialized = false;
+
+    private static List<String> enumNames = new ArrayList<>();
+    private static List<String> enumUrls = new ArrayList<>();
+    private static Map<Enum<?>, String> routesEnums = new HashMap<>();
+
     /**
      * Init the ConnectLib with the specified resource type and routes.
      * @param resourceType the type of resource to initialize
      * @param routes the routes to be used in the ConnectLib
      */
-    public void Init(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
+    public ConnectLib Init(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
         try {
             logger = new Logger();
             storeAndRetrieve = new StoreAndRetrieve();
             yamlUtils = new YamlUtils();
             logs = new Logs();
             rlv = new RetrieveLastVersion();
+            isInitialized = true;
 
             rlv.isLatestVersion();
 
@@ -59,6 +70,21 @@ public class ConnectLib {
 
             langManager = new LangManager();
 
+            for (Class<? extends Enum<?>> route : routes) {
+                if (route == null) {
+                    Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "initialise.routeclass"));
+                    continue;
+                }
+
+                Map<Enum<?>, String> converted = EnumLoader.convertRouteImport(route);
+                if (converted != null && !converted.isEmpty()) {
+                    routesEnums.putAll(converted);
+                    for (Map.Entry<Enum<?>, String> entry : converted.entrySet()) {
+                        enumNames.add(entry.getKey().name());
+                        enumUrls.add(entry.getValue());
+                    }
+                }
+            }
 
 
             Map<Enum<?>, String> routesEnums = new HashMap<>();
@@ -85,6 +111,32 @@ public class ConnectLib {
         } catch (Exception e) {
             Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "initialise.catcherror", Map.of("exception", e.getMessage())));
         }
+        return this;
+    }
+
+    /**
+     * Get the routes map.
+     * @return a map of route names to their corresponding paths
+     */
+    public Map<String, String> getRoutesMap() {
+        return new HashMap<>(routes);
+    }
+
+    /**
+     * Check if the ConnectLib supports web services.
+     * This method starts the Spring application.
+     */
+    public ConnectLib webServices() {
+        SpringApp().startApplication().subscribe();
+        return this;
+    }
+
+    /**
+     * Check if the ConnectLib is initialized.
+     * @return true if initialized, false otherwise
+     */
+    public boolean isInitialized() {
+        return isInitialized;
     }
 
     /**
@@ -160,7 +212,7 @@ public class ConnectLib {
 
     /**
      * Return the instance of LangSupport.
-     * @return LangSupport instance
+     * @return LangSupport instance²
      */
     public LangSupport LangSupport() {
         return LangSupport.getInstance();
@@ -173,5 +225,13 @@ public class ConnectLib {
      */
     public LangManager LangManager() {
         return langManager;
+    }
+
+    /**
+     * Return the instance of Application.
+     * @return Application instance
+     */
+    public Application SpringApp() {
+        return Application.getInstance();
     }
 }
