@@ -193,9 +193,16 @@ public class MainTest {
                     .getRoutes(MethodType.GET, TestRoutes.HELLO)
                     .getResponse();
 
+            apiFactoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(TestCustomVersion.V1_API ,MethodType.GET, TestRoutes.REQUEST_TOKEN)
+                    .urlBranch(ExampleUrlBranch.PROD)
+                    .getResponse();
+
             ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
             System.out.println("Response: " + apiFactory.display());
+
+            Thread.sleep(20000);
 
         } catch (Exception e) {
             e.printStackTrace();
