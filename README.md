@@ -20,16 +20,16 @@ And if you thought APIs were complicated, think again! With ConnectLib, it's lik
 Support Lib : Java 23
 
 Hook -----------------------|
- - Support Minecraft 1.16 - Latest Version
- - Support LangType 2.0 - Latest Version
+ - Support Minecraft 1.16 - 1.21.x -> Latest Version
+ - Support LangType 2.0 -> Latest Version
 
  - Coming Soon.
 ```
 ---
 ## LangManager
 ```
- EN : Released - Version 1.3 - Latest Version
- FR : Sorti - Version 1.2 - Dernière version
+ EN : Released - Version 1.3 -> Latest Version
+ FR : Sorti - Version 1.2 -> Dernière version
  ```
 
 ---
