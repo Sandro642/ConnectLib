@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConnectLib Dashboard</title>
+    <title>Dashboard</title>
     <style>
         * {
             margin: 0;
@@ -365,7 +365,7 @@
 <body>
 <div class="content-wrapper">
     <nav class="navbar">
-        <div class="navbar-title">ConnectLib Dashboard</div>
+        <div class="navbar-title", id="navbar-title"></div>
     </nav>
 
     <div class="main-container">
@@ -381,14 +381,16 @@
             </div>
             <div class="sidebar-content">
                 <div class="sidebar-item active" onclick="showSection('status')">
-                    <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2">
                         <circle cx="12" cy="12" r="10"></circle>
                         <path d="M12 6v6l4 2"></path>
                     </svg>
                     <span class="sidebar-item-text">Status</span>
                 </div>
                 <div class="sidebar-item" onclick="showSection('routes')">
-                    <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2">
                         <circle cx="18" cy="5" r="3"></circle>
                         <circle cx="6" cy="12" r="3"></circle>
                         <circle cx="18" cy="19" r="3"></circle>
@@ -398,7 +400,8 @@
                     <span class="sidebar-item-text">Routes</span>
                 </div>
                 <div class="sidebar-item" onclick="showSection('requests')">
-                    <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg class="sidebar-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2">
                         <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                         <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
                     </svg>
@@ -450,7 +453,8 @@
                 <div class="section-header">
                     <h2 class="section-title">Requests</h2>
                     <button class="refresh-btn" id="refresh-btn" onclick="refreshRequests()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2">
                             <polyline points="23 4 23 10 17 10"></polyline>
                             <polyline points="1 20 1 14 7 14"></polyline>
                             <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -485,6 +489,23 @@
     }
 
     const API_BASE_URL = '/api';
+
+    async function loadConfig() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/config`);
+            const config = await response.json();
+
+            const navbarTitle = document.getElementById('navbar-title');
+
+            if (config && config.nameDashboard) {
+                navbarTitle.textContent = config.nameDashboard;
+            } else {
+                navbarTitle.textContent = 'ConnectLib Dashboard';
+            }
+        } catch (error) {
+            console.error('Error loading config:', error);
+        }
+    }
 
     async function loadStatus() {
         try {
@@ -594,6 +615,7 @@
         loadStatus();
         loadRoutes();
         loadRequests();
+        loadConfig();
 
         setInterval(() => {
             loadStatus();

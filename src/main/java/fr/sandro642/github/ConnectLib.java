@@ -9,13 +9,9 @@ import fr.sandro642.github.misc.*;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.spring.Application;
-import fr.sandro642.github.spring.controller.DataController;
 import fr.sandro642.github.update.RetrieveLastVersion;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * ConnectLib is the main class of the ConnectorAPI library for Standard API.
@@ -53,7 +49,7 @@ public class ConnectLib {
      * @param resourceType the type of resource to initialize
      * @param routes the routes to be used in the ConnectLib
      */
-    public ConnectLib Init(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
+    public ConnectLib init(ResourceType resourceType, LangType langType, Class<? extends Enum<?>>... routes) {
         try {
             logger = new Logger();
             storeAndRetrieve = new StoreAndRetrieve();
@@ -126,9 +122,29 @@ public class ConnectLib {
      * Check if the ConnectLib supports web services.
      * This method starts the Spring application.
      */
-    public ConnectLib webServices() {
+    public void webServices() {
+        storeAndRetrieve.put(storeAndRetrieve.PORT, 3000);
         SpringApp().startApplication().subscribe();
-        return this;
+    }
+
+    /**
+     * Check if the ConnectLib supports web services on a specific port with a dashboard name.
+     * This method starts the Spring application.
+     * @param port the port number to run the web services on
+     *             If port is 0, the default port 3000 will be used
+     * @param nameDashboard the name of the dashboard
+     */
+    public void webServices(int port, String nameDashboard) {
+        storeAndRetrieve.put(storeAndRetrieve.NAME_DASHBOARD, nameDashboard);
+
+        if (port == 0) {
+            storeAndRetrieve.put(storeAndRetrieve.PORT, 3000);
+        } else {
+            storeAndRetrieve.put(storeAndRetrieve.PORT, port);
+        }
+
+
+        SpringApp().startApplication().subscribe();
     }
 
     /**

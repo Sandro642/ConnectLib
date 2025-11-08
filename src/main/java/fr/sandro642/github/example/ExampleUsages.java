@@ -43,9 +43,9 @@ public class ExampleUsages {
     public void initializeLib() {
 
         // Optionally, you can specify routes if needed
-        connectLib.Init(ResourceType.MAIN_RESOURCES, LangType.FRENCH, ExampleRoutes.class);
+        connectLib.init(ResourceType.MAIN_RESOURCES, LangType.FRENCH, ExampleRoutes.class);
         // You can also initialize without specifying routes
-        connectLib.Init(ResourceType.MAIN_RESOURCES, LangType.FRENCH);
+        connectLib.init(ResourceType.MAIN_RESOURCES, LangType.FRENCH);
     }
 
     // Example method to demonstrate usage

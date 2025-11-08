@@ -83,12 +83,12 @@ public class MainTest {
 
     @Test
     public void initializeCAPI() {
-        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+        connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
     }
 
 
     public static void main(String[] args) {
-        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
+        connectLib.init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
         try {
             connectLib.Logger().showLogs();
 
@@ -108,7 +108,7 @@ public class MainTest {
 
     @Test
     public void testUseFullRoute() {
-        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
+        connectLib.init(ResourceType.TEST_RESOURCES, LangType.FRENCH, TestRoutes.class);
 
         connectLib.Logger().showLogs();
         try {
@@ -132,7 +132,7 @@ public class MainTest {
 
     @Test
     public void testLangType() {
-        connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+        connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
 
         connectLib.Logger().showLogs();
 
@@ -162,7 +162,7 @@ public class MainTest {
     public void testSpecData() {
         try {
 
-            connectLib.Init(ResourceType.MAIN_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+            connectLib.init(ResourceType.MAIN_RESOURCES, LangType.ENGLISH, TestRoutes.class);
 
             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(TestCustomVersion.V1_API, MethodType.GET, TestRoutes.REQUEST_TOKEN)
@@ -186,8 +186,8 @@ public class MainTest {
     public void startAppServices() {
         try {
             connectLib.Logger().showLogs();
-            connectLib.Init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
-                    .webServices();
+            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
+                    .webServices(8080, "TestDashboard");
 
             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(MethodType.GET, TestRoutes.HELLO)

@@ -89,6 +89,13 @@ public class DataController {
         return result;
     }
 
+    @GetMapping("/config")
+    public Map<String, Object> getConfig() {
+        Map<String, Object> config = new HashMap<>();
+        config.put("nameDashboard", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().NAME_DASHBOARD));
+        return config;
+    }
+
     /**
      * Endpoint to create a new request.
      * @param route the route for the request

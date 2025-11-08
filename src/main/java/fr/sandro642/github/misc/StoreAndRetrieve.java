@@ -20,6 +20,9 @@ public class StoreAndRetrieve {
      */
     public final String URL_KEY = "baseUrl";
     public final String FILE_LOCATION_KEY = "fileLocation";
+
+    public final String NAME_DASHBOARD = "nameDashboard";
+    public final String PORT = String.valueOf(3000);
     public final HashMap<String, Object> store = new HashMap<>();
 
     /**
