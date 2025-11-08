@@ -49,7 +49,7 @@ public class ApiFactory {
         this.rawJson = rawJson;
         try {
             ObjectMapper mapper = new ObjectMapper();
-            this.rawData = mapper.readValue(rawJson, new TypeReference<Map<String, Object>>() {});
+            this.rawData = mapper.readValue(rawJson, new TypeReference<>() {});
         } catch (Exception e) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.APIFACTORY_CLASS, "parsefromrawjson.error", Map.of("json", rawJson, "exception", e.getMessage())));
         }
@@ -60,6 +60,15 @@ public class ApiFactory {
      */
     protected void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
+    }
+
+    /**
+     * Method to retrieve the rawData map containing the parsed JSON data.
+     *
+     * @return The rawData map containing the parsed JSON data.
+     */
+    public Map <String, Object> getRawData() {
+        return rawData;
     }
 
     /**
