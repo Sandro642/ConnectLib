@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - DEV/BRANCH-0.3.8.1
+      - Feature/AtomicFactory
 permissions:
   contents: write
   pages: write
