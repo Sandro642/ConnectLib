@@ -187,20 +187,7 @@ public class MainTest {
         try {
             connectLib.Logger().showLogs();
             connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
-                    .webServices(8080, "TestDashboard");
-
-            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
-                    .getResponse();
-
-            apiFactoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(TestCustomVersion.V1_API ,MethodType.GET, TestRoutes.REQUEST_TOKEN)
-                    .urlBranch(ExampleUrlBranch.PROD)
-                    .getResponse();
-
-            ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
-
-            System.out.println("Response: " + apiFactory.display());
+                            .wanImplement("http://localhost:8080");
 
             Thread.sleep(20000);
 
@@ -208,6 +195,8 @@ public class MainTest {
             e.printStackTrace();
         }
     }
+
+
 
 
 }

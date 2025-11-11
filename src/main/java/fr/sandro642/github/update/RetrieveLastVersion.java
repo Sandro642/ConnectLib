@@ -40,8 +40,8 @@ public class RetrieveLastVersion {
             JsonArray data = gson.fromJson(response.body(), JsonArray.class);
 
             if (data != null && !data.isEmpty()) {
-                JsonObject firstTag = data.get(0).getAsJsonObject();
-                return firstTag.get("name").getAsString();
+                JsonObject object = data.get(0).getAsJsonObject();
+                return object.get("name").getAsString();
             } else {
                 return "No tags found";
             }

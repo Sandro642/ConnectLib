@@ -1,4 +1,4 @@
-package fr.sandro642.github.misc;
+package fr.sandro642.github.log;
 
 import java.io.File;
 import java.io.FileWriter;

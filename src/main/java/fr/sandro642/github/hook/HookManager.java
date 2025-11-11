@@ -3,7 +3,6 @@ package fr.sandro642.github.hook;
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.enums.lang.CategoriesType;
-import fr.sandro642.github.misc.Logger;
 
 /**
  * HookManager is a class that manages hooks for different resource types.

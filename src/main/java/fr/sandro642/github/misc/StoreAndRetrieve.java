@@ -23,6 +23,7 @@ public class StoreAndRetrieve {
 
     public final String NAME_DASHBOARD = "nameDashboard";
     public final String PORT = String.valueOf(3000);
+    public final String DYNAMIC_PORT = "dynamicPort";
     public final HashMap<String, Object> store = new HashMap<>();
 
     /**

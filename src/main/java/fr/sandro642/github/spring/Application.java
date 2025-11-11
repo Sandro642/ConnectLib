@@ -23,6 +23,14 @@ public class Application {
 
     private static final ConnectLib connectLib = new ConnectLib();
 
+    private String Dyn_Port() {
+        if (connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT) != null) {
+            return connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT).toString();
+        } else {
+            return connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().PORT).toString();
+        }
+    }
+
     /**
      * Starts the Spring Boot application in a non-blocking manner.
      * @return a Mono that completes when the application has started
@@ -33,10 +41,12 @@ public class Application {
             app.setBannerMode(Banner.Mode.OFF);               // supprime le banner Spring
             app.setLogStartupInfo(false);                     // désactive l'info de démarrage
             Map<String, Object> props = new HashMap<>();
-            props.put("server.port", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().PORT)); // définit le port du serveur
+            props.put("server.port", Dyn_Port()); // définit le port du serveur
             props.put("logging.level.root", "OFF");           // coupe l'affichage des logs
             app.setDefaultProperties(props);
             app.run();
+
+            System.out.println(Dyn_Port());
         }).subscribeOn(Schedulers.boundedElastic()).then();
     }
 
