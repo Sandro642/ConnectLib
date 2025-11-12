@@ -7,6 +7,11 @@ package fr.sandro642.github.spring.dto;
 public class RouteInfo {
 
     /**
+     * Port information of the route.
+     */
+    private String infoPort;
+
+    /**
      * Name of the route.
      */
     private String name;
@@ -26,7 +31,8 @@ public class RouteInfo {
      * @param name Name of the route
      * @param url URL of the route
      */
-    public RouteInfo(String name, String url) {
+    public RouteInfo(String infoPort, String name, String url) {
+        this.infoPort = infoPort;
         this.name = name;
         this.url = url;
     }

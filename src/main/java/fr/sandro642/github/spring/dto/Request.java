@@ -10,6 +10,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Request {
 
     /**
+     * Port information of the request.
+     */
+    private String infoPort;
+
+    /**
      * Unique identifier for the request
      */
     private Long id;
@@ -36,12 +41,14 @@ public class Request {
 
     /**
      * Parameterized constructor
+     * @param infoPort Port information of the request
      * @param id Unique identifier for the request
      * @param route Route associated with the request
      * @param branch Branch associated with the request
      * @param status Status of the request
      */
-    public Request(Long id, String route, String branch, String status) {
+    public Request(String infoPort, Long id, String route, String branch, String status) {
+        this.infoPort = infoPort;
         this.id = id;
         this.route = route;
         this.branch = branch;

@@ -58,6 +58,7 @@ public class DataController {
     @GetMapping("/status")
     public Map<String, Object> getStatus() {
         Map<String, Object> status = new HashMap<>();
+        status.put("portInfo", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT));
         status.put("isInitialized", connectLib.isInitialized());
         status.put("resourceType", connectLib.HookManager().getResourceType());
         return status;
@@ -73,7 +74,7 @@ public class DataController {
         List<RouteInfo> result = new ArrayList<>();
         if (map != null) {
             for (Map.Entry<String, String> e : map.entrySet()) {
-                result.add(new RouteInfo(e.getKey(), e.getValue()));
+                result.add(new RouteInfo(connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT).toString(), e.getKey(), e.getValue()));
             }
         }
         return result;
@@ -108,7 +109,7 @@ public class DataController {
         }
         long id = requestIdCounter.incrementAndGet();
 
-        Request req = new Request(id, route, branch, "pending");
+        Request req = new Request(connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT).toString(), id, route, branch, "pending");
         requestsMap.put(id, req);
         return req;
     }
