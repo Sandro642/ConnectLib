@@ -270,7 +270,7 @@ public class JobGetInfos {
      * makes the API call, and returns the response as an ApiFactory object.
      * @return ApiFactory containing the response from the API, or null if an error occurs.
      */
-    public CompletableFuture<ApiFactory> getResponse() {
+    public CompletableFuture<ApiFactory> execute() {
         try {
             String route = (String) connectLib.StoreAndRetrieve().store.get("currentRoute");
             MethodType method = (MethodType) connectLib.StoreAndRetrieve().store.get("currentMethod");
