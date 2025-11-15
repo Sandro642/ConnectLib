@@ -505,6 +505,7 @@
             }
         } catch (error) {
             console.error('Error loading config:', error);
+            document.getElementById('navbar-title').textContent = 'ConnectLib Dashboard';
         }
     }
 
@@ -522,42 +523,74 @@
                 statusBadge.className = 'status-badge error';
             }
 
-            document.getElementById('resource-type').textContent = data.resourceType;
+            document.getElementById('resource-type').textContent = data.resourceType || 'N/A';
         } catch (error) {
             console.error('Error loading status:', error);
+            document.getElementById('connectlib-status').textContent = 'Error';
+            document.getElementById('connectlib-status').className = 'status-badge error';
+        }
+    }
+
+    async function loadPortInfo() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/requests`);
+            const data = await response.json();
+
+            const portElement = document.getElementById('port-info');
+            if (data.portInfo) {
+                portElement.textContent = data.portInfo;
+            } else {
+                portElement.textContent = 'N/A';
+            }
+        } catch (error) {
+            console.error('Error loading port info:', error);
+            document.getElementById('port-info').textContent = 'N/A';
         }
     }
 
     async function loadRoutes() {
         try {
             const response = await fetch(`${API_BASE_URL}/routes`);
-            const routes = await response.json();
+            const data = await response.json();
 
             const tbody = document.getElementById('routes-tbody');
             tbody.innerHTML = '';
+
+            // Handle both array and object with routes property
+            const routes = Array.isArray(data) ? data : (data.routes || []);
+
+            if (routes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #94a3b8;">No routes available</td></tr>';
+                return;
+            }
 
             routes.forEach((route, index) => {
                 const row = document.createElement('tr');
 
                 row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td><span class="route-badge">${route.name}</span></td>
-                    <td><span class="route-badge">${route.url}</span></td>
-                `;
+                <td>${index + 1}</td>
+                <td><span class="route-badge">${route.name}</span></td>
+                <td><span class="route-badge">${route.url}</span></td>
+            `;
                 tbody.appendChild(row);
             });
         } catch (error) {
             console.error('Error loading routes:', error);
+            const tbody = document.getElementById('routes-tbody');
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: #ef4444;">Error loading routes</td></tr>';
         }
     }
 
     async function loadRequests() {
         try {
             const response = await fetch(`${API_BASE_URL}/requests`);
-            const requests = await response.json();
+            const data = await response.json();
 
             const container = document.getElementById('requests-container');
             container.innerHTML = '';
+
+            // Handle both array and object with requests property
+            const requests = Array.isArray(data) ? data : (data.requests || []);
 
             if (requests.length === 0) {
                 container.innerHTML = '<p style="text-align: center; color: #94a3b8;">No requests</p>';
@@ -574,30 +607,32 @@
                     request.status === 'success' ? 'Success' : 'Failed';
 
                 requestItem.innerHTML = `
-                    <div class="request-flow">
-                        <div class="request-node">
-                            <div class="node-dot ${statusClass}"></div>
-                            <div class="node-label">Route</div>
-                            <div class="node-value">${request.route}</div>
-                        </div>
-                        <div class="connector"></div>
-                        <div class="request-node">
-                            <div class="node-dot ${statusClass}"></div>
-                            <div class="node-label">URL Branch</div>
-                            <div class="node-value">${request.branch}</div>
-                        </div>
-                        <div class="connector"></div>
-                        <div class="request-node">
-                            <div class="node-dot ${statusClass}"></div>
-                            <div class="node-label">Status</div>
-                            <div class="node-value">${statusText}</div>
-                        </div>
+                <div class="request-flow">
+                    <div class="request-node">
+                        <div class="node-dot ${statusClass}"></div>
+                        <div class="node-label">Route</div>
+                        <div class="node-value">${request.route}</div>
                     </div>
-                `;
+                    <div class="connector"></div>
+                    <div class="request-node">
+                        <div class="node-dot ${statusClass}"></div>
+                        <div class="node-label">URL Branch</div>
+                        <div class="node-value">${request.branch}</div>
+                    </div>
+                    <div class="connector"></div>
+                    <div class="request-node">
+                        <div class="node-dot ${statusClass}"></div>
+                        <div class="node-label">Status</div>
+                        <div class="node-value">${statusText}</div>
+                    </div>
+                </div>
+            `;
                 container.appendChild(requestItem);
             });
         } catch (error) {
             console.error('Error loading requests:', error);
+            const container = document.getElementById('requests-container');
+            container.innerHTML = '<p style="text-align: center; color: #ef4444;">Error loading requests</p>';
         }
     }
 
@@ -617,10 +652,12 @@
         loadRoutes();
         loadRequests();
         loadConfig();
+        loadPortInfo();
 
         setInterval(() => {
             loadStatus();
             loadRoutes();
+            loadPortInfo();
         }, 5000);
     });
 </script>

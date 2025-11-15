@@ -162,7 +162,8 @@ public class MainTest {
     public void testSpecData() {
         try {
 
-            connectLib.init(ResourceType.MAIN_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+            connectLib.init(ResourceType.MAIN_RESOURCES, LangType.ENGLISH, TestRoutes.class)
+                    .wanImplement("http://localhost:8080");
 
             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(TestCustomVersion.V1_API, MethodType.GET, TestRoutes.REQUEST_TOKEN)
@@ -176,6 +177,8 @@ public class MainTest {
             System.out.println("Data: " + apiFactory.getData("data"));
 
             System.out.println(apiFactory.getSpecData("data", "accessToken"));
+
+            Thread.sleep(20000);
 
         } catch (Exception e) {
             e.printStackTrace();

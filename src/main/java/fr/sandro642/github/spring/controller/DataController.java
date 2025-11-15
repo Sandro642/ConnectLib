@@ -2,7 +2,6 @@ package fr.sandro642.github.spring.controller;
 
 import fr.sandro642.github.ConnectLib;
 import fr.sandro642.github.spring.dto.Request;
-import fr.sandro642.github.spring.dto.RouteInfo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -64,29 +63,41 @@ public class DataController {
         return status;
     }
 
-    /**
-     * Endpoint to get the available routes from ConnectLib.
-     * @return a list of RouteInfo objects representing the routes
-     */
     @GetMapping("/routes")
-    public List<RouteInfo> getRoutes() {
+    public Map<String, Object> getRoutes() {
         Map<String, String> map = connectLib.getRoutesMap();
-        List<RouteInfo> result = new ArrayList<>();
+        Map<String, Object> result = new HashMap<>();
+
+        // portInfo
+        result.put("portInfo", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT).toString());
+
+        List<Map<String, String>> routes = new ArrayList<>();
         if (map != null) {
             for (Map.Entry<String, String> e : map.entrySet()) {
-                result.add(new RouteInfo(connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT).toString(), e.getKey(), e.getValue()));
+                Map<String, String> route = new HashMap<>();
+                route.put("name", e.getKey());
+                route.put("url", e.getValue());
+                routes.add(route);
             }
         }
+        result.put("routes", routes);
         return result;
     }
+
 
     /**
      * Endpoint to get all requests.
      * @return a list of Request objects
      */
     @GetMapping("/requests")
-    public List<Request> getRequests() {
-        List<Request> result = new ArrayList<>(requestsMap.values());
+    public Map<String, Object> getRequests() {
+        Map<String, Object> result = new HashMap<>();
+
+        result.put("portInfo", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT).toString());
+
+        List<Request> requests = new ArrayList<>(requestsMap.values());
+        result.put("requests", requests);
+
         return result;
     }
 

@@ -158,8 +158,6 @@ public class ConnectLib {
     /**
      * Implement WAN connection to retrieve the port from the server.
      * @param urlServ the server URL
-     * @param codeWan the WAN code
-     * @return the port as a String
      */
     public void wanImplement(String urlServ) {
         try {
