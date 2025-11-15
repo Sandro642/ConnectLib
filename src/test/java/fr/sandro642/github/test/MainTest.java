@@ -176,6 +176,8 @@ public class MainTest {
 
     @Test
     public void testProd() {
+        connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+
         testSpecData();
 
         pushsession();
@@ -184,8 +186,6 @@ public class MainTest {
     @Test
     public void testSpecData() {
         try {
-
-            connectLib.init(ResourceType.MAIN_RESOURCES, LangType.ENGLISH, TestRoutes.class);
 
             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(TestCustomVersion.V1_API, MethodType.GET, TestRoutes.REQUEST_TOKEN)
@@ -219,7 +219,7 @@ public class MainTest {
                     .getRoutes(TestCustomVersion.V1_API, MethodType.POST, TestRoutes.SESSION_PUSH)
                     .urlBranch(ExampleUrlBranch.PROD)
                     .params(params)
-                    .getResponse();
+                    .execute();
 
             ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
