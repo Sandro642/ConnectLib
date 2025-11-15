@@ -41,6 +41,8 @@ public class JobGetInfos {
      */
     private URLProvider urlBranch;
 
+    private String fullRoute = "";
+
     /**
      * Constructor of JobGetInfos.
      * Initializes the ApiClient and loads the YAML configuration.
@@ -60,195 +62,90 @@ public class JobGetInfos {
     }
 
     /**
-     * Get routes from the YAML file and builds the full URL.
-     * @param versionType Version of the API (V1_BRANCH, V2_BRANCH)
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param body Body of the request for POST (can be null for GET)
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, Enum<?> routeName, Map<String, ?> body) {
-        return getRoutes(versionType, methodType, getRouteName(routeName), body, null, null);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL with parameters.
-     * @param versionType Version of the API (V1_BRANCH, V2_BRANCH)
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, Enum<?> routeName) {
-        return getRoutes(versionType, methodType, getRouteName(routeName), null, null, null);
-    }
-
-    /**
      * Get routes from the YAML file and builds the full URL with a request body.
      * @param methodType Type of HTTP method (GET, POST)
      * @param routeName Name of the route in the YAML file
      * @return JobGetInfos for chaining
      */
     public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName) {
-        return getRoutes(null, methodType, getRouteName(routeName), null, null, null);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL with a request body and parameters.
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param body Body of the request for POST (can be null for GET)
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body) {
-        return getRoutes(null, methodType, getRouteName(routeName), body, null, null);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL with additional parameters.
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param params Additional parameters for the request
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body, Map<String, ?> params) {
-        return getRoutes(null, methodType, getRouteName(routeName), body, params, null);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL.
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutes(MethodType methodType, String routeName) {
-        return getRoutes(null, methodType, routeName, null, null, null);
-    }
-
-    /**
-     * Récupère les routes depuis le fichier YAML et construit l'URL complète
-     * @param versionType Version de l'API (V1_BRANCH, V2_BRANCH)
-     * @param methodType Type de méthode HTTP (GET, POST)
-     * @param routeName Nom de la route dans le fichier YAML
-     * @return JobGetInfos pour chaînage
-     */
-    public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, String routeName) {
-        return getRoutes(versionType, methodType, routeName, null, null, null);
+        return getRoutes(null, methodType, getRouteName(routeName));
     }
 
     /**
      * Get routes from the YAML file and builds the full URL with a request body.
-     * @param versionType Version of the API (V1_BRANCH, V2_BRANCH)
+     * @param versionType VersionProvider to specify API versioning
      * @param methodType Type of HTTP method (GET, POST)
      * @param routeName Name of the route in the YAML file
-     * @param body Body of the request for POST (can be null for GET)
      * @return JobGetInfos for chaining
      */
-    public JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, String routeName, Map<String, ?> body) {
-        return getRoutes(versionType, methodType, routeName, body, null, null);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL with a request body and parameters.
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param body Body of the request for POST (can be null for GET)
-     * @param params Additional parameters for the request
-     * @param query Additional query parameters for the request
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutes(MethodType methodType, String routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
-        return getRoutes(null, methodType, routeName, body, params, query);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL with additional parameters.
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param body Body of the request for POST (can be null for GET)
-     * @param params Additional parameters for the request
-     * @param query Additional query parameters for the request
-     * @return JobGetInfos for chaining
-     */
-    public JobGetInfos getRoutes(MethodType methodType, Enum<?> routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
-        return getRoutes(null, methodType, getRouteName(routeName), body, params, query);
-    }
-
-    /**
-     * Get routes from the YAML file and builds the full URL with additional parameters.
-     * @param versionType Version of the API (V1_BRANCH, V2_BRANCH)
-     * @param methodType Type of HTTP method (GET, POST)
-     * @param routeName Name of the route in the YAML file
-     * @param params Additional parameters for the request
-     * @param query Additional query parameters for the request
-     * @return JobGetInfos for chaining
-     */
-    public <R> JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, R routeName, Map<String, ?> body, Map<String, ?> params, Map<String, ?> query) {
+    public <R> JobGetInfos getRoutes(VersionProvider versionType, MethodType methodType, R routeName) {
         try {
             String route = connectLib.getRoute(routeName.toString().toLowerCase());
-
-            String fullRoute;
 
             if (versionType != null && versionType.getVersion() != null) {
                 String cleanRoute = route.startsWith("/") ? route.substring(1) : route;
                 fullRoute = "/" + versionType.getVersion() + "/" + cleanRoute;
             } else {
-                fullRoute = route;
+                this.fullRoute = route;
             }
 
-            if (params != null && !params.isEmpty()) {
-                for (Map.Entry<String, ?> entry : params.entrySet()) {
-                    String paramKey = "{" + entry.getKey() + "}";
-                    String paramValue = entry.getValue().toString();
-                    fullRoute = fullRoute.replace(paramKey, paramValue);
-                }
-            }
-
-            // New query string handling logic
-            if (query != null && !query.isEmpty()) {
-                // Pattern for capturing parameters between $
-                Pattern pattern = Pattern.compile("\\$([^$]+)\\$");
-                Matcher matcher = pattern.matcher(fullRoute);
-
-                StringBuilder queryString = new StringBuilder("?");
-                boolean firstParam = true;
-
-                // Iterate through all matches (parameters between $)
-                while (matcher.find()) {
-                    String paramName = matcher.group(1); // Get parameter name without $
-
-                    // Check if this parameter exists in the query map
-                    if (query.containsKey(paramName)) {
-                        if (!firstParam) {
-                            queryString.append("&");
-                        }
-                        queryString.append(paramName).append("=").append(query.get(paramName));
-                        firstParam = false;
-                    }
-                }
-
-                // Append query string to the route only if parameters were added
-                if (queryString.length() > 1) {
-                    // Clean the route by removing $parameter$ placeholders and extra &
-                    String cleanRoute = fullRoute.replaceAll("\\$[^$]+\\$", "").replaceAll("&+", "");
-                    fullRoute = cleanRoute + queryString.toString();
-                }
-            }
-
-            connectLib.StoreAndRetrieve().store.put("currentRoute", fullRoute);
+            connectLib.StoreAndRetrieve().store.put("currentRoute", this.fullRoute);
             connectLib.StoreAndRetrieve().store.put("currentMethod", methodType);
-
-            if (body != null) {
-                connectLib.StoreAndRetrieve().store.put("currentBody", body);
-            }
-
-            if (params != null) {
-                connectLib.StoreAndRetrieve().store.put("currentParams", params);
-            }
 
             connectLib.Logger().INFO(connectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getroutes.maderoute", "route", fullRoute));
         } catch (Exception e) {
             connectLib.Logger().ERROR(connectLib.LangManager().getMessage(CategoriesType.JOBS_PACKAGE, "getroutes.error", "exception", e.getMessage()));
         }
+        return this;
+    }
+
+    public JobGetInfos body(Map<?, ?> body) {
+        connectLib.StoreAndRetrieve().store.put("currentBody", body);
+        return this;
+    }
+
+    public JobGetInfos params(Map<?, ?> params) {
+        if (params == null || params.isEmpty()) return this;
+
+        for (Map.Entry<?, ?> entry : params.entrySet()) {
+            String paramKey = "{" + entry.getKey() + "}";
+            String paramValue = entry.getValue() == null ? "" : entry.getValue().toString();
+            this.fullRoute = this.fullRoute.replace(paramKey, paramValue);
+        }
+
+        connectLib.StoreAndRetrieve().store.put("currentParams", params);
+        connectLib.StoreAndRetrieve().store.put("currentRoute", this.fullRoute);
+        return this;
+    }
+
+    public JobGetInfos query(Map<?, ?> query) {
+        if (query == null || query.isEmpty()) return this;
+
+        Pattern pattern = Pattern.compile("\\$([^$]+)\\$");
+        Matcher matcher = pattern.matcher(this.fullRoute);
+
+        StringBuilder queryString = new StringBuilder("?");
+        boolean firstParam = true;
+
+        while (matcher.find()) {
+            String paramName = matcher.group(1);
+            if (query.containsKey(paramName)) {
+                if (!firstParam) {
+                    queryString.append("&");
+                }
+                Object value = query.get(paramName);
+                queryString.append(paramName).append("=").append(value == null ? "" : value.toString());
+                firstParam = false;
+            }
+        }
+
+        if (queryString.length() > 1) {
+            String cleanRoute = this.fullRoute.replaceAll("\\$[^$]+\\$", "").replaceAll("&+", "");
+            this.fullRoute = cleanRoute + queryString.toString();
+        }
+
+        connectLib.StoreAndRetrieve().store.put("currentRoute", this.fullRoute);
+        connectLib.StoreAndRetrieve().store.put("currentQuery", query);
         return this;
     }
 

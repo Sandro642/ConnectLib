@@ -29,7 +29,8 @@ public class MainTest {
     public enum TestRoutes implements RouteImport {
         HELLO("/hello"),
         GREET("greet$name$"),
-        REQUEST_TOKEN("/auth/request/token")
+        REQUEST_TOKEN("/auth/request/token"),
+        SESSION_PUSH("/auth/link/app/{sessionId}")
         ;
 
         final String route;
@@ -131,7 +132,7 @@ public class MainTest {
             );
 
             CompletableFuture<ApiFactory> factoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(MethodType.GET, TestRoutes.GREET, null, null, query)
+                    .getRoutes(MethodType.GET, TestRoutes.GREET)
                     .execute();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
@@ -171,6 +172,14 @@ public class MainTest {
         }
     }
 
+    private String code_session;
+
+    @Test
+    public void testProd() {
+        testSpecData();
+
+        pushsession();
+    }
 
     @Test
     public void testSpecData() {
@@ -190,6 +199,31 @@ public class MainTest {
             System.out.println("Data: " + apiFactory.getData("data"));
 
             System.out.println(apiFactory.getSpecData("data", "accessToken"));
+
+            this.code_session = (String) apiFactory.getSpecData("data", "sessionCode");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void pushsession() {
+        try {
+
+            Map<?,?> params = Map.of(
+                    "sessionId", this.code_session
+            );
+
+            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(TestCustomVersion.V1_API, MethodType.POST, TestRoutes.SESSION_PUSH)
+                    .urlBranch(ExampleUrlBranch.PROD)
+                    .params(params)
+                    .getResponse();
+
+            ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Réponse brute: " + apiFactory.display());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -217,6 +251,5 @@ public class MainTest {
             e.printStackTrace();
         }
     }
-
 
 }
