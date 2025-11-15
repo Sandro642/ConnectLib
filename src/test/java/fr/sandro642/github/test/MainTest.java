@@ -6,6 +6,7 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
+import fr.sandro642.github.provider.AtomicFactory;
 import fr.sandro642.github.provider.RouteImport;
 import fr.sandro642.github.provider.URLProvider;
 import fr.sandro642.github.provider.VersionProvider;
@@ -41,6 +42,19 @@ public class MainTest {
         @Override
         public String getRoute() {
             return route;
+        }
+    }
+
+    public class ClassheritFromFactory extends AtomicFactory {
+
+
+
+        public ClassheritFromFactory(ApiFactory apiFactory) {
+            getPhysx(apiFactory);
+        }
+
+        public Object getContent() {
+            return rawPhysx().get("content");
         }
     }
 
@@ -94,8 +108,8 @@ public class MainTest {
             connectLib.Logger().showLogs();
 
              CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(null, MethodType.GET, TestRoutes.HELLO)
-                    .getResponse();
+                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
+                    .execute();
 
              ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
@@ -118,10 +132,8 @@ public class MainTest {
             );
 
             CompletableFuture<ApiFactory> factoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(null, MethodType.GET, TestRoutes.GREET)
-                    .urlBranch(ExampleUrlBranch.POST_PROD)
-                    .query(query)
-                    .getResponse();
+                    .getRoutes(MethodType.GET, TestRoutes.GREET)
+                    .execute();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
@@ -148,7 +160,7 @@ public class MainTest {
                      */
                     //.urlBranch(ExampleUrlBranch.LOCALHOST)
 
-                    .getResponse();
+                    .execute();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
@@ -178,7 +190,7 @@ public class MainTest {
             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(TestCustomVersion.V1_API, MethodType.GET, TestRoutes.REQUEST_TOKEN)
                     .urlBranch(ExampleUrlBranch.PROD)
-                    .getResponse();
+                    .execute();
 
             ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
@@ -222,23 +234,18 @@ public class MainTest {
     public void startAppServices() {
         try {
             connectLib.Logger().showLogs();
-            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
-                    .webServices(8080, "TestDashboard");
+            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+                    //.webServices(8080, "TestDashboard");
 
-            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(null, MethodType.GET, TestRoutes.HELLO)
-                    .getResponse();
+            CompletableFuture<ClassheritFromFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
+                    .urlBranch(ExampleUrlBranch.POST_PROD)
+                    .execute()
+                    .thenApply(ClassheritFromFactory::new);
 
-            apiFactoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(TestCustomVersion.V1_API ,MethodType.GET, TestRoutes.REQUEST_TOKEN)
-                    .urlBranch(ExampleUrlBranch.PROD)
-                    .getResponse();
+            ClassheritFromFactory classheritFromFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
-            ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
-
-            System.out.println("Response: " + apiFactory.display());
-
-            Thread.sleep(20000);
+            System.out.println("Response: " + classheritFromFactory.getContent());
 
         } catch (Exception e) {
             e.printStackTrace();
