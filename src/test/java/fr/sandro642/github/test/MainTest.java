@@ -210,20 +210,11 @@ public class MainTest {
     @Test
     public void pushsession() {
         try {
+            connectLib.Logger().showLogs();
+            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
+                            .wanImplement("http://localhost:8080", "");
 
-            Map<?,?> params = Map.of(
-                    "sessionId", this.code_session
-            );
-
-            CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(TestCustomVersion.V1_API, MethodType.POST, TestRoutes.SESSION_PUSH)
-                    .urlBranch(ExampleUrlBranch.PROD)
-                    .params(params)
-                    .execute();
-
-            ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
-
-            System.out.println("Réponse brute: " + apiFactory.display());
+            Thread.sleep(20000);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -251,5 +242,7 @@ public class MainTest {
             e.printStackTrace();
         }
     }
+
+
 
 }

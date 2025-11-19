@@ -10,7 +10,6 @@ import java.util.Map;
  * This class provides a method to convert an enum class into a map where the keys are the enum constants and the values are their corresponding routes.
  * @author Sandro642
  * @version 1.0
- * @since 1.0
  */
 
 public class EnumLoader {

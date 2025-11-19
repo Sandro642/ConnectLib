@@ -1,16 +1,24 @@
 package fr.sandro642.github;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.lang.CategoriesType;
 import fr.sandro642.github.hook.HookManager;
 import fr.sandro642.github.hook.LangSupport;
 import fr.sandro642.github.hook.MCSupport;
+import fr.sandro642.github.log.Logger;
+import fr.sandro642.github.log.Logs;
 import fr.sandro642.github.misc.*;
 import fr.sandro642.github.jobs.JobGetInfos;
 import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.spring.Application;
 import fr.sandro642.github.update.RetrieveLastVersion;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.*;
 
 /**
@@ -145,6 +153,51 @@ public class ConnectLib {
 
 
         SpringApp().startApplication().subscribe();
+    }
+
+    /**
+     * Implement WAN connection to retrieve the port from the server.
+     * @param urlServ the server URL
+     */
+    public void wanImplement(String urlServ) {
+        try {
+            String codeWan = "";
+
+            HttpClient client1 = HttpClient.newHttpClient();
+            HttpRequest request1 = HttpRequest.newBuilder()
+                    .uri(URI.create(urlServ)) // remplacer par l'URL qui
+                    .build();
+
+            HttpResponse<String> response1 = client1.send(request1, HttpResponse.BodyHandlers.ofString());
+
+            Gson gson1 = new Gson();
+            JsonObject root1 = gson1.fromJson(response1.body(), JsonObject.class);
+
+            if (root1 != null) {
+                codeWan = root1.get("code").getAsString();
+            }
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(urlServ + "/connect/" + codeWan)) // remplacer par l'URL qui renvoie le JSON
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            Gson gson = new Gson();
+            JsonObject root = gson.fromJson(response.body(), JsonObject.class);
+
+            if (root != null && root.has("user")) {
+                JsonObject user = root.getAsJsonObject("user");
+                if (user != null && user.has("port") && !user.get("port").isJsonNull()) {
+                    StoreAndRetrieve().put(StoreAndRetrieve().DYNAMIC_PORT, user.get("port").getAsString());
+                }
+            }
+
+            SpringApp().startApplication().subscribe();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
