@@ -65,7 +65,7 @@ Changelog:
 
 ---
 
-## 🌟 Why ConnectLib?
+##  Why ConnectLib?
 
 Imagine an API that doesn't just connect services, but becomes the conductor of your integrations. ConnectLib is designed to:
 
@@ -76,17 +76,17 @@ Imagine an API that doesn't just connect services, but becomes the conductor of 
 
 ---
 
-## 🛠️ Main Features
+##  Main Features
 
-- 🔌 **Centralized connector management**
-- ⚡ **Automated job execution**
-- 🧩 **Extensible and modular**
-- 📊 **Detailed logs and monitoring**
-- 🔒 **Built-in security**
+-  **Centralized connector management**
+-  **Automated job execution**
+-  **Extensible and modular**
+-  **Detailed logs and monitoring**
+-  **Built-in security**
 
 ---
 
-## 🚦 Quick Start
+##  Quick Start
 
 1. **Clone the project**
    ```bash
@@ -104,13 +104,13 @@ Imagine an API that doesn't just connect services, but becomes the conductor of 
 
 ---
 
-## 🧑‍💻 Usage Example
+##  Usage Example
 
 More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/example/ExampleUsages.java)
 
 ---
-[build.gradle](build.gradle)
-## 📚 Project Structure
+
+##  Project Structure
 
 - `src/main/java/fr/sandro642/github/` : main source code
 - `src/test/java/fr/sandro642/github/test/` : unit tests
@@ -118,7 +118,7 @@ More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/examp
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repo
 2. Create a branch (`feature/my-feature`)
@@ -126,7 +126,7 @@ More examples HERE: [ExampleUsages.java](src/main/java/fr/sandro642/github/examp
 
 ---
 
-## 📞 Contact
+##  Contact
 
 For any questions or suggestions: [sandro33810@gmail.com](mailto:sandro33810@gmail.com)
 

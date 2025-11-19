@@ -6,6 +6,7 @@ import fr.sandro642.github.api.ApiFactory;
 import fr.sandro642.github.enums.LangType;
 import fr.sandro642.github.enums.MethodType;
 import fr.sandro642.github.enums.ResourceType;
+import fr.sandro642.github.provider.AtomicFactory;
 import fr.sandro642.github.provider.RouteImport;
 import fr.sandro642.github.provider.URLProvider;
 import fr.sandro642.github.provider.VersionProvider;
@@ -28,7 +29,8 @@ public class MainTest {
     public enum TestRoutes implements RouteImport {
         HELLO("/hello"),
         GREET("greet$name$"),
-        REQUEST_TOKEN("/auth/request/token")
+        REQUEST_TOKEN("/auth/request/token"),
+        SESSION_PUSH("/auth/link/app/{sessionId}")
         ;
 
         final String route;
@@ -40,6 +42,19 @@ public class MainTest {
         @Override
         public String getRoute() {
             return route;
+        }
+    }
+
+    public class ClassheritFromFactory extends AtomicFactory {
+
+
+
+        public ClassheritFromFactory(ApiFactory apiFactory) {
+            getPhysx(apiFactory);
+        }
+
+        public Object getContent() {
+            return rawPhysx().get("content");
         }
     }
 
@@ -94,7 +109,7 @@ public class MainTest {
 
              CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(MethodType.GET, TestRoutes.HELLO)
-                    .getResponse();
+                    .execute();
 
              ApiFactory response = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
@@ -117,8 +132,8 @@ public class MainTest {
             );
 
             CompletableFuture<ApiFactory> factoryCompletableFuture = connectLib.JobGetInfos()
-                    .getRoutes(MethodType.GET, TestRoutes.GREET, null, null, query)
-                    .getResponse();
+                    .getRoutes(MethodType.GET, TestRoutes.GREET)
+                    .execute();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
@@ -145,7 +160,7 @@ public class MainTest {
                      */
                     //.urlBranch(ExampleUrlBranch.LOCALHOST)
 
-                    .getResponse();
+                    .execute();
 
             ApiFactory response = factoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
@@ -157,18 +172,25 @@ public class MainTest {
         }
     }
 
+    private String code_session;
+
+    @Test
+    public void testProd() {
+        connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+
+        testSpecData();
+
+        pushsession();
+    }
 
     @Test
     public void testSpecData() {
         try {
 
-            connectLib.init(ResourceType.MAIN_RESOURCES, LangType.ENGLISH, TestRoutes.class)
-                    .wanImplement("http://localhost:8080");
-
             CompletableFuture<ApiFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
                     .getRoutes(TestCustomVersion.V1_API, MethodType.GET, TestRoutes.REQUEST_TOKEN)
                     .urlBranch(ExampleUrlBranch.PROD)
-                    .getResponse();
+                    .execute();
 
             ApiFactory apiFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
 
@@ -177,6 +199,20 @@ public class MainTest {
             System.out.println("Data: " + apiFactory.getData("data"));
 
             System.out.println(apiFactory.getSpecData("data", "accessToken"));
+
+            this.code_session = (String) apiFactory.getSpecData("data", "sessionCode");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void pushsession() {
+        try {
+            connectLib.Logger().showLogs();
+            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
+                            .wanImplement("http://localhost:8080", "");
 
             Thread.sleep(20000);
 
@@ -189,16 +225,23 @@ public class MainTest {
     public void startAppServices() {
         try {
             connectLib.Logger().showLogs();
-            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
-                            .wanImplement("http://localhost:8080");
+            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+                    //.webServices(8080, "TestDashboard");
 
-            Thread.sleep(20000);
+            CompletableFuture<ClassheritFromFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
+                    .urlBranch(ExampleUrlBranch.POST_PROD)
+                    .execute()
+                    .thenApply(ClassheritFromFactory::new);
+
+            ClassheritFromFactory classheritFromFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Response: " + classheritFromFactory.getContent());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
 
 

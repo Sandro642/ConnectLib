@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - Feature/AtomicFactory
 permissions:
   contents: write
   pages: write
