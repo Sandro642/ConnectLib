@@ -212,7 +212,7 @@ public class MainTest {
         try {
             connectLib.Logger().showLogs();
             connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
-                            .wanImplement("http://localhost:8080", "");
+                            .wanImplement("http://localhost:8080", "TestDashboard");
 
             Thread.sleep(20000);
 
