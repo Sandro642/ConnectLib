@@ -58,6 +58,9 @@ public class DataController {
     public Map<String, Object> getStatus() {
         Map<String, Object> status = new HashMap<>();
         status.put("portInfo", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT));
+        String nameFromStore = connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().NAME_DASHBOARD).toString();
+
+        status.put("nameComponent", nameFromStore);
         status.put("isInitialized", connectLib.isInitialized());
         status.put("resourceType", connectLib.HookManager().getResourceType());
         return status;
@@ -70,6 +73,7 @@ public class DataController {
 
         // portInfo
         result.put("portInfo", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT).toString());
+        result.put("nameComponent", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().NAME_DASHBOARD));
 
         List<Map<String, String>> routes = new ArrayList<>();
         if (map != null) {
@@ -94,6 +98,7 @@ public class DataController {
         Map<String, Object> result = new HashMap<>();
 
         result.put("portInfo", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().DYNAMIC_PORT).toString());
+        result.put("nameComponent", connectLib.StoreAndRetrieve().get(connectLib.StoreAndRetrieve().NAME_DASHBOARD));
 
         List<Request> requests = new ArrayList<>(requestsMap.values());
         result.put("requests", requests);

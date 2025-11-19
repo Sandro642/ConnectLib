@@ -15,6 +15,7 @@ import fr.sandro642.github.enums.ResourceType;
 import fr.sandro642.github.spring.Application;
 import fr.sandro642.github.update.RetrieveLastVersion;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -156,47 +157,106 @@ public class ConnectLib {
     }
 
     /**
-     * Implement WAN connection to retrieve the port from the server.
-     * @param urlServ the server URL
+     * Implement WAN connectivity using the provided server URL and component name.
+     * This method performs HTTP requests to establish a connection and retrieve necessary information.
+     * @param urlServ the URL of the server to connect to
+     * @param nameComponent the name of the component to be used in the connection
      */
-    public void wanImplement(String urlServ) {
+    public void wanImplement(String urlServ, String nameComponent) {
+        if (urlServ == null || urlServ.isBlank()) {
+            return;
+        }
         try {
-            String codeWan = "";
+            StoreAndRetrieve().put(StoreAndRetrieve().NAME_DASHBOARD, nameComponent);
 
-            HttpClient client1 = HttpClient.newHttpClient();
-            HttpRequest request1 = HttpRequest.newBuilder()
-                    .uri(URI.create(urlServ)) // remplacer par l'URL qui
+            String trimmed = urlServ.trim();
+            if (!trimmed.matches("(?i)^https?://.*")) trimmed = "http://" + trimmed;
+            if (trimmed.endsWith("/")) trimmed = trimmed.substring(0, trimmed.length() - 1);
+            String urlServLambda = trimmed + "/api";
+
+            URI uri = URI.create(urlServLambda);
+
+            HttpClient client = HttpClient.newBuilder()
+                    .version(HttpClient.Version.HTTP_1_1)
+                    .connectTimeout(java.time.Duration.ofSeconds(5))
+                    .followRedirects(HttpClient.Redirect.NORMAL)
                     .build();
 
-            HttpResponse<String> response1 = client1.send(request1, HttpResponse.BodyHandlers.ofString());
-
-            Gson gson1 = new Gson();
-            JsonObject root1 = gson1.fromJson(response1.body(), JsonObject.class);
-
-            if (root1 != null) {
-                codeWan = root1.get("code").getAsString();
-            }
-
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(urlServ + "/connect/" + codeWan)) // remplacer par l'URL qui renvoie le JSON
+            HttpRequest req1 = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .GET()
+                    .timeout(java.time.Duration.ofSeconds(5))
+                    .header("Accept", "application/json")
+                    .header("User-Agent", "ConnectLib/1.0")
                     .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            try {
+                HttpResponse<String> resp1 = client.send(req1, HttpResponse.BodyHandlers.ofString());
 
-            Gson gson = new Gson();
-            JsonObject root = gson.fromJson(response.body(), JsonObject.class);
-
-            if (root != null && root.has("user")) {
-                JsonObject user = root.getAsJsonObject("user");
-                if (user != null && user.has("port") && !user.get("port").isJsonNull()) {
-                    StoreAndRetrieve().put(StoreAndRetrieve().DYNAMIC_PORT, user.get("port").getAsString());
+                if (resp1.statusCode() / 100 != 2 || resp1.body() == null || resp1.body().isBlank()) {
+                    return;
                 }
+
+                JsonObject root1 = new Gson().fromJson(resp1.body(), JsonObject.class);
+                if (root1 == null || !root1.has("code") || root1.get("code").isJsonNull()) {
+                    return;
+                }
+                String codeWan = root1.get("code").getAsString();
+
+                String connectUrl = trimmed + "/api/connect/" + java.net.URLEncoder.encode(codeWan, java.nio.charset.StandardCharsets.UTF_8);
+                HttpRequest req2 = HttpRequest.newBuilder()
+                        .uri(URI.create(connectUrl))
+                        .GET()
+                        .timeout(java.time.Duration.ofSeconds(5))
+                        .header("Accept", "application/json")
+                        .header("User-Agent", "ConnectLib/1.0")
+                        .build();
+
+                HttpResponse<String> resp2 = client.send(req2, HttpResponse.BodyHandlers.ofString());
+
+                if (resp2.statusCode() / 100 == 2 && resp2.body() != null && !resp2.body().isBlank()) {
+                    JsonObject root = new Gson().fromJson(resp2.body(), JsonObject.class);
+                    if (root != null && root.has("user")) {
+                        JsonObject user = root.getAsJsonObject("user");
+                        if (user != null && user.has("port") && !user.get("port").isJsonNull()) {
+                            StoreAndRetrieve().put(StoreAndRetrieve().DYNAMIC_PORT, user.get("port").getAsString());
+                        }
+                    }
+                }
+
+                SpringApp().startApplication().subscribe();
+                return;
+            } catch (java.io.EOFException eof) {
+                Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "wanimplement.erroreefexception", Map.of("exception", eof.getMessage())));
+            } catch (IOException ioe) {
+                Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "wanimplement.errorioexception", Map.of("exception", ioe.getMessage())));
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+                return;
             }
 
-            SpringApp().startApplication().subscribe();
+            try {
+                java.net.URL url = new java.net.URL(urlServLambda);
+                java.net.HttpURLConnection conn = (java.net.HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(3000);
+                conn.setReadTimeout(3000);
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("User-Agent", "ConnectLib/1.0");
+                conn.setRequestProperty("Connection", "close");
+                int code = conn.getResponseCode();
+                String body;
+                try (java.io.InputStream is = code >= 400 ? conn.getErrorStream() : conn.getInputStream()) {
+                    body = is == null ? "<no-body>" : new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+                }
+            } catch (Exception e) {
+                Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "wanimplement.errorfallback", Map.of("exception", e.getMessage())));
+            }
+
+        } catch (IllegalArgumentException iae) {
+            Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "wanimplement.illegalargument", Map.of("exception", iae.getMessage())));
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger().ERROR(langManager.getMessage(CategoriesType.CONNECTLIB_CLASS, "wanimplement.error", Map.of("exception", e.getMessage())));
         }
     }
 
