@@ -61,6 +61,7 @@ Changelog:
  - [0.2.7.2-STABLE]: Remove implementation Project Reactor
  - [0.2.9-STABLE]: Added support query variables in routes, allowing you to pass parameters directly in the URL.
  - [0.4.0-STABLE]: Web implementation, now you can have a dashboard to see your connectors and jobs.
+ - [0.4.8-STABLE]: Add Wan Implementation with ConnectLib Dashboard.
 ```
 
 ---
