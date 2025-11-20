@@ -66,7 +66,6 @@ public class Application implements WebFluxConfigurer {
             app.setDefaultProperties(props);
             app.run();
 
-            System.out.println(Dyn_Port());
         }).subscribeOn(Schedulers.boundedElastic()).then();
     }
 
