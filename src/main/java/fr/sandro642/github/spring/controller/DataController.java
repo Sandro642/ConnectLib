@@ -147,6 +147,7 @@ public class DataController {
         if (existing == null) {
             return null;
         }
+
         existing.setStatus(status);
         requestsMap.put(id, existing);
         return existing;

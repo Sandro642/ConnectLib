@@ -56,6 +56,10 @@ public class MainTest {
         public Object getContent() {
             return rawPhysx().get("content");
         }
+
+        public Object display() {
+            return rawPhysx().get("");
+        }
     }
 
     /**
@@ -98,7 +102,14 @@ public class MainTest {
 
     @Test
     public void initializeCAPI() {
-        connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+        connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
+                .wanImplement("localhost:3000", "Connectlib1");
+
+        try {
+            Thread.sleep(2000000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -225,7 +236,8 @@ public class MainTest {
     public void startAppServices() {
         try {
             connectLib.Logger().showLogs();
-            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class);
+            connectLib.init(ResourceType.TEST_RESOURCES, LangType.ENGLISH, TestRoutes.class)
+                    .wanImplement("localhost:3000", "Connectlib3");
                     //.webServices(8080, "TestDashboard");
 
             CompletableFuture<ClassheritFromFactory> apiFactoryCompletableFuture = connectLib.JobGetInfos()
@@ -235,14 +247,27 @@ public class MainTest {
                     .thenApply(ClassheritFromFactory::new);
 
             ClassheritFromFactory classheritFromFactory = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
+            System.out.println("Display" + classheritFromFactory.display());
 
             System.out.println("Response: " + classheritFromFactory.getContent());
+
+            Thread.sleep(10000);
+
+            apiFactoryCompletableFuture = connectLib.JobGetInfos()
+                    .getRoutes(MethodType.GET, TestRoutes.HELLO)
+                    .urlBranch(ExampleUrlBranch.POST_PROD)
+                    .execute()
+                    .thenApply(ClassheritFromFactory::new);
+
+            ClassheritFromFactory classheritFromFactory2 = apiFactoryCompletableFuture.get(5, TimeUnit.SECONDS);
+
+            System.out.println("Response: " + classheritFromFactory2.getContent());
+
+            Thread.sleep(200000);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 
 }
